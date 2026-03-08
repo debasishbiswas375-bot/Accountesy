@@ -1,0 +1,32 @@
+body{
+margin:0;
+font-family:Arial;
+display:flex;
+}
+
+.sidebar{
+width:250px;
+background:#1c2b50;
+color:white;
+padding:20px;
+}
+
+.sidebar a{
+color:white;
+display:block;
+padding:10px 0;
+text-decoration:none;
+}
+
+.content{
+flex:1;
+padding:40px;
+background:linear-gradient(135deg,#2f5cff,#142a6b);
+color:white;
+min-height:100vh;
+}
+
+footer{
+margin-top:50px;
+opacity:0.7;
+}

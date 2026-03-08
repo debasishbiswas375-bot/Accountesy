@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: accountesy
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app.main:app -k uvicorn.workers.UvicornWorker
