@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Dashboard</h2>
+
+<p>Plan: {{data.plan}}</p>
+<p>Credits: {{data.credits}}</p>
+<p>Expiry: {{data.expiry}}</p>
+
+<form action="/convert" method="post" enctype="multipart/form-data">
+<input type="file" name="file">
+<button>Convert</button>
+</form>
+
+{% endblock %}
