@@ -1,128 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "base.html" %}
 
-<title>Accountesy</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+{% block content %}
 
-<link rel="stylesheet" href="/static/style.css">
+<h1>Convert Bank Statements to Tally XML</h1>
 
-<style>
+<p>Fast • Secure • Accurate</p>
 
-.landing{
-display:flex;
-height:100vh;
-align-items:center;
-justify-content:space-between;
-padding:80px;
-}
+<a href="/login">Login</a>
 
-.left{
-max-width:520px;
-}
+<a href="/register">Create Account</a>
 
-.left h1{
-font-size:56px;
-margin-bottom:20px;
-}
-
-.left p{
-font-size:20px;
-opacity:.9;
-}
-
-.right{
-width:420px;
-background:white;
-color:#222;
-padding:40px;
-border-radius:16px;
-box-shadow:0 20px 40px rgba(0,0,0,.25);
-}
-
-.right input{
-width:100%;
-padding:14px;
-margin:10px 0;
-border-radius:10px;
-border:1px solid #ddd;
-}
-
-.login-btn{
-width:100%;
-padding:14px;
-background:#1877f2;
-color:white;
-border:none;
-border-radius:10px;
-font-weight:bold;
-}
-
-.signup-btn{
-margin-top:15px;
-width:100%;
-padding:12px;
-background:#42b72a;
-border:none;
-color:white;
-border-radius:10px;
-}
-
-</style>
-
-</head>
-
-<body>
-
-<div class="landing">
-
-<div class="left">
-
-<h1>Convert Bank Statements<br>to Tally XML</h1>
-
-<p>
-Fast • Secure • Accurate
-</p>
-
-<br>
-
-<ul>
-<li>Automatic voucher detection</li>
-<li>Ledger auto matching</li>
-<li>Credit based conversion</li>
-<li>Tally XML export</li>
-</ul>
-
-</div>
-
-
-<div class="right">
-
-<h3>Login to Accountesy</h3>
-
-<form action="/login" method="post">
-
-<input name="email" placeholder="Email">
-
-<input type="password" name="password" placeholder="Password">
-
-<button class="login-btn">Login</button>
-
-</form>
-
-<p style="text-align:center;margin-top:10px">
-<a href="/forgot">Forgot password?</a>
-</p>
-
-<hr>
-
-<button onclick="location.href='/register'" class="signup-btn">
-Create new account
-</button>
-
-</div>
-
-</div>
-
-</body>
-</html>
+{% endblock %}
