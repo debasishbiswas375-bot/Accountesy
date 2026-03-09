@@ -2,63 +2,50 @@
 <html>
 <head>
     <title>Accountesy</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/static/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-
-<div class="topbar">
-    <div class="top-left">
-        <i data-lucide="menu" onclick="toggleSidebar()" style="cursor:pointer; margin-right: 15px;"></i>
-        <img src="/static/logo.png" class="brand-logo" style="height: 60px;">
-        <div class="brand-text">
-            <div class="brand-name">Accountesy</div>
+    <div class="topbar">
+        <div class="top-left" style="display:flex; align-items:center; gap:15px;">
+            <i data-lucide="menu" onclick="toggleSidebar()" style="cursor:pointer;"></i>
+            <img src="/static/logo.png" style="height:60px;">
+            <div class="brand-info">
+                <div style="font-size:32px; font-weight:700; line-height:1;">Accountesy</div>
+                <div style="font-size:12px; opacity:0.9;">Learn Smart, Grow Fast, Be Accounting Expert with Accountesy</div>
+            </div>
         </div>
-    </div>
-
-    <div class="top-right">
-        <div class="notification-icon" style="position:relative; cursor:pointer;">
+        <div class="top-right" style="display:flex; align-items:center; gap:20px;">
             <i data-lucide="bell"></i>
-            <span class="notif-dot"></span>
+            <div class="avatar" style="width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; font-weight:bold;">D</div>
         </div>
-        <div class="avatar" onclick="toggleProfileMenu()">D</div>
-        <a href="/auth/register" style="background:#3b82f6; color:white; padding:10px 20px; border-radius:12px; text-decoration:none; font-weight:600;">Register</a>
-    </div>
-</div>
-
-<div class="sidebar" id="sidebar">
-    <div class="nav-section">
-        <a href="/" class="nav-item" style="color:white; text-decoration:none; display:flex; gap:10px; margin-bottom:20px;">
-            <i data-lucide="layout-dashboard"></i><span class="nav-text">Dashboard</span>
-        </a>
-        <a href="/admin" class="nav-item" style="color:white; text-decoration:none; display:flex; gap:10px;">
-            <i data-lucide="shield"></i><span class="nav-text">Admin</span>
-        </a>
     </div>
 
-    <div class="sponsor-box" style="text-align:center;">
-        <div class="sponsor-title" style="font-size:10px; opacity:0.7;">Sponsored by</div>
-        <div class="sponsor-name" style="font-size:12px; font-weight:600;">Uday Mondal | Tax Consultant Advocate</div>
-        <img src="/static/logo1.png" style="width:25px; border-radius:8px; margin-top:10px;">
+    <div class="sidebar" id="sidebar">
+        <nav style="display:flex; flex-direction:column; gap:20px;">
+            <a href="/" style="color:white; text-decoration:none;"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+            <a href="/admin" style="color:white; text-decoration:none;"><i data-lucide="shield"></i> Admin</a>
+        </nav>
+        <div class="sponsor-box" style="margin-top:auto; text-align:center;">
+            <p style="font-size:10px; margin:0;">Sponsored by</p>
+            <p style="font-size:12px; font-weight:600; margin:5px 0;">Uday Mondal | Tax Consultant Advocate</p>
+            <img src="/static/logo1.png" style="width:50px; border-radius:5px;">
+        </div>
     </div>
-</div>
 
-<div class="main">
-    {% block content %}{% endblock %}
-    
-    <footer style="margin-top:100px; text-align:center; padding:20px; border-top:1px solid rgba(255,255,255,0.1);">
-        <p>© 2026 Accountesy | Created by <strong>Debasish Biswas</strong></p>
+    <div class="main">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer class="footer">
+        © 2026 Accountesy | Created by <strong>Debasish Biswas</strong>
     </footer>
-</div>
 
-<script>
-    function toggleSidebar(){
-        document.getElementById("sidebar").classList.toggle("mini");
-    }
-    lucide.createIcons();
-</script>
+    <script>
+        function toggleSidebar() { document.getElementById("sidebar").classList.toggle("mini"); }
+        lucide.createIcons();
+    </script>
 </body>
 </html>
