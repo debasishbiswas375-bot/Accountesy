@@ -2,53 +2,77 @@
 <html lang="en">
 <head>
     <title>Accountesy - Accounting Expert</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="/static/logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root { --sidebar-width: 260px; --topbar-height: 70px; }
+        body {
+            margin: 0; padding: 0; font-family: 'Poppins', sans-serif;
+            background: url('/static/b-logo.png') no-repeat center center fixed;
+            background-size: cover; color: white; overflow-x: hidden;
+        }
+        .topbar {
+            height: var(--topbar-height);
+            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(15px);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 50px; /* 50px lined alignment */
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .sidebar {
+            width: var(--sidebar-width); height: calc(100vh - var(--topbar-height));
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px);
+            position: fixed; top: var(--topbar-height); left: 0;
+            padding: 30px 20px; border-right: 1px solid rgba(255,255,255,0.1);
+        }
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 50px; /* 50px lined alignment */
+            min-height: calc(100vh - var(--topbar-height) - 100px);
+        }
+        .sponsor-box {
+            background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 12px;
+            text-align: center; margin-top: 50px;
+        }
+        footer {
+            margin-left: var(--sidebar-width); padding: 30px 50px;
+            text-align: center; border-top: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.3); backdrop-filter: blur(5px);
+        }
+    </style>
 </head>
-<body style="background: url('/static/b-logo.png') no-repeat center center fixed; background-size: cover; color: white; min-height: 100vh;">
-
-<div class="topbar" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); display: flex; justify-content: space-between; padding: 15px 30px; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1);">
-    <div class="top-left" style="display: flex; align-items: center;">
-        <img src="/static/logo.png" alt="Logo" style="height: 40px; margin-right: 15px;">
-        <div class="brand-text">
-            <div class="brand-name" style="font-weight: 700; font-size: 20px;">Accountesy</div>
-            <div class="brand-tagline" style="font-size: 11px; opacity: 0.8;">Learn Smart, Grow Fast, Be Accounting Expert</div>
+<body>
+    <div class="topbar">
+        <div style="display: flex; align-items: center;">
+            <img src="/static/logo.png" style="height: 45px; margin-right: 15px;">
+            <span style="font-weight: 700; font-size: 22px;">Accountesy</span>
         </div>
-    </div>
-    <div class="top-right">
-        <a href="/auth/login" style="color: white; text-decoration: none; margin-right: 20px;">Login</a>
-        <a href="/auth/register" style="background: #3b82f6; color: white; padding: 8px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">Register</a>
-    </div>
-</div>
-
-<div class="main-layout" style="display: flex; min-height: calc(100vh - 71px);">
-    <div class="sidebar" style="width: 260px; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border-right: 1px solid rgba(255,255,255,0.1); padding: 30px 20px; display: flex; flex-direction: column; justify-content: space-between;">
-        <div class="nav-section">
-            <a href="/" style="display: flex; align-items: center; color: white; text-decoration: none; margin-bottom: 20px;"><i data-lucide="home" style="margin-right: 10px;"></i> Home</a>
-            <a href="/dashboard" style="display: flex; align-items: center; color: white; text-decoration: none;"><i data-lucide="layout-dashboard" style="margin-right: 10px;"></i> Dashboard</a>
-        </div>
-        <div class="sponsor-box" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; text-align: center;">
-            <p style="font-size: 10px; opacity: 0.7; margin-bottom: 5px;">Sponsored by</p>
-            <img src="/static/logo1.png" alt="Sponsor" style="width: 100%; border-radius: 6px; margin-bottom: 8px;">
-            <p style="font-size: 12px; font-weight: 500;">Uday Mondal | Tax Consultant</p>
+        <div>
+            <a href="/auth/login" style="color: white; text-decoration: none; margin-right: 25px;">Login</a>
+            <a href="/auth/register" style="background: #3b82f6; padding: 10px 25px; border-radius: 8px; text-decoration: none; color: white; font-weight: 600;">Register</a>
         </div>
     </div>
 
-    <div class="content-area" style="flex: 1; padding: 40px; display: flex; flex-direction: column;">
-        <div style="flex: 1;">
-            {% block content %}{% endblock %}
+    <div class="sidebar">
+        <nav>
+            <a href="/" style="display: flex; color: white; text-decoration: none; margin-bottom: 20px;"><i data-lucide="home"></i>&nbsp; Home</a>
+            <a href="/dashboard" style="display: flex; color: white; text-decoration: none;"><i data-lucide="layout-dashboard"></i>&nbsp; Dashboard</a>
+        </nav>
+        <div class="sponsor-box">
+            <p style="font-size: 10px; margin-bottom: 5px;">Sponsored by</p>
+            <img src="/static/logo1.png" style="width: 100%; border-radius: 5px;">
+            <p style="font-size: 12px; font-weight: 600; margin-top: 5px;">Uday Mondal | Tax Consultant</p>
         </div>
-        
-        <footer style="margin-top: 50px; padding: 20px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); backdrop-filter: blur(5px); border-radius: 15px 15px 0 0;">
-            <p style="font-size: 14px; opacity: 0.8;">© 2026 Accountesy | Created by <strong style="color: #3b82f6;">Debasish Biswas</strong></p>
-        </footer>
     </div>
-</div>
 
-<script>lucide.createIcons();</script>
+    <div class="main-content">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer>
+        <p>© 2026 Accountesy | Created by <strong>Debasish Biswas</strong></p>
+    </footer>
+
+    <script>lucide.createIcons();</script>
 </body>
 </html>
