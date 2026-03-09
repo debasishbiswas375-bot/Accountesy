@@ -4,5 +4,7 @@ jinja2
 python-multipart
 pandas
 openpyxl
+bcrypt
 gunicorn
-python-dotenv
+sqlalchemy
+psycopg2-binary
