@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Accountesy - Accounting Expert</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .landing-nav { display: flex; justify-content: space-between; align-items: center; padding: 25px 80px; }
+        .landing-hero { text-align: center; padding: 120px 20px; max-width: 800px; margin: 0 auto; }
+        .landing-hero h1 { font-size: 56px; line-height: 1.2; margin-bottom: 20px; text-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .landing-hero p { font-size: 22px; opacity: 0.9; margin-bottom: 40px; }
+        .btn-landing { background: white; color: #1f56c2; padding: 15px 35px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 18px; transition: 0.3s; display: inline-block; box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        .btn-landing:hover { transform: translateY(-3px); background: #f8f9fa; }
+        .nav-link { color: white; text-decoration: none; font-weight: 500; margin-right: 30px; font-size: 16px; transition: 0.2s; }
+        .nav-link:hover { opacity: 0.8; }
+        @media (max-width: 768px) {
+            .landing-nav { padding: 20px; flex-direction: column; gap: 15px; }
+            .landing-hero h1 { font-size: 40px; }
+            .nav-link { margin-right: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="landing-nav">
+        <div class="brand-name" style="font-size: 32px;">Accountesy</div>
+        <div>
+            <a href="/auth/login" class="nav-link">Login</a>
+            <a href="/auth/register" class="btn-landing" style="padding: 10px 24px; font-size: 15px; box-shadow: none;">Create Account</a>
+        </div>
+    </div>
+
+    <div class="landing-hero">
+        <h1>Convert Bank Statements to Tally XML</h1>
+        <p>Fast • Secure • Accurate</p>
+        <a href="/auth/register" class="btn-landing">Start Converting Now</a>
+    </div>
+</body>
+</html>
