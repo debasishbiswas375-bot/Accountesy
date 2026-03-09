@@ -1,38 +1,22 @@
-﻿{% extends "base.html" %}
+{% extends "base.html" %}
 {% block content %}
-<div class="landing-hero" style="text-align: center; padding: 80px 20px;">
-    <h1 style="font-size: 48px; margin-bottom: 20px;">Accountesy - Accounting Expert</h1>
-    <p style="font-size: 20px; opacity: 0.9; margin-bottom: 40px;">
-        The smartest way to convert Bank Statements to Tally XML. 
-        Trusted by Tax Consultants & CA Firms.
-    </p>
-    <div style="display: flex; justify-content: center; gap: 20px;">
-        <a href="/auth/register" class="convert-btn" style="text-decoration: none;">Get Started for Free</a>
-        <a href="#features" class="convert-btn" style="text-decoration: none; background: rgba(255,255,255,0.2); color: white;">View Features</a>
-    </div>
+<div class="hero-section" style="text-align:center; padding:50px 0;">
+    <h1 style="font-size:48px;">Accountesy - Accounting Expert</h1>
+    <p>The smartest way to convert Bank Statements to Tally XML.</p>
 </div>
 
-<div id="features" class="stats-grid" style="margin-top: 50px;">
-    <div class="stat-card">
-        <div class="stat-icon"><i data-lucide="zap"></i></div>
-        <div class="stat-info">
-            <h4>Instant Conversion</h4>
-            <p style="font-size: 13px; opacity: 0.8;">Convert PDF/Excel to Tally XML in seconds.</p>
-        </div>
+<div class="feature-container">
+    <div class="feature-box">
+        <h3><i data-lucide="zap"></i> Instant Conversion</h3>
+        <p>Convert PDF/Excel to Tally XML in seconds.</p>
     </div>
-    <div class="stat-card">
-        <div class="stat-icon"><i data-lucide="shield-check"></i></div>
-        <div class="stat-info">
-            <h4>Secure & Private</h4>
-            <p style="font-size: 13px; opacity: 0.8;">We do not store your financial statements.</p>
-        </div>
+    <div class="feature-box">
+        <h3><i data-lucide="lock"></i> Secure & Private</h3>
+        <p>We do not store your financial statements.</p>
     </div>
-    <div class="stat-card">
-        <div class="stat-icon"><i data-lucide="layers"></i></div>
-        <div class="stat-info">
-            <h4>Smart Mapping</h4>
-            <p style="font-size: 13px; opacity: 0.8;">Automatic ledger detection & suspense handling.</p>
-        </div>
+    <div class="feature-box">
+        <h3><i data-lucide="layers"></i> Smart Mapping</h3>
+        <p>Automatic ledger detection & suspense handling.</p>
     </div>
 </div>
 {% endblock %}
