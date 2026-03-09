@@ -4,16 +4,15 @@ body {
     color: white;
     background: linear-gradient(135deg, #6bb6ff 0%, #3d8bfd 50%, #1f56c2 100%);
     position: relative;
-    overflow-x: hidden;
     min-height: 100vh;
 }
 
-/* Watermark: Fixed Path for Render */
+/* Watermark: Applied per your exact code */
 body::before {
     content: "";
     position: fixed;
     inset: 0;
-    background: url("/static/b-logo.png") repeat; /* Fixed Path */
+    background: url("/static/b-logo.png") repeat;
     background-size: 60px;
     opacity: 0.07;
     filter: grayscale(90%);
@@ -21,73 +20,53 @@ body::before {
     z-index: -1;
 }
 
-/* TOPBAR: 50px lined alignment */
 .topbar {
     height: 90px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 60px;
-    background: rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
+    padding: 0 50px; /* 50px lined alignment */
 }
 
-/* SIDEBAR & MINI TOGGLE */
 .sidebar {
     position: fixed;
     top: 110px;
     left: 40px;
     width: 260px;
-    height: 75vh;
+    height: 70vh;
     padding: 30px 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     background: rgba(255, 255, 255, 0.18);
     backdrop-filter: blur(30px);
     border-radius: 28px;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.25), inset 0 0 20px rgba(255,255,255,0.15);
-    transition: all 0.3s ease;
-}
-
-.sidebar.mini {
-    width: 80px;
-}
-
-.sidebar.mini .nav-text, .sidebar.mini .sponsor-name, .sidebar.mini .sponsor-title {
-    display: none;
-}
-
-/* AVATAR & NOTIFICATIONS */
-.avatar {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.25);
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.notif-dot {
-    position: absolute;
-    top: -3px;
-    right: -3px;
-    width: 8px;
-    height: 8px;
-    background: #ff3b3b;
-    border-radius: 50%;
+    flex-direction: column;
 }
 
 .main {
     margin-left: 340px;
-    padding: 50px;
-    transition: all 0.3s ease;
+    padding: 20px 50px 100px 50px;
 }
 
-.sidebar.mini ~ .main {
-    margin-left: 160px;
+/* Semi-boxes for features */
+.feature-box {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    width: fit-content;
+}
+
+/* Fixed Footer at bottom of screen */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 340px;
+    right: 0;
+    padding: 20px 50px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
