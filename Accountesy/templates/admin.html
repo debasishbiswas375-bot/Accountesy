@@ -1,0 +1,48 @@
+﻿{% extends "base.html" %}
+{% block content %}
+<div class="dashboard-header">
+    <h2>Admin Control Center</h2>
+    <p>Manage users, plans, and platform settings.</p>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon"><i data-lucide="users"></i></div>
+        <div class="stat-info"><h4>Total Users</h4><div class="stat-value">42</div></div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon"><i data-lucide="activity"></i></div>
+        <div class="stat-info"><h4>Total Conversions</h4><div class="stat-value">856</div></div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon"><i data-lucide="wallet"></i></div>
+        <div class="stat-info"><h4>Active Plans</h4><div class="stat-value">18</div></div>
+    </div>
+</div>
+
+<div class="upload-section">
+    <h3><i data-lucide="user-cog"></i> User Management</h3>
+    <div style="overflow-x: auto; margin-top: 20px;">
+        <table style="width: 100%; text-align: left; border-collapse: collapse;">
+            <thead>
+                <tr style="border-bottom: 2px solid rgba(255,255,255,0.3);">
+                    <th style="padding: 12px;">Email</th>
+                    <th style="padding: 12px;">Plan</th>
+                    <th style="padding: 12px;">Credits</th>
+                    <th style="padding: 12px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <td style="padding: 12px;">ca.office@example.com</td>
+                    <td style="padding: 12px;">Pro</td>
+                    <td style="padding: 12px;">450</td>
+                    <td style="padding: 12px;">
+                        <button style="padding: 6px 12px; border-radius: 6px; border: none; background: white; color: #1f56c2; font-weight: 600; cursor: pointer;">Edit User</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

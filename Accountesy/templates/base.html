@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Accountesy - Accounting Expert</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/static/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body style="background: url('/static/b-logo.png') no-repeat center center fixed; background-size: cover;">
+
+<div class="topbar">
+    <div class="top-left">
+        <img src="/static/logo.png" alt="Logo" class="main-logo">
+        <div class="brand-text">
+            <div class="brand-name">Accountesy</div>
+            <div class="brand-tagline">Learn Smart, Grow Fast, Be Accounting Expert</div>
+        </div>
+    </div>
+    <div class="top-right">
+        {% if email %}
+            <span class="user-email">{{ email }}</span>
+            <a href="/auth/logout" class="nav-btn">Logout</a>
+        {% else %}
+            <a href="/auth/login" class="nav-btn">Login</a>
+            <a href="/auth/register" class="convert-btn">Register</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="sidebar">
+    <div class="nav-section">
+        <a href="/" class="nav-item"><i data-lucide="home"></i><span>Home</span></a>
+        <a href="/dashboard" class="nav-item"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></a>
+    </div>
+    <div class="sponsor-box">
+        <p class="sponsor-label">Sponsored by</p>
+        <img src="/static/logo1.png" alt="Uday Mondal" class="sponsor-logo">
+        <p class="sponsor-text">Uday Mondal | Tax Consultant</p>
+    </div>
+</div>
+
+<div class="main">
+    {% block content %}{% endblock %}
+    
+    <footer class="footer">
+        <p>© 2026 Accountesy | Created by <strong>Debasish Biswas</strong></p>
+    </footer>
+</div>
+
+<script>lucide.createIcons();</script>
+</body>
+</html>
