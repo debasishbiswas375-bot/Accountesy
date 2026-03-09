@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Dashboard</h1>
+
+<div style="display:flex;gap:30px">
+
+<div class="card">
+<h3>Current Plan</h3>
+<p>{{user.plan}}</p>
+</div>
+
+<div class="card">
+<h3>Remaining Credits</h3>
+<p>{{user.credits}}</p>
+</div>
+
+<div class="card">
+<h3>Converted Vouchers</h3>
+<p>{{user.vouchers}}</p>
+</div>
+
+<div class="card">
+<h3>Plan Expiry</h3>
+<p>{{user.expiry}}</p>
+</div>
+
+</div>
+
+{% endblock %}
