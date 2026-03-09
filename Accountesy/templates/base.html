@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <title>Accountesy</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,45 +11,54 @@
 <body>
 
 <div class="topbar">
-    <div class="top-left" style="display: flex; align-items: center;">
-        <img src="/static/logo.png" style="height: 40px; margin-right: 15px;">
+    <div class="top-left">
+        <i data-lucide="menu" onclick="toggleSidebar()" style="cursor:pointer; margin-right: 15px;"></i>
+        <img src="/static/logo.png" class="brand-logo" style="height: 60px;">
         <div class="brand-text">
-            <div class="brand-name" style="font-weight: 700; font-size: 20px;">Accountesy</div>
+            <div class="brand-name">Accountesy</div>
         </div>
     </div>
 
     <div class="top-right">
-        <div class="notification-container" style="position: relative;">
+        <div class="notification-icon" style="position:relative; cursor:pointer;">
             <i data-lucide="bell"></i>
             <span class="notif-dot"></span>
         </div>
-        <div class="avatar-container">
-            <div class="avatar">D</div> </div>
-        <a href="/auth/register" style="background: var(--accent); color: white; padding: 8px 20px; border-radius: 8px; text-decoration: none; font-weight: 600;">Register</a>
+        <div class="avatar" onclick="toggleProfileMenu()">D</div>
+        <a href="/auth/register" style="background:#3b82f6; color:white; padding:10px 20px; border-radius:12px; text-decoration:none; font-weight:600;">Register</a>
     </div>
 </div>
 
-<div class="sidebar">
-    <nav class="nav-section">
-        <a href="/" class="nav-item" style="display:block; color:white; text-decoration:none; margin-bottom:20px;"><i data-lucide="layout-dashboard"></i> Dashboard</a>
-        <a href="/admin" class="nav-item" style="display:block; color:white; text-decoration:none; margin-bottom:20px;"><i data-lucide="shield"></i> Admin</a>
-    </nav>
-    
-    <div class="sponsor-box" style="position: absolute; bottom: 100px; text-align: center; width: 220px;">
-        <p style="font-size: 10px; opacity:0.7;">Sponsored by</p>
-        <img src="/static/logo1.png" style="width: 100%; border-radius: 8px;">
-        <p style="font-size: 11px;">Uday Mondal | Tax Consultant</p>
+<div class="sidebar" id="sidebar">
+    <div class="nav-section">
+        <a href="/" class="nav-item" style="color:white; text-decoration:none; display:flex; gap:10px; margin-bottom:20px;">
+            <i data-lucide="layout-dashboard"></i><span class="nav-text">Dashboard</span>
+        </a>
+        <a href="/admin" class="nav-item" style="color:white; text-decoration:none; display:flex; gap:10px;">
+            <i data-lucide="shield"></i><span class="nav-text">Admin</span>
+        </a>
+    </div>
+
+    <div class="sponsor-box" style="text-align:center;">
+        <div class="sponsor-title" style="font-size:10px; opacity:0.7;">Sponsored by</div>
+        <div class="sponsor-name" style="font-size:12px; font-weight:600;">Uday Mondal | Tax Consultant Advocate</div>
+        <img src="/static/logo1.png" style="width:25px; border-radius:8px; margin-top:10px;">
     </div>
 </div>
 
 <div class="main">
     {% block content %}{% endblock %}
+    
+    <footer style="margin-top:100px; text-align:center; padding:20px; border-top:1px solid rgba(255,255,255,0.1);">
+        <p>© 2026 Accountesy | Created by <strong>Debasish Biswas</strong></p>
+    </footer>
 </div>
 
-<footer class="footer">
-    <p>© 2026 Accountesy | Created by <strong>Debasish Biswas</strong></p>
-</footer>
-
-<script>lucide.createIcons();</script>
+<script>
+    function toggleSidebar(){
+        document.getElementById("sidebar").classList.toggle("mini");
+    }
+    lucide.createIcons();
+</script>
 </body>
 </html>
