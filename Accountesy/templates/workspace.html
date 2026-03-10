@@ -1,57 +1,80 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="workspace-container">
+<div class="workspace-card">
     <h2>Tally Conversion Workspace</h2>
-    <p>Drag and drop your files into the designated zones below.</p>
 
-    <form id="upload-form" action="/convert/process" method="POST" enctype="multipart/form-data">
-        <div class="drop-zone" id="bank-zone">
-            <span class="drop-zone__prompt">Drop Bank Statement (PDF/Excel) here</span>
-            <input type="file" name="bank_file" class="drop-zone__input" required>
-        </div>
+    <div id="drop-area" style="border: 2px dashed rgba(255,255,255,0.2); border-radius: 20px; padding: 40px; text-align: center; background: rgba(255,255,255,0.05);">
+        <i data-lucide="upload-cloud" style="width: 48px; height: 48px; margin-bottom: 15px;"></i>
+        <p>Drag and drop <b>Bank Statement</b> and <b>Master.html</b> here</p>
+        <input type="file" id="file-input" multiple hidden>
+        <button onclick="document.getElementById('file-input').click()" class="btn-select">Or Select Files</button>
+        <div id="file-list" style="margin-top: 15px; font-size: 13px; color: #60a5fa;"></div>
+    </div>
 
-        <div class="drop-zone" id="master-zone">
-            <span class="drop-zone__prompt">Drop Master.html here</span>
-            <input type="file" name="master_file" class="drop-zone__input" required>
-        </div>
+    <button id="preview-btn" class="btn-primary" style="margin-top: 20px; width: 100%;">AI Preview & Classify</button>
 
-        <button type="submit" class="btn-generate">🚀 Generate Tally XML</button>
-    </form>
+    <div id="preview-container" style="display:none; margin-top: 40px;">
+        <h3>AI Classification Results</h3>
+        <table class="preview-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Narration</th>
+                    <th>Ledger (Select if AI is unsure)</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody id="preview-body"></tbody>
+        </table>
+        <button onclick="generateFinalXML()" class="btn-download">Download Final Tally XML</button>
+    </div>
 </div>
 
 <script>
-    document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
-        const dropZoneElement = inputElement.closest(".drop-zone");
+let dropArea = document.getElementById('drop-area');
+let bankFile, masterFile;
 
-        dropZoneElement.addEventListener("click", (e) => { inputElement.click(); });
+// STOP BROWSER DEFAULTS
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(e => {
+    dropArea.addEventListener(e, (evt) => { evt.preventDefault(); evt.stopPropagation(); }, false);
+});
 
-        inputElement.addEventListener("change", (e) => {
-            if (inputElement.files.length) {
-                dropZoneElement.querySelector(".drop-zone__prompt").textContent = inputElement.files[0].name;
-                dropZoneElement.classList.add("drop-zone--active");
-            }
-        });
+dropArea.addEventListener('drop', (e) => {
+    let files = e.dataTransfer.files;
+    handleFiles(files);
+});
 
-        dropZoneElement.addEventListener("dragover", (e) => {
-            e.preventDefault();
-            dropZoneElement.classList.add("drop-zone--over");
-        });
+function handleFiles(files) {
+    for (let f of files) {
+        if (f.name.toLowerCase().endsWith('.pdf') || f.name.toLowerCase().endsWith('.xlsx')) bankFile = f;
+        if (f.name.toLowerCase().endsWith('.html')) masterFile = f;
+    }
+    document.getElementById('file-list').innerText = `Ready: ${bankFile?.name} & ${masterFile?.name}`;
+}
 
-        ["dragleave", "dragend"].forEach((type) => {
-            dropZoneElement.addEventListener(type, (e) => {
-                dropZoneElement.classList.remove("drop-zone--over");
-            });
-        });
+document.getElementById('preview-btn').onclick = async () => {
+    if (!bankFile || !masterFile) return alert("Please drop both files first!");
+    
+    let formData = new FormData();
+    formData.append('bank_file', bankFile);
+    formData.append('master_file', masterFile);
 
-        dropZoneElement.addEventListener("drop", (e) => {
-            e.preventDefault();
-            if (e.dataTransfer.files.length) {
-                inputElement.files = e.dataTransfer.files;
-                dropZoneElement.querySelector(".drop-zone__prompt").textContent = e.dataTransfer.files[0].name;
-                dropZoneElement.classList.remove("drop-zone--over");
-                dropZoneElement.classList.add("drop-zone--active");
-            }
-        });
+    let response = await fetch('/convert/preview', { method: 'POST', body: formData });
+    let data = await response.json();
+
+    let html = '';
+    data.transactions.forEach((tx, idx) => {
+        let options = tx.options.map(o => `<option value="${o}" ${o === tx.ledger ? 'selected' : ''}>${o}</option>`).join('');
+        html += `
+            <tr style="${tx.doubt ? 'background: rgba(239, 68, 68, 0.1);' : ''}">
+                <td>${tx.date}</td>
+                <td style="font-size: 11px;">${tx.narration.substring(0, 50)}...</td>
+                <td><select class="ai-ledger-select" data-idx="${idx}">${options}</select></td>
+                <td style="text-align: right;">${tx.amount}</td>
+            </tr>`;
     });
+    document.getElementById('preview-body').innerHTML = html;
+    document.getElementById('preview-container').style.display = 'block';
+};
 </script>
 {% endblock %}
