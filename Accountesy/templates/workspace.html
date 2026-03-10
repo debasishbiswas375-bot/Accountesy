@@ -1,33 +1,74 @@
-// Inside your workspace.html script block
+{% extends "base.html" %}
+{% block content %}
+<div class="workspace-card">
+    <h2>Tally Conversion Workspace</h2>
+
+    <div id="drop-area" style="border: 2px dashed rgba(255,255,255,0.2); border-radius: 20px; padding: 40px; text-align: center; cursor: pointer;">
+        <i data-lucide="upload-cloud"></i>
+        <p>Drop <b>Bank Statement</b> and <b>Master.html</b> here</p>
+        <input type="file" id="file-input" multiple hidden>
+    </div>
+
+    <button id="preview-btn" class="btn-primary" style="margin-top:20px; width:100%;">AI Preview & Classify</button>
+
+    <div id="preview-container" style="display:none; margin-top: 40px;">
+        <table class="preview-table" style="width:100%; border-collapse: collapse;">
+            <thead><tr><th>Voucher Date</th><th>Narration</th><th>Target Ledger</th><th>Amount</th></tr></thead>
+            <tbody id="preview-body"></tbody>
+        </table>
+        <button id="download-btn" class="btn-download" style="width:100%; margin-top:20px;">Download Final XML</button>
+    </div>
+</div>
+
+<script>
+let bankFile, masterFile, currentTransactions;
+
+// PREVENT PDF OPENING IN NEW TAB
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(e => {
+    document.getElementById('drop-area').addEventListener(e, (evt) => { 
+        evt.preventDefault(); evt.stopPropagation(); 
+    }, false);
+});
+
+document.getElementById('drop-area').addEventListener('drop', (e) => {
+    for (let f of e.dataTransfer.files) {
+        if (f.name.match(/\.(pdf|xlsx|xls)$/i)) bankFile = f;
+        if (f.name.endsWith('.html')) masterFile = f;
+    }
+    alert("Files Loaded Successfully!");
+});
+
 document.getElementById('preview-btn').onclick = async () => {
-    // ... (fetch logic same as before) ...
-    
-    let html = '';
-    result.transactions.forEach((tx, i) => {
-        // Highlight rows that are currently in Suspense
-        const rowStyle = tx.is_suspense ? 'background: rgba(239, 68, 68, 0.15); border-left: 4px solid #ef4444;' : '';
-        const options = tx.options.map(o => `<option value="${o}" ${o === tx.ledger ? 'selected' : ''}>${o}</option>`).join('');
-        
-        html += `
-            <tr style="${rowStyle}">
-                <td>${tx.date}</td>
-                <td style="font-size: 11px;">${tx.narration}</td>
-                <td>
-                    <select class="ledger-select" onchange="updateVoucher(${i}, this.value)">
-                        ${options}
-                    </select>
-                </td>
-                <td style="text-align: right; font-weight: bold;">${tx.amount}</td>
-            </tr>`;
-    });
-    document.getElementById('preview-body').innerHTML = html;
+    let fd = new FormData();
+    fd.append('bank_file', bankFile); fd.append('master_file', masterFile);
+
+    let res = await fetch('/convert/preview', { method: 'POST', body: fd });
+    let result = await res.json();
+    currentTransactions = result.transactions;
+
+    document.getElementById('preview-body').innerHTML = result.transactions.map((tx, i) => `
+        <tr style="${tx.is_suspense ? 'background:rgba(239,68,68,0.1)' : ''}">
+            <td>${tx.date}</td>
+            <td style="font-size:10px">${tx.narration}</td>
+            <td><select onchange="updateVoucher(${i}, this.value)">${tx.options.map(o => `<option value="${o}" ${o===tx.ledger?'selected':''}>${o}</option>`).join('')}</select></td>
+            <td>${tx.amount}</td>
+        </tr>`).join('');
+    document.getElementById('preview-container').style.display = 'block';
 };
 
-// Function to Nil the Suspense manually
-function updateVoucher(index, newLedger) {
-    currentTransactions[index].ledger = newLedger;
-    if (newLedger !== "Suspense A/c") {
-        // Remove the [Suspense] tag from narration once a valid ledger is picked
-        currentTransactions[index].narration = currentTransactions[index].narration.replace(' [Suspense]', '');
-    }
+function updateVoucher(idx, val) {
+    currentTransactions[idx].ledger = val;
+    if(val !== "Suspense A/c") currentTransactions[idx].narration = currentTransactions[idx].narration.replace(' [Suspense]', '');
 }
+
+document.getElementById('download-btn').onclick = async () => {
+    let res = await fetch('/convert/final', { 
+        method: 'POST', headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ transactions: currentTransactions }) 
+    });
+    let blob = await res.blob();
+    let url = window.URL.createObjectURL(blob);
+    let a = document.createElement('a'); a.href = url; a.download = 'Tally_Import.xml'; a.click();
+};
+</script>
+{% endblock %}
