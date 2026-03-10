@@ -2,88 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accountesy - Accounting Expert</title>
     <link rel="stylesheet" href="/static/style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Essential layout fixes for your specific design */
-        body { background: #0f172a; color: white; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .topbar { height: 70px; background: rgba(255,255,255,0.05); backdrop-filter: blur(15px); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .nav-item { display: flex; align-items: center; gap: 15px; color: white; text-decoration: none; padding: 12px; border-radius: 8px; margin-bottom: 5px; transition: 0.3s; }
-        .nav-item:hover { background: rgba(255,255,255,0.1); }
-        .sidebar { width: 240px; background: rgba(255,255,255,0.02); border-right: 1px solid rgba(255,255,255,0.1); padding: 20px; min-height: calc(100vh - 130px); }
-        .footer { height: 60px; background: #0f172a; display: flex; align-items: center; justify-content: center; border-top: 1px solid rgba(255,255,255,0.1); position: fixed; bottom: 0; width: 100%; z-index: 1000; }
-        .dropdown { position: absolute; top: 65px; right: 30px; background: #1e293b; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; display: none; flex-direction: column; width: 180px; z-index: 3000; }
-        .dropdown.active { display: flex; }
-        .dropdown a { padding: 12px 20px; color: white; text-decoration: none; font-size: 14px; }
-        .dropdown a:hover { background: rgba(255,255,255,0.05); }
+        .main-wrapper { margin-left: 300px; padding: 40px; padding-top: 110px; min-height: 80vh; }
+        .sidebar.mini ~ .main-wrapper { margin-left: 120px; }
     </style>
 </head>
 <body>
-
     <div class="topbar">
-        <div style="display: flex; align-items: center; gap: 20px;">
-            <img src="/static/logo.png" alt="Logo" style="height: 50px;">
-            <div>
-                <b style="font-size: 18px; display: block;">Accountesy</b>
-                <span style="font-size: 11px; opacity: 0.6;">Learn Smart, Grow Fast, Be Accounting Expert</span>
+        <div class="top-left">
+            <button class="hamburger" id="sidebar-toggle"><span></span><span></span><span></span></button>
+            <img src="/static/logo.png" class="brand-logo">
+            <div class="brand-info">
+                <div class="brand-name">Accountesy</div>
+                <div class="brand-tagline">Learn Smart, Grow Fast, Be Accounting Expert</div>
             </div>
         </div>
-        <div style="display: flex; gap: 20px; align-items: center; position: relative;">
+        <div class="top-right">
             <i data-lucide="bell" style="cursor:pointer;"></i>
-            <div id="avatar-btn" style="width: 35px; height: 35px; background: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-weight: bold;">D</div>
-            
-            <div id="avatar-menu" class="dropdown">
-                <a href="/account">My Account</a>
-                <a href="/pricing">Billing</a>
-                <hr style="border:0; border-top: 1px solid rgba(255,255,255,0.1); margin:0;">
-                <a href="/logout" style="color: #f87171;">Logout</a>
-            </div>
+            <div class="avatar" id="avatar-btn" onclick="location.href='/account'">D</div>
         </div>
     </div>
 
-    <div style="display: flex;">
-        <div class="sidebar">
-            <a href="/workspace" class="nav-item">
-                <i data-lucide="briefcase"></i> <span>Workspace</span>
-            </a>
-            <a href="/history" class="nav-item">
-                <i data-lucide="history"></i> <span>History</span>
-            </a>
-            <a href="/account" class="nav-item">
-                <i data-lucide="user"></i> <span>Account</span>
-            </a>
+    <div class="sidebar" id="sidebar">
+        <div class="nav-section">
+            <a href="/workspace" class="nav-item"><i data-lucide="briefcase"></i><span>Workspace</span></a>
+            <a href="/history" class="nav-item"><i data-lucide="history"></i><span>History</span></a>
+            <a href="/account" class="nav-item"><i data-lucide="user"></i><span>Account</span></a>
         </div>
-
-        <div style="flex: 1; padding: 40px; padding-bottom: 100px;">
-            {% block content %}{% endblock %}
+        <div class="sponsor-box">
+            <div class="sponsor-title">Proudly Sponsored by</div>
+            <div class="sponsor-name">Uday Mondal | Tax Consultant</div>
         </div>
     </div>
 
-    <footer class="footer">
-        <div style="font-size: 14px; color: rgba(255,255,255,0.6);">
-            © 2026 Accountesy | Created by <strong style="color: white;">Debasish Biswas</strong>
-        </div>
+    <div class="main-wrapper">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer class="main-footer">
+        © 2026 Accountesy | Created by <strong>Debasish Biswas</strong>
     </footer>
 
     <script>
-        // Initialize Icons
         lucide.createIcons();
-
-        // Toggle Avatar Dropdown
-        const avatarBtn = document.getElementById('avatar-btn');
-        const avatarMenu = document.getElementById('avatar-menu');
-
-        avatarBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            avatarMenu.classList.toggle('active');
-        });
-
-        // Close dropdown when clicking outside
-        window.addEventListener('click', () => {
-            avatarMenu.classList.remove('active');
-        });
+        document.getElementById('sidebar-toggle').onclick = () => {
+            document.getElementById('sidebar').classList.toggle('mini');
+        };
     </script>
 </body>
 </html>
