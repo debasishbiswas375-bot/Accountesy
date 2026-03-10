@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="workspace-header" style="margin-bottom: 40px;">
+    <h1 style="font-size: 32px; font-weight: 700;">Tally Conversion Workspace</h1>
+    <p>Upload your files to begin the AI-powered mapping process.</p>
+</div>
+
+<form action="/convert/process" method="POST" enctype="multipart/form-data">
+    <div class="feature-row" style="gap: 30px;">
+        <div class="feature-box" style="flex: 1; min-width: 300px;">
+            <h4><i data-lucide="file-text"></i> 1. Bank Statement</h4>
+            <p style="font-size: 12px; opacity: 0.7; margin-bottom: 15px;">Upload your PDF or Excel statement.</p>
+            <input type="file" name="bank_file" accept=".pdf,.xlsx" required 
+                   style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; width: 100%;">
+        </div>
+
+        <div class="feature-box" style="flex: 1; min-width: 300px;">
+            <h4><i data-lucide="database"></i> 2. Tally Masters</h4>
+            <p style="font-size: 12px; opacity: 0.7; margin-bottom: 15px;">Upload your master.html list from Tally.</p>
+            <input type="file" name="master_file" accept=".html" required
+                   style="background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; width: 100%;">
+        </div>
+    </div>
+
+    <div style="margin-top: 40px; text-align: center;">
+        <button type="submit" style="background: #3b82f6; color: white; border: none; padding: 15px 40px; border-radius: 12px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 20px rgba(59,130,246,0.3);">
+            <i data-lucide="cpu"></i> Generate Tally XML
+        </button>
+    </div>
+</form>
+{% endblock %}
