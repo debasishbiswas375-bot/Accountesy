@@ -15,17 +15,17 @@
         <img src="/static/logo.png" style="height:65px;">
         <div>
             <div class="brand-name">Accountesy</div>
-            <div class="brand-tagline">Learn Smart, Grow Fast, Be Accounting Expert</div>
+            <div class="brand-tagline">Learn Smart, Grow Fast, Be Accounting Expert with Accountesy</div>
         </div>
     </div>
 
     <div style="display:flex; align-items:center; gap:25px;">
         <div style="position:relative; cursor:pointer;" onclick="toggleMenu('notifMenu')">
             <i data-lucide="bell"></i><span class="notif-dot"></span>
-            <div id="notifMenu" class="dropdown-menu"><a>New System Update</a></div>
+            <div id="notifMenu" class="dropdown-menu"><a>New system update</a></div>
         </div>
         <div style="position:relative; cursor:pointer;" onclick="toggleMenu('profileMenu')">
-            <div class="avatar">D</div>
+            <div class="avatar" style="width:45px; height:45px; border-radius:50%; background:rgba(255,255,255,0.25); display:flex; align-items:center; justify-content:center; font-weight:bold;">D</div>
             <div id="profileMenu" class="dropdown-menu">
                 <a href="/account">Account Settings</a>
                 <a href="/auth/logout">Logout</a>
@@ -36,17 +36,17 @@
 
 <div class="sidebar" id="sidebar">
     <nav style="display:flex; flex-direction:column; gap:12px;">
-        <a href="/" class="nav-item"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></a>
-        <a href="/workspace" class="nav-item"><i data-lucide="briefcase"></i><span>Workspace</span></a>
-        <a href="/pricing" class="nav-item"><i data-lucide="credit-card"></i><span>Pricing</span></a>
-        <a href="/history" class="nav-item"><i data-lucide="history"></i><span>History</span></a>
-        <a href="/features" class="nav-item"><i data-lucide="star"></i><span>Features</span></a>
+        <a href="/" class="nav-item" style="color:white; text-decoration:none; display:flex; gap:10px; padding:10px;"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></a>
+        <a href="/workspace" class="nav-item" style="color:white; text-decoration:none; display:flex; gap:10px; padding:10px;"><i data-lucide="briefcase"></i><span>Workspace</span></a>
+        <a href="/features" class="nav-item" style="color:white; text-decoration:none; display:flex; gap:10px; padding:10px;"><i data-lucide="star"></i><span>Features</span></a>
+        <a href="/pricing" class="nav-item" style="color:white; text-decoration:none; display:flex; gap:10px; padding:10px;"><i data-lucide="credit-card"></i><span>Pricing</span></a>
+        <a href="/history" class="nav-item" style="color:white; text-decoration:none; display:flex; gap:10px; padding:10px;"><i data-lucide="history"></i><span>History</span></a>
     </nav>
 
-    <div class="sponsor-info" style="text-align:center; padding-top:20px; border-top:1px solid rgba(255,255,255,0.1);">
-        <p style="font-size:10px; opacity:0.7;">Proudly Sponsored by</p>
-        <p style="font-size:12px; font-weight:600;">Uday Mondal | Tax Consultant</p>
-        <img src="/static/logo1.png" style="width:50px; border-radius:8px;">
+    <div class="sponsor-info" style="text-align:center; padding-top:20px; border-top:1px solid rgba(255,255,255,0.1); margin-top:20px;">
+        <p style="font-size:10px; opacity:0.7;">Sponsored by</p>
+        <p style="font-size:12px; font-weight:600; margin-bottom:10px;">Uday Mondal | Tax Consultant Advocate</p>
+        <img src="/static/logo1.png" style="width:60px; border-radius:8px;">
     </div>
 </div>
 
@@ -57,8 +57,8 @@
 <div class="footer-menu">
     <span>© 2026 Accountesy</span>
     <span>Created by <strong>Debasish Biswas</strong></span>
-    <a href="/pricing" style="color:white; text-decoration:none;">Plans</a>
-    <a href="/history" style="color:white; text-decoration:none;">History</a>
+    <a href="/pricing" style="color:white; text-decoration:none; margin-left:20px;">Plans</a>
+    <a href="/history" style="color:white; text-decoration:none; margin-left:10px;">History</a>
 </div>
 
 <script>
