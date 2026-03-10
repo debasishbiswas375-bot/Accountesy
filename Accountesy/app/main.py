@@ -4,9 +4,11 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import StreamingResponse
 
+# --- PATH FIX ---
 app_dir = os.path.dirname(os.path.abspath(__file__)) 
 if app_dir not in sys.path: sys.path.append(app_dir)
 
+# Ensure these match your logic/processor.py names exactly
 from logic.processor import get_preview_data, generate_tally_xml
 
 app = FastAPI(title="Accountesy")
@@ -20,9 +22,11 @@ async def landing(request: Request): return templates.TemplateResponse("landing.
 @app.get("/workspace")
 async def workspace(request: Request): return templates.TemplateResponse("workspace.html", {"request": request})
 
+# --- CRITICAL FIX: Missing Preview Route ---
 @app.post("/convert/preview")
 async def preview_logic(bank_file: UploadFile = File(...), master_file: UploadFile = File(...)):
     try:
+        # Calls the AI logic to Nil Suspense and find dates
         preview_results, masters = await get_preview_data(bank_file, master_file)
         return {"transactions": preview_results, "master_ledgers": masters}
     except Exception as e:
@@ -41,8 +45,8 @@ async def final_export(request: Request):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+# Render Port Fix
 if __name__ == "__main__":
     import uvicorn
-    # Render provides the port via an environment variable
     port = int(os.environ.get("PORT", 10000))
     uvicorn.run(app, host="0.0.0.0", port=port)
