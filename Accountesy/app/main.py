@@ -4,49 +4,53 @@ from fastapi import FastAPI, Request, UploadFile, File, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-# --- 1. SMART PATH INJECTION ---
-# Adds the current folder to the path so 'routers' can be found easily
-current_dir = os.path.dirname(os.path.abspath(__file__))
-if current_dir not in sys.path:
-    sys.path.append(current_dir)
+# 1. PATH FIX: Find the 'Accountesy' folder (one level up from this file)
+current_file_path = os.path.abspath(__file__) # Accountesy/app/main.py
+app_dir = os.path.dirname(current_file_path) # Accountesy/app
+accountesy_root = os.path.dirname(app_dir)   # Accountesy
+
+# Add paths to system so routers/logic can be found
+sys.path.append(app_dir)
 
 from bs4 import BeautifulSoup
 import pandas as pd
 import io
 
-# Import routers simply
-try:
-    from routers import auth, converter, admin, dashboard
-except ImportError:
-    # This handles different Render startup locations
-    sys.path.append(os.path.join(current_dir, ".."))
-    from routers import auth, converter, admin, dashboard
+# 2. DYNAMIC FOLDER DETECTION
+# These point to Accountesy/static and Accountesy/templates
+static_path = os.path.join(accountesy_root, "static")
+template_path = os.path.join(accountesy_root, "templates")
+
+# Fallback: If they aren't there, check inside the 'app' folder
+if not os.path.exists(static_path):
+    static_path = os.path.join(app_dir, "static")
+if not os.path.exists(template_path):
+    template_path = os.path.join(app_dir, "templates")
 
 app = FastAPI(title="Accountesy")
 
-# Setup paths for templates and static files
-template_path = os.path.join(current_dir, "templates")
-static_path = os.path.join(current_dir, "static")
+# 3. MOUNT WITH VERIFIED PATHS
+if os.path.exists(static_path):
+    app.mount("/static", StaticFiles(directory=static_path), name="static")
 
-app.mount("/static", StaticFiles(directory=static_path), name="static")
 templates = Jinja2Templates(directory=template_path)
 
 # Register routers
-app.include_router(dashboard.router)
-app.include_router(auth.router)
+try:
+    from routers import auth, converter, dashboard
+    app.include_router(dashboard.router)
+    app.include_router(auth.router)
+except ImportError as e:
+    print(f"Router Import Warning: {e}")
 
 # --- ROUTES ---
 @app.get("/")
-async def public_landing(request: Request):
+async def landing(request: Request):
     return templates.TemplateResponse("landing.html", {"request": request})
 
 @app.get("/workspace")
 async def workspace(request: Request):
     return templates.TemplateResponse("workspace.html", {"request": request})
-
-@app.get("/history")
-async def history(request: Request):
-    return templates.TemplateResponse("history.html", {"request": request})
 
 @app.post("/convert/process")
 async def process_conversion(bank_file: UploadFile = File(...), master_file: UploadFile = File(...)):
