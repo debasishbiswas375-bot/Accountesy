@@ -2,12 +2,10 @@ import io, re, pandas as pd, pdfplumber
 from bs4 import BeautifulSoup
 
 async def get_preview_data(bank_file, master_file):
-    # 1. Parse Ledgers from Master.html
     master_content = await master_file.read()
     soup = BeautifulSoup(master_content, "html.parser")
     tally_ledgers = [td.get_text().strip() for td in soup.find_all('td') if 'italic' in str(td.get('style'))]
 
-    # 2. Extract PDF Data
     bank_content = await bank_file.read()
     all_rows = []
     with pdfplumber.open(io.BytesIO(bank_content)) as pdf:
@@ -15,7 +13,6 @@ async def get_preview_data(bank_file, master_file):
             table = page.extract_table()
             if table: all_rows.extend(table)
     
-    # 3. Dynamic Header Detection (Fixes missing Voucher Dates)
     header_idx = next((i for i, r in enumerate(all_rows) if any('date' in str(c).lower() for c in r if c)), 0)
     df = pd.DataFrame(all_rows[header_idx+1:], columns=all_rows[header_idx])
     date_col = next((c for c in df.columns if 'date' in str(c).lower()), df.columns[0])
@@ -29,7 +26,6 @@ async def get_preview_data(bank_file, master_file):
         debit = re.sub(r'[^\d.]', '', str(row.get('Debit', row.get('Withdrawal', '0')))) or "0"
         credit = re.sub(r'[^\d.]', '', str(row.get('Credit', row.get('Deposit', '0')))) or "0"
 
-        # 4. AI Mapping & Suspense Tagging
         suggestions = [l for l in tally_ledgers if l.upper() in narr or l.upper()[:4] in narr]
         is_suspense = len(suggestions) != 1
         
@@ -44,15 +40,10 @@ async def get_preview_data(bank_file, master_file):
         })
     return preview_results, tally_ledgers
 
-# --- THE MISSING FUNCTION CAUSING THE ERROR ---
 def generate_tally_xml(transactions):
     xml = '<ENVELOPE><HEADER><TALLYREQUEST>Import Data</TALLYREQUEST></HEADER><BODY><IMPORTDATA><REQUESTDESC><REPORTNAME>Vouchers</REPORTNAME></REQUESTDESC><REQUESTDATA>'
     for tx in transactions:
-        # Format date to YYYYMMDD for Tally
-        clean_date = re.sub(r'\D', '', tx['date'])
-        if len(clean_date) == 8: # DDMMYYYY -> YYYYMMDD
-            clean_date = clean_date[4:] + clean_date[2:4] + clean_date[:2]
-            
+        clean_date = re.sub(r'\D', '', tx['date'])[:8]
         xml += f"""
         <TALLYMESSAGE xmlns:UDF="TallyUDF">
             <VOUCHER VCHTYPE="{tx['type']}" ACTION="Create">
