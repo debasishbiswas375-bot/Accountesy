@@ -1,40 +1,146 @@
-/* Sidebar Mini Mode */
-.sidebar.mini { width: 80px; }
-.sidebar.mini span { display: none; }
+/* ================= GLOBAL STYLES ================= */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    background: linear-gradient(135deg, #6bb6ff 0%, #3d8bfd 50%, #1f56c2 100%);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
 
-/* Navigation Icon Alignment (Fixes overlapping) */
-.nav-item {
+/* Watermark */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: url("/static/b-logo.png") repeat;
+    background-size: 60px;
+    opacity: 0.05;
+    filter: grayscale(90%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* ================= TOPBAR ================= */
+.topbar {
+    height: 80px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.top-left {
     display: flex;
     align-items: center;
     gap: 15px;
-    padding: 12px 20px;
-    text-decoration: none;
-    color: white;
 }
 
-/* Footer Fix (Clean & Minimal) */
+.brand-logo { height: 55px; }
+.brand-name { font-size: 24px; font-weight: 700; letter-spacing: 0.5px; margin: 0; }
+.brand-tagline { font-size: 11px; opacity: 0.8; font-weight: 400; }
+
+.top-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+/* ================= SIDEBAR ================= */
+.sidebar {
+    position: fixed;
+    top: 100px;
+    left: 30px;
+    width: 240px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(30px);
+    border-radius: 24px;
+    padding: 25px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: width 0.3s ease;
+    z-index: 900;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Fixes overlapping icons from image_864582.jpg */
+    padding: 12px 18px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: white;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.nav-item:hover { background: rgba(255, 255, 255, 0.2); }
+.nav-item i { width: 20px; text-align: center; }
+
+/* Mini Mode Fix */
+.sidebar.mini { width: 60px; padding: 25px 10px; }
+.sidebar.mini span { display: none; }
+
+/* ================= DROPDOWNS ================= */
+.dropdown-menu {
+    position: absolute;
+    top: 65px;
+    right: 0;
+    width: 180px;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(30px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: none;
+    flex-direction: column;
+    padding: 8px 0;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+}
+
+.dropdown-menu.show { display: flex; }
+.dropdown-menu a {
+    padding: 12px 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+.dropdown-menu a:hover { background: rgba(255, 255, 255, 0.1); }
+
+/* ================= FOOTER ================= */
 .main-footer {
     position: fixed;
     bottom: 0;
+    left: 0;
     width: 100%;
-    background: #0f172a;
-    padding: 15px;
-    text-align: center;
-    font-size: 14px;
-    border-top: 1px solid rgba(255,255,255,0.1);
+    height: 60px;
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+    z-index: 1000;
 }
 
-/* Dropdown Menu */
-.dropdown {
-    position: absolute;
-    top: 65px;
-    right: 20px;
-    background: #1e293b;
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 8px;
-    display: none;
-    flex-direction: column;
-    z-index: 3000;
+.main-footer strong { color: white; margin-left: 5px; }
+
+/* ================= MAIN CONTENT ================= */
+.main-wrapper {
+    margin-left: 300px;
+    padding: 40px;
+    padding-bottom: 100px; /* Space for footer */
+    transition: margin 0.3s ease;
 }
-.dropdown.show { display: flex; }
-.dropdown a { padding: 12px 20px; color: white; text-decoration: none; font-size: 13px; }
+
+.sidebar.mini ~ .main-wrapper { margin-left: 120px; }
