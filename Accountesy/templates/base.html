@@ -2,82 +2,57 @@
 <html>
 <head>
     <title>Accountesy</title>
-    <link rel="icon" type="image/png" href="/static/logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
-
-<div class="topbar">
-    <div class="brand-section">
-        <i data-lucide="menu" onclick="toggleSidebar()" style="cursor:pointer; margin-right:10px;"></i>
-        <img src="/static/logo.png" style="height:65px;">
-        <div>
-            <div class="brand-name">Accountesy</div>
-            <div class="brand-tagline">Learn Smart, Grow Fast, Be Accounting Expert with Accountesy</div>
-        </div>
-    </div>
-
-    <div style="display:flex; align-items:center; gap:25px;">
-        <div style="position:relative; cursor:pointer;" onclick="toggleMenu('notifMenu')">
-            <i data-lucide="bell"></i><span class="notif-dot"></span>
-            <div id="notifMenu" class="dropdown-menu">
-                <a href="#">No new notifications</a>
+    <div class="topbar">
+        <div class="brand-section">
+            <i data-lucide="menu" id="sidebar-toggle"></i>
+            <img src="/static/logo.png" style="height:60px;">
+            <div class="brand-text">
+                <div class="name">Accountesy</div>
+                <div class="tagline">Learn Smart, Grow Fast, Be Accounting Expert with Accountesy</div>
             </div>
         </div>
-        <div style="position:relative; cursor:pointer;" onclick="toggleMenu('profileMenu')">
-            <div class="avatar" style="width:40px; height:40px; border-radius:50%; background:rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center; font-weight:bold;">D</div>
-            <div id="profileMenu" class="dropdown-menu">
+        <div class="topbar-actions">
+            <i data-lucide="bell" id="bell-icon"></i>
+            <div class="avatar" id="avatar-icon">D</div>
+            <div class="dropdown" id="avatar-dropdown">
                 <a href="/account">Account Settings</a>
-                <a href="/history">Conversion History</a>
-                <a href="/auth/logout" style="color: #ff4757;">Logout</a>
+                <a href="/logout">Logout</a>
             </div>
         </div>
     </div>
-</div>
 
-<div class="sidebar" id="sidebar">
-    <nav style="display:flex; flex-direction:column; gap:12px;">
-        <a href="/" class="nav-item"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></a>
-        <a href="/workspace" class="nav-item"><i data-lucide="briefcase"></i><span>Workspace</span></a>
-        <a href="/features" class="nav-item"><i data-lucide="star"></i><span>Features</span></a>
-        <a href="/pricing" class="nav-item"><i data-lucide="credit-card"></i><span>Pricing</span></a>
-        <a href="/history" class="nav-item"><i data-lucide="history"></i><span>History</span></a>
-    </nav>
-
-    <div class="sponsor-info" style="text-align:center; padding-top:20px; border-top:1px solid rgba(255,255,255,0.1); margin-top:20px;">
-        <p style="font-size:10px; opacity:0.7; margin-bottom:5px;">Proudly Sponsored by</p>
-        <p style="font-size:12px; font-weight:600; margin-bottom:10px;">Uday Mondal | Tax Consultant Advocate</p>
-        <img src="/static/logo1.png" style="width:55px; border-radius:8px;">
+    <div class="main-layout">
+        <div class="sidebar" id="sidebar">
+            <a href="/" class="nav-item"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></a>
+            <a href="/workspace" class="nav-item"><i data-lucide="briefcase"></i><span>Workspace</span></a>
+            <a href="/features" class="nav-item"><i data-lucide="star"></i><span>Features</span></a>
+            <a href="/pricing" class="nav-item"><i data-lucide="credit-card"></i><span>Pricing</span></a>
+            <a href="/history" class="nav-item"><i data-lucide="history"></i><span>History</span></a>
+        </div>
+        <div class="content-area">
+            {% block content %}{% endblock %}
+        </div>
     </div>
-</div>
 
-<div class="main">
-    {% block content %}{% endblock %}
-</div>
+    <footer class="main-footer">
+        <div>© 2026 Accountesy | Created by <strong>Debasish Biswas</strong></div>
+    </footer>
 
-<div class="footer-menu">
-    <span>© 2026 Accountesy</span>
-    <span>Created by <strong>Debasish Biswas</strong></span>
-    <a href="/workspace">Workspace</a>
-    <a href="/pricing">Plans</a>
-    <a href="/history">History</a>
-</div>
-
-<script>
-    function toggleSidebar() { document.getElementById("sidebar").classList.toggle("mini"); }
-    function toggleMenu(id) { 
-        var menu = document.getElementById(id);
-        menu.classList.toggle("show");
-    }
-    // Close menus when clicking outside
-    window.onclick = function(e) {
-        if (!e.target.closest('.top-right')) {
-            document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('show'));
-        }
-    }
-    lucide.createIcons();
-</script>
+    <script>
+        // Dropdown & Sidebar Logic
+        document.getElementById('avatar-icon').onclick = (e) => {
+            e.stopPropagation();
+            document.getElementById('avatar-dropdown').classList.toggle('show');
+        };
+        document.getElementById('sidebar-toggle').onclick = () => {
+            document.getElementById('sidebar').classList.toggle('mini');
+        };
+        window.onclick = () => document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('show'));
+        lucide.createIcons();
+    </script>
 </body>
 </html>
