@@ -9,3 +9,5 @@ pdfplumber
 beautifulsoup4
 lxml
 rapidfuzz
+sqlalchemy
+psycopg2-binary
