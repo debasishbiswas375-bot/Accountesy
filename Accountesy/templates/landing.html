@@ -1,22 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
-<div style="text-align:center; padding-top:40px;">
-    <h1 style="font-size:45px; margin-bottom:10px;">Accountesy - Accounting Expert</h1>
-    <p style="font-size:18px; opacity:0.8;">The smartest way to convert Bank Statements to Tally XML.</p>
+<div style="text-align: center; color: white;">
+    <h1 style="font-size: 3.5rem; margin-bottom: 10px;">Accountesy - Accounting Expert</h1>
+    <p style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 60px;">The smartest way to convert Bank Statements to Tally XML.</p>
 
-    <div class="feature-row">
-        <div class="feature-box">
-            <h4 style="margin:0;"><i data-lucide="zap" style="width:18px;"></i> Instant Conversion</h4>
-            <p style="font-size:13px; opacity:0.7;">Convert PDF/Excel to Tally XML in seconds.</p>
+    <div class="grid-container" style="max-width: 1100px; margin: 0 auto 80px;">
+        <div class="feature-card">
+            <i data-lucide="zap" style="color: #00f2fe; margin-bottom: 15px;"></i>
+            <h3>Instant Conversion</h3>
+            <p>Convert SBI, ICICI, or HDFC statements to Tally XML in under 5 seconds.</p>
         </div>
-        <div class="feature-box">
-            <h4 style="margin:0;"><i data-lucide="lock" style="width:18px;"></i> Secure & Private</h4>
-            <p style="font-size:13px; opacity:0.7;">We do not store your financial statements.</p>
+        <div class="feature-card">
+            <i data-lucide="shield-check" style="color: #00f2fe; margin-bottom: 15px;"></i>
+            <h3>Nil Suspense</h3>
+            <p>AI automatically matches transactions to your 132 Tally ledgers.</p>
         </div>
-        <div class="feature-box">
-            <h4 style="margin:0;"><i data-lucide="cpu" style="width:18px;"></i> Smart Mapping</h4>
-            <p style="font-size:13px; opacity:0.7;">Automatic ledger detection & suspense handling.</p>
+        <div class="feature-card">
+            <i data-lucide="calendar" style="color: #00f2fe; margin-bottom: 15px;"></i>
+            <h3>Date Recovery</h3>
+            <p>Advanced OCR ensures Voucher Dates are never missing in Tally.</p>
         </div>
     </div>
+
+    <a href="/workspace" class="btn-white" style="background: white; color: #2a67b1; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1rem;">
+        Launch Workspace
+    </a>
 </div>
 {% endblock %}
