@@ -1,49 +1,29 @@
 import sys
 import os
+import io
+import pandas as pd
 from fastapi import FastAPI, Request, UploadFile, File, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-
-# 1. PATH FIX: Find the 'Accountesy' folder (one level up from this file)
-current_file_path = os.path.abspath(__file__) # Accountesy/app/main.py
-app_dir = os.path.dirname(current_file_path) # Accountesy/app
-accountesy_root = os.path.dirname(app_dir)   # Accountesy
-
-# Add paths to system so routers/logic can be found
-sys.path.append(app_dir)
-
+from fastapi.responses import StreamingResponse
 from bs4 import BeautifulSoup
-import pandas as pd
-import io
 
-# 2. DYNAMIC FOLDER DETECTION
-# These point to Accountesy/static and Accountesy/templates
-static_path = os.path.join(accountesy_root, "static")
-template_path = os.path.join(accountesy_root, "templates")
-
-# Fallback: If they aren't there, check inside the 'app' folder
-if not os.path.exists(static_path):
-    static_path = os.path.join(app_dir, "static")
-if not os.path.exists(template_path):
-    template_path = os.path.join(app_dir, "templates")
+# --- 1. ROOT PATH FIX ---
+current_dir = os.path.dirname(os.path.abspath(__file__))
+sys.path.append(current_dir)
+accountesy_root = os.path.dirname(current_dir)
 
 app = FastAPI(title="Accountesy")
 
-# 3. MOUNT WITH VERIFIED PATHS
-if os.path.exists(static_path):
-    app.mount("/static", StaticFiles(directory=static_path), name="static")
+# Configure dynamic paths
+static_path = os.path.join(accountesy_root, "static")
+template_path = os.path.join(accountesy_root, "templates")
 
+app.mount("/static", StaticFiles(directory=static_path), name="static")
 templates = Jinja2Templates(directory=template_path)
 
-# Register routers
-try:
-    from routers import auth, converter, dashboard
-    app.include_router(dashboard.router)
-    app.include_router(auth.router)
-except ImportError as e:
-    print(f"Router Import Warning: {e}")
+# --- 2. PAGE ROUTES ---
 
-# --- ROUTES ---
 @app.get("/")
 async def landing(request: Request):
     return templates.TemplateResponse("landing.html", {"request": request})
@@ -52,12 +32,50 @@ async def landing(request: Request):
 async def workspace(request: Request):
     return templates.TemplateResponse("workspace.html", {"request": request})
 
+@app.get("/features")
+async def features(request: Request):
+    return templates.TemplateResponse("features.html", {"request": request})
+
+@app.get("/pricing")
+async def pricing(request: Request):
+    return templates.TemplateResponse("pricing.html", {"request": request})
+
+@app.get("/history")
+async def history(request: Request):
+    return templates.TemplateResponse("history.html", {"request": request})
+
+@app.get("/account")
+async def account(request: Request):
+    return templates.TemplateResponse("account.html", {"request": request, "user_name": "Debasish Biswas"})
+
+# --- 3. CONVERSION ENGINE ---
+
 @app.post("/convert/process")
 async def process_conversion(bank_file: UploadFile = File(...), master_file: UploadFile = File(...)):
     try:
+        # Parse Tally Masters
         master_content = await master_file.read()
         soup = BeautifulSoup(master_content, "html.parser")
         tally_ledgers = [td.get_text().strip() for td in soup.find_all('td') if td.get_text().strip()]
-        return {"status": "Success", "ledgers_found": len(tally_ledgers)}
+
+        # Read Bank Statement
+        bank_content = await bank_file.read()
+        df = pd.read_excel(io.BytesIO(bank_content))
+        
+        # Simple AI mapping logic to Suggested_Ledger
+        df['Suggested_Ledger'] = df.iloc[:, 1].apply(
+            lambda x: next((l for l in tally_ledgers if l.lower() in str(x).lower()), "Suspense A/c")
+        )
+
+        # Generate XML
+        output = io.BytesIO()
+        df.to_xml(output, index=False, root_name='TALLYMESSAGE', row_name='VOUCHER')
+        output.seek(0)
+
+        return StreamingResponse(
+            output, 
+            media_type="application/xml",
+            headers={"Content-Disposition": "attachment; filename=Accountesy_Tally_Export.xml"}
+        )
     except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        raise HTTPException(status_code=400, detail=f"Conversion Error: {str(e)}")
