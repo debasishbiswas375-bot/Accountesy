@@ -1,11 +1,8 @@
-﻿fastapi
+fastapi
 uvicorn
+gunicorn
 jinja2
 python-multipart
 pandas
 openpyxl
-pdfplumber
-sqlalchemy
-psycopg2-binary
-python-dotenv
-gunicorn
+beautifulsoup4
