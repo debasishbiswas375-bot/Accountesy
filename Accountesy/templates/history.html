@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="workspace-header">
+    <h1>Conversion History</h1>
+    <p>View and download your previous Tally XML conversions.</p>
+</div>
+
+<div class="feature-row" style="margin-top: 30px;">
+    <div class="feature-box" style="width: 100%; max-width: 900px; background: rgba(255, 255, 255, 0.08);">
+        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+            <thead>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <th style="padding: 15px;">Date</th>
+                    <th style="padding: 15px;">Bank Statement</th>
+                    <th style="padding: 15px;">Entries</th>
+                    <th style="padding: 15px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <td style="padding: 15px; opacity: 0.8;">March 10, 2026</td>
+                    <td style="padding: 15px;">HDFC_Statement_Feb.pdf</td>
+                    <td style="padding: 15px;">142 Rows</td>
+                    <td style="padding: 15px;">
+                        <button style="background: #3b82f6; border: none; color: white; padding: 5px 15px; border-radius: 6px; cursor: pointer;">Download XML</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="margin-top: 20px; font-size: 12px; opacity: 0.6;">* History is automatically synced with your AI Workspace learning data.</p>
+    </div>
+</div>
+{% endblock %}
