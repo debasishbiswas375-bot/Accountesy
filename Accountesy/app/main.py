@@ -61,8 +61,18 @@ async def handle_upload(bank_file: UploadFile = File(...), master_file: UploadFi
         # Catches 'string to float' or 'Invalid tag' errors and reports them
         raise HTTPException(status_code=400, detail=str(e))
 
+# --- ADDED ROUTE IN main.py ---
+@app.post("/convert/preview")
+async def get_preview(bank_file: UploadFile = File(...), master_file: UploadFile = File(...)):
+    try:
+        # Returns JSON data for the interactive preview table
+        data, masters = await get_preview_data(bank_file, master_file)
+        return {"transactions": data, "master_ledgers": masters}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 # --- 4. RENDER PORT BINDING ---
 if __name__ == "__main__":
     import uvicorn
     port = int(os.environ.get("PORT", 10000))
     uvicorn.run(app, host="0.0.0.0", port=port)
+
