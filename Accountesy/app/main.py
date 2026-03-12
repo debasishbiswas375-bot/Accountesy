@@ -37,19 +37,15 @@ class LearningData(BaseModel):
 async def landing(request: Request):
     return templates.TemplateResponse("landing.html", {"request": request})
 
-@app.get("/dashboard")
-async def dashboard(request: Request):
-    # Fetch real user stats from Supabase
-    # In production, filter .eq("id", user.id)
-    user_data = supabase.table("users").select("credits").eq("email", os.environ.get("ADMIN_EMAIL")).single().execute()
-    
+@app.get("/")
+async def dashboard(request: Request, user=Depends(get_current_user)):
+    """Fetches user-wise data only"""
+    user_record = supabase.table("users").select("*").eq("id", user.id).single().execute()
     return templates.TemplateResponse("dashboard.html", {
         "request": request,
-        "user_name": os.environ.get("ADMIN_USERNAME", "Debasish"), # From Render
-        "credits": user_data.data.get('credits', 0.00),
-        "vouchers_processed": 1248,
-        "learned_count": 84
-    })
+        "user_name": user_record.data.get('full_name', 'User'),
+        "credits": user_record.data.get('credits', 0.00)
+    })})
 
 @app.get("/workspace")
 async def workspace(request: Request):
@@ -61,11 +57,7 @@ async def history(request: Request):
 
 @app.get("/account")
 async def account(request: Request):
-    return templates.TemplateResponse("account.html", {
-        "request": request,
-        "user_name": os.environ.get("ADMIN_USERNAME"),
-        "user_email": os.environ.get("ADMIN_EMAIL"),
-        "user_credits": 9999.00
+    return templates.TemplateResponse("account.html", {"request": request})
     })
 
 @app.get("/pricing")
@@ -125,3 +117,4 @@ if __name__ == "__main__":
     import uvicorn
     port = int(os.environ.get("PORT", 10000))
     uvicorn.run(app, host="0.0.0.0", port=port)
+
