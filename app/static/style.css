@@ -1,0 +1,273 @@
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    color:white;
+    background:linear-gradient(135deg,#6bb6ff 0%,#3d8bfd 50%,#1f56c2 100%);
+    position:relative;
+    overflow-x:hidden;
+}
+
+/* Watermark */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:url("b-logo.png") repeat;
+    background-size:60px;
+    opacity:0.07;
+    filter:grayscale(90%);
+    pointer-events:none;
+}
+
+/* ================= TOPBAR ================= */
+
+.topbar{
+    height:90px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 60px;
+}
+
+.top-left{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.brand-logo{
+    height:75px;
+}
+
+.brand-name{
+    font-size:28px;
+    font-weight:700;
+    letter-spacing:0.5px;
+}
+
+.brand-tagline{
+    font-size:15px;
+    font-weight:500;
+    opacity:0.95;
+}
+
+.top-right{
+    display:flex;
+    align-items:center;
+    gap:25px;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    position:fixed;
+    top:110px;
+    left:40px;
+    width:260px;
+    height:75vh;
+    padding:30px 20px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+
+    background:rgba(255,255,255,0.18);
+    backdrop-filter:blur(30px);
+    border-radius:28px;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,0.25),
+        inset 0 0 20px rgba(255,255,255,0.15);
+
+    transition:all 0.3s ease;
+}
+
+.nav-section{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.nav-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:14px 16px;
+    border-radius:16px;
+    text-decoration:none;
+    color:white;
+    font-weight:500;
+    transition:0.2s;
+}
+
+.nav-item:hover{
+    background:rgba(255,255,255,0.25);
+}
+
+.nav-item i{
+    width:20px;
+    height:20px;
+}
+
+/* Sponsor */
+
+.sponsor-box{
+    text-align:center;
+}
+
+.sponsor-title{
+    font-size:10px;
+}
+
+.sponsor-name{
+    font-size:15px;
+    font-weight:600;
+    margin:6px 0;
+}
+
+.sponsor-logo{
+    width:55px;
+}
+
+/* ================= MAIN ================= */
+
+.main{
+    margin-left:340px;
+    padding:150px 80px;
+}
+
+/* ================= MINI MODE ================= */
+
+.sidebar.mini{
+    width:80px;
+    padding:30px 10px;
+}
+
+.sidebar.mini span,
+.sidebar.mini .sponsor-name,
+.sidebar.mini .sponsor-title{
+    display:none;
+}
+
+.sidebar.mini ~ .main{
+    margin-left:180px;
+}
+
+/* ================= HAMBURGER ================= */
+
+.hamburger{
+    background:none;
+    border:none;
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.hamburger span{
+    width:24px;
+    height:2px;
+    background:white;
+}
+
+/* ================= AVATAR ================= */
+
+.avatar{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    background:rgba(255,255,255,0.25);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+/* Profile Dropdown */
+
+.avatar-container{
+    position:relative;
+}
+
+.profile-menu{
+    position:absolute;
+    top:60px;
+    right:0;
+    width:160px;
+    background:rgba(255,255,255,0.18);
+    backdrop-filter:blur(25px);
+    border-radius:14px;
+    padding:10px 0;
+    display:none;
+    flex-direction:column;
+}
+
+.profile-menu a{
+    padding:10px 15px;
+    color:white;
+    text-decoration:none;
+}
+
+.profile-menu a:hover{
+    background:rgba(255,255,255,0.25);
+}
+
+.profile-menu.show{
+    display:flex;
+}
+
+/* ================= NOTIFICATIONS ================= */
+
+.notification-container{
+    position:relative;
+}
+
+.notification-icon{
+    position:relative;
+    cursor:pointer;
+}
+
+.notif-dot{
+    position:absolute;
+    top:-3px;
+    right:-3px;
+    width:8px;
+    height:8px;
+    background:#ff3b3b;
+    border-radius:50%;
+}
+
+.notification-menu{
+    position:absolute;
+    top:60px;
+    right:0;
+    width:240px;
+    background:rgba(255,255,255,0.18);
+    backdrop-filter:blur(25px);
+    border-radius:16px;
+    padding:15px;
+    display:none;
+    flex-direction:column;
+    gap:10px;
+}
+
+.notification-menu.show{
+    display:flex;
+}
+
+.notif-title{
+    font-weight:600;
+}
+
+.notif-item{
+    padding:8px;
+    border-radius:10px;
+}
+
+.notif-item:hover{
+    background:rgba(255,255,255,0.25);
+}
+
+
+
