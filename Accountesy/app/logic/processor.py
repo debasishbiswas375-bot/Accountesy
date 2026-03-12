@@ -2,6 +2,8 @@ import io, re, json, os, gzip, pandas as pd, pdfplumber
 from bs4 import BeautifulSoup
 from logic.mapper import auto_ai_search, GROUP_MAPPINGS
 
+# AI Learning patterns are now stored in Supabase 'ai_memory' table
+# But we keep a local cache for speed
 MEMORY_FILE = os.path.join(os.path.dirname(__file__), "learning_db.json")
 
 def load_memory():
@@ -73,7 +75,7 @@ async def get_preview_data(bank_file, master_file=None):
     return results, tally_ledgers
 
 def generate_tally_xml(transactions, bank_name):
-    # Credit Calculation: 0.1 per voucher
+    # --- PRICING LOGIC: 0.1 CREDITS PER VOUCHER ---
     total_vch = len(transactions)
     credit_cost = round(total_vch * 0.1, 2)
     
@@ -87,5 +89,7 @@ def generate_tally_xml(transactions, bank_name):
         xml += f'<TALLYMESSAGE><VOUCHER VCHTYPE="{tx["type"]}" ACTION="Create"><DATE>{d}</DATE><NARRATION>{tx["narration"]}</NARRATION><ALLLEDGERENTRIES.LIST><LEDGERNAME>{tx["ledger"]}</LEDGERNAME><ISDEEMEDPOSITIVE>{"Yes" if tx["type"]=="Payment" or (tx["type"]=="Contra" and tx["ledger"]=="Cash") else "No"}</ISDEEMEDPOSITIVE><AMOUNT>{("-" if tx["type"]=="Payment" or (tx["type"]=="Contra" and tx["ledger"]=="Cash") else "") + tx["amount"]}</AMOUNT></ALLLEDGERENTRIES.LIST><ALLLEDGERENTRIES.LIST><LEDGERNAME>{bank_name}</LEDGERNAME><ISDEEMEDPOSITIVE>{"No" if tx["type"]=="Payment" or (tx["type"]=="Contra" and tx["ledger"]=="Cash") else "Yes"}</ISDEEMEDPOSITIVE><AMOUNT>{"-" if tx["type"]=="Receipt" or (tx["type"]=="Contra" and tx["ledger"]!="Cash") else ""}{tx["amount"]}</AMOUNT></ALLLEDGERENTRIES.LIST></VOUCHER></TALLYMESSAGE>'
     
     final_xml = xml + '</REQUESTDATA></IMPORTDATA></BODY></ENVELOPE>'
+    
+    # --- STORAGE SAFEGUARD: COMPRESSION ---
     compressed = gzip.compress(final_xml.encode('utf-8'))
     return final_xml, credit_cost, compressed
