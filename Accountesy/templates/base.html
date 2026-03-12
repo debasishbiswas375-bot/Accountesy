@@ -1,42 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/style.css"> <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            background: url('/static/b-logo.png') no-repeat center center fixed; /* Your background */
+            background-size: cover;
+            display: flex;
+        }
+    </style>
 </head>
-<body style="display: flex;">
+<body>
     <nav class="sidebar">
         <div class="logo-area">
-            <span class="logo-text">Accountesy</span>
+            <img src="/static/logo.png" alt="Logo" style="height: 35px;"> <span class="logo-text">Accountesy</span>
         </div>
         <div class="nav-links">
             <a href="/dashboard" class="nav-item"><i data-lucide="layout-dashboard"></i> Dashboard</a>
             <a href="/workspace" class="nav-item"><i data-lucide="plus-square"></i> Workspace</a>
             <a href="/history" class="nav-item"><i data-lucide="history"></i> History</a>
             <a href="/pricing" class="nav-item"><i data-lucide="credit-card"></i> Pricing</a>
-            <a href="/account" class="nav-item"><i data-lucide="settings"></i> Account</a>
-            
             {% if user_name == 'deba1234' %}
-            <div style="margin-top: 20px; padding: 10px; border-top: 1px solid rgba(255,255,255,0.1);">
                 <a href="/admin" class="nav-item"><i data-lucide="shield-check"></i> Admin Panel</a>
-            </div>
             {% endif %}
+        </div>
+        <div class="user-footer">
+            <img src="/static/logo1.png" alt="Sponsor" style="width: 30px; border-radius: 50%;"> <p>{{ user_name if user_name else 'Guest' }}</p>
         </div>
     </nav>
 
-    <main class="main-wrapper" style="flex: 1; padding: 40px;">
-        <div style="display: flex; justify-content: flex-end; align-items: center; gap: 20px; margin-bottom: 40px;">
-            <i data-lucide="bell" style="cursor: pointer; color: white;"></i>
-            <div style="display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 30px;">
-                <div style="text-align: right; line-height: 1;">
-                    <p style="margin:0; font-size: 12px; font-weight: bold; color: white;">{{ user_name }}</p>
-                    <small style="color: #00f2fe;">{{ credits }} Cr</small>
-                </div>
-                <div style="width: 35px; height: 35px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #2a67b1; font-weight: bold;">
-                    {{ user_name[0] if user_name else 'U' }}
+    <main class="main-content" style="flex: 1; margin-left: 260px; padding: 40px;">
+        <header style="display: flex; justify-content: flex-end; align-items: center; gap: 20px; margin-bottom: 30px;">
+            <i data-lucide="bell" style="color: white;"></i>
+            <div style="display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 20px;">
+                <span style="color: white; font-weight: bold;">{{ user_name }}</span>
+                <div style="width: 32px; height: 32px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #2a67b1;">
+                    {{ user_name[0] if user_name else '?' }}
                 </div>
             </div>
-        </div>
+        </header>
         {% block content %}{% endblock %}
     </main>
     <script>lucide.createIcons();</script>
