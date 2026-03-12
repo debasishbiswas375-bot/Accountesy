@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="glass-card">
+    <h1 style="color: var(--primary-blue); margin-bottom: 5px;">AI Voucher Workspace</h1>
+    <p style="opacity: 0.6; margin-bottom: 30px;">The engine learns from every correction you make.</p>
+
+    <div id="drop-area" style="border: 2px dashed var(--primary-blue); border-radius: 20px; padding: 40px; text-align: center; background: rgba(255,255,255,0.4); cursor: pointer;">
+        <i data-lucide="file-up" style="width: 40px; height: 40px; color: var(--primary-blue); margin-bottom: 10px;"></i>
+        <p id="file-status" style="font-weight: bold;">Drop Bank Statement (PDF/Excel) & Master.html</p>
+        <input type="file" id="file-input" multiple hidden>
+    </div>
+
+    <div style="margin-top: 20px; display: flex; gap: 15px; align-items: center;">
+        <label style="font-size: 14px; font-weight: 600;">Target Bank Ledger:</label>
+        <input type="text" id="bank-ledger-name" value="State Bank of India" style="padding: 10px; border-radius: 8px; border: 1px solid #ddd; flex: 1;">
+        <button id="process-btn" style="padding: 10px 30px; background: var(--primary-blue); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">
+            Start AI Process
+        </button>
+    </div>
+</div>
+
+<div id="preview-section" style="display: none; margin-top: 30px;">
+    <div class="glass-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h3>Verify AI Classification</h3>
+            <div style="display: flex; gap: 10px;">
+                <span style="font-size: 11px; padding: 4px 8px; background: #fff5f5; border: 1px solid #feb2b2; border-radius: 4px; color: #c53030;">Red = Suspense</span>
+                <span style="font-size: 11px; padding: 4px 8px; background: #f0fff4; border: 1px solid #bbf7d0; border-radius: 4px; color: #22543d;">Green = AI Learned</span>
+            </div>
+        </div>
+
+        <table class="preview-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Narration</th>
+                    <th>Ledger / Party</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody id="preview-body"></tbody>
+        </table>
+        
+        <div style="margin-top: 25px; background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <p style="margin: 0; font-size: 13px; color: #64748b;">Estimated Credit Cost (0.1/vch):</p>
+                    <h2 id="credit-estimate" style="margin: 5px 0; color: var(--primary-blue);">0.00 Credits</h2>
+                </div>
+                <button id="download-btn" style="padding: 15px 40px; background: #10b981; color: white; border: none; border-radius: 10px; font-weight: 900; cursor: pointer; font-size: 1.1rem; box-shadow: 0 10px 15px rgba(16, 185, 129, 0.2);">
+                    Download Tally XML
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let bankFile, masterFile, transactionData = [];
+
+const dropArea = document.getElementById('drop-area');
+dropArea.onclick = () => document.getElementById('file-input').click();
+document.getElementById('file-input').onchange = (e) => handleFiles(e.target.files);
+
+function handleFiles(files) {
+    for (let f of files) {
+        if (f.name.endsWith('.html')) masterFile = f;
+        else bankFile = f;
+    }
+    document.getElementById('file-status').innerText = `Selected: ${bankFile?.name || 'Bank File Missing'}`;
+}
+
+document.getElementById('process-btn').onclick = async () => {
+    if (!bankFile) return alert("Please upload a bank statement first.");
+    
+    let fd = new FormData();
+    fd.append('bank_file', bankFile);
+    if (masterFile) fd.append('master_file', masterFile);
+
+    const res = await fetch('/convert/preview', { method: 'POST', body: fd });
+    const data = await res.json();
+    transactionData = data.transactions;
+    
+    // Update credit estimate (0.1 per voucher)
+    document.getElementById('credit-estimate').innerText = (transactionData.length * 0.1).toFixed(2) + " Credits";
+    renderTable();
+};
+
+async function teachAI(narration, ledger) {
+    await fetch('/learn', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ narration: narration, ledger: ledger })
+    });
+}
+
+function updateRow(idx, val) {
+    if (val === "custom") {
+        val = prompt("Enter Ledger Name for Tally:");
+        if (!val) return;
+    }
+    transactionData[idx].ledger = val;
+    transactionData[idx].confidence = 2; // Mark as 'Learned' (Green)
+    teachAI(transactionData[idx].narration, val);
+    renderTable();
+}
+
+function renderTable() {
+    const body = document.getElementById('preview-body');
+    body.innerHTML = transactionData.map((tx, i) => `
+        <tr style="background: ${tx.confidence === 0 ? '#fff5f5' : (tx.confidence === 2 ? '#f0fff4' : '#fff')}; border-bottom: 1px solid #eee;">
+            <td style="font-size: 12px;">${tx.date}</td>
+            <td style="font-size: 10px; max-width: 250px; color: #555;">${tx.narration}</td>
+            <td>
+                <select class="ledger-select" onchange="updateRow(${i}, this.value)" style="width: 100%; padding: 5px; border-radius: 5px;">
+                    ${tx.options.map(opt => `<option value="${opt}" ${opt === tx.ledger ? 'selected' : ''}>${opt}</option>`).join('')}
+                    <option value="custom">+ New Ledger</option>
+                </select>
+            </td>
+            <td><span style="font-size: 11px; font-weight: bold;">${tx.type}</span></td>
+            <td style="text-align: right; font-weight: bold; color: var(--primary-blue);">₹${tx.amount}</td>
+        </tr>
+    `).join('');
+    document.getElementById('preview-section').style.display = 'block';
+}
+
+document.getElementById('download-btn').onclick = async () => {
+    const bankName = document.getElementById('bank-ledger-name').value;
+    const res = await fetch('/convert/final', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ transactions: transactionData, bank_name: bankName })
+    });
+    const data = await res.json();
+    
+    alert(`Conversion Successful!\nVouchers: ${data.voucher_count}\nCredits Deducted: ${data.credits_used}`);
+    
+    // Download logic
+    const blob = new Blob([data.xml], { type: 'text/xml' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `Tally_Import_${new Date().getTime()}.xml`;
+    a.click();
+};
+</script>
+{% endblock %}

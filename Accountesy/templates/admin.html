@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="margin-bottom: 30px; display: flex; justify-content: space-between; align-items: end;">
+    <div>
+        <h1 style="color: #1e293b; margin: 0;">Admin Command Center</h1>
+        <p style="opacity: 0.6;">Global overview of users, credits, and system health.</p>
+    </div>
+    <div style="background: #ef4444; color: white; padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: bold; letter-spacing: 1px;">
+        <i data-lucide="shield-alert" style="width: 14px; vertical-align: middle; margin-right: 5px;"></i> SYSTEM LIVE
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+    <div class="glass-card" style="padding: 20px; border-top: 4px solid var(--primary-blue);">
+        <p style="margin: 0; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase;">Total Users</p>
+        <h2 style="margin: 10px 0;">1,042</h2>
+    </div>
+    <div class="glass-card" style="padding: 20px; border-top: 4px solid #10b981;">
+        <p style="margin: 0; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase;">Total Revenue</p>
+        <h2 style="margin: 10px 0;">₹42,850</h2>
+    </div>
+    <div class="glass-card" style="padding: 20px; border-top: 4px solid #f59e0b;">
+        <p style="margin: 0; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase;">Queue Size</p>
+        <h2 style="margin: 10px 0;">5 Files</h2>
+    </div>
+</div>
+
+<div class="glass-card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3>User Credit Management</h3>
+        <div style="display: flex; gap: 10px;">
+            <input type="text" placeholder="Search by email..." style="padding: 8px; border-radius: 6px; border: 1px solid #ddd; font-size: 13px;">
+            <button class="footer-btn" style="padding: 8px 15px;">Search</button>
+        </div>
+    </div>
+
+    <table class="preview-table">
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Email</th>
+                <th>Plan</th>
+                <th>Credits</th>
+                <th>Last Active</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>#1</td>
+                <td style="font-weight: 600;">debasish.biswas375@gmail.com</td>
+                <td><span style="background: #dbeafe; color: #1e40af; padding: 2px 8px; border-radius: 12px; font-size: 10px;">PRO</span></td>
+                <td style="color: #10b981; font-weight: bold;">9999.00</td>
+                <td>12-03-2026</td>
+                <td>
+                    <button onclick="addCredits(1)" style="padding: 4px 8px; font-size: 10px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer;">+ Add Credits</button>
+                </td>
+            </tr>
+            <tr>
+                <td>#2</td>
+                <td style="font-weight: 600;">client.example@gmail.com</td>
+                <td><span style="background: #f1f5f9; color: #475569; padding: 2px 8px; border-radius: 12px; font-size: 10px;">FREE</span></td>
+                <td style="color: #ef4444; font-weight: bold;">0.50</td>
+                <td>11-03-2026</td>
+                <td>
+                    <button onclick="addCredits(2)" style="padding: 4px 8px; font-size: 10px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer;">+ Add Credits</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="glass-card" style="margin-top: 30px;">
+    <h3 style="margin-bottom: 20px;">Live Conversion Queue</h3>
+    <div style="background: #0f172a; color: #38bdf8; font-family: 'Courier New', monospace; padding: 15px; border-radius: 10px; font-size: 12px; height: 150px; overflow-y: auto;">
+        <p style="margin: 2px 0;">[13:02:11] USER_1: PDF Uploaded - SBI_Statement.pdf</p>
+        <p style="margin: 2px 0;">[13:02:14] AI_ENGINE: Processing 60 vouchers...</p>
+        <p style="margin: 2px 0;">[13:02:15] SYSTEM: -6.00 Credits deducted from USER_1</p>
+        <p style="margin: 2px 0;">[13:05:22] USER_104: XML Generation started...</p>
+        <p style="margin: 2px 0; color: #818cf8;">[13:06:01] INFO: Database cleanup complete.</p>
+    </div>
+</div>
+
+<script>
+    lucide.createIcons();
+
+    function addCredits(userId) {
+        const amount = prompt("Enter credit amount to add:");
+        if (amount) {
+            alert(`Adding ${amount} credits to User #${userId}...`);
+            // Here you would call fetch('/admin/add-credits', {method: 'POST', body: ...})
+        }
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="glass-card">
+    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 25px;">
+        <div>
+            <h1 style="color: var(--primary-blue); margin: 0;">Account Settings</h1>
+            <p style="opacity: 0.6; font-size: 14px;">Update your profile, security, and contact details.</p>
+        </div>
+        <div style="text-align: right;">
+            <span style="background: #f0f9ff; color: #0369a1; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: bold; border: 1px solid #bae6fd;">
+                <i data-lucide="shield-check" style="width: 12px; vertical-align: middle;"></i> Verified Account
+            </span>
+        </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 40px;">
+        
+        <div style="border-right: 1px solid #f1f5f9; padding-right: 30px;">
+            <div style="background: #f8fafc; padding: 20px; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 20px;">
+                <p style="margin: 0; font-size: 10px; color: #64748b; text-transform: uppercase; font-weight: bold;">Credit Balance</p>
+                <h2 style="margin: 8px 0; color: #10b981;">9999.00</h2>
+                <button class="footer-btn" style="width: 100%; font-size: 12px; padding: 8px;">Buy More Credits</button>
+            </div>
+
+            <div style="margin-top: 30px;">
+                <h4 style="margin-bottom: 15px;">Security</h4>
+                <button onclick="resetPassword()" class="btn-white" style="width: 100%; text-align: left; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; padding: 12px;">
+                    <i data-lucide="key" style="width: 16px;"></i> Reset Password
+                </button>
+                <p style="font-size: 11px; color: #94a3b8; padding: 0 5px;">A password reset link will be sent to your verified email via Supabase.</p>
+            </div>
+        </div>
+
+        <form id="profile-form">
+            <h4 style="margin-top: 0; margin-bottom: 20px;">Profile Information</h4>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 5px;">Email Address</label>
+                <input type="email" value="debasish.biswas375@gmail.com" disabled style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0; background: #f1f5f9; cursor: not-allowed;">
+                <p style="font-size: 11px; color: #10b981; margin-top: 5px;"><i data-lucide="check-circle" style="width: 10px;"></i> Email verified by Supabase Auth</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <div>
+                    <label style="display: block; font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 5px;">Full Name</label>
+                    <input type="text" id="full_name" placeholder="Debasish Biswas" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1;">
+                </div>
+                <div>
+                    <label style="display: block; font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 5px;">Phone Number</label>
+                    <input type="text" id="phone" placeholder="+91 XXXX-XXXXXX" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1;">
+                </div>
+            </div>
+
+            <div style="margin-bottom: 25px;">
+                <label style="display: block; font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 5px;">Business Address</label>
+                <textarea id="address" rows="3" placeholder="Enter your full business address..." style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-family: inherit;"></textarea>
+            </div>
+
+            <button type="button" onclick="updateProfile()" class="footer-btn" style="width: 100%; padding: 15px; font-weight: 700;">
+                Save Changes
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    lucide.createIcons();
+
+    async function updateProfile() {
+        const name = document.getElementById('full_name').value;
+        const phone = document.getElementById('phone').value;
+        const address = document.getElementById('address').value;
+
+        // In production, this calls your FastAPI route which updates Supabase
+        alert("Updating profile for: " + name);
+        console.log({name, phone, address});
+        
+        // Example Fetch:
+        // await fetch('/update-profile', { method: 'POST', body: JSON.stringify({name, phone, address}) });
+    }
+
+    async function resetPassword() {
+        // Triggers Supabase In-built Email Verification/Reset
+        alert("A password reset email has been triggered via Supabase Auth.");
+    }
+</script>
+{% endblock %}

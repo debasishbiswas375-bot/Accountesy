@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="glass-card" style="text-align: center; padding: 40px 20px;">
+    <h1 style="color: var(--primary-blue); margin-bottom: 10px;">Dynamic AI Pricing</h1>
+    <p style="opacity: 0.7; max-width: 600px; margin: 0 auto 40px;">
+        Choose the best plan for your accounting needs. Prices update in real-time.
+    </p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;">
+        
+        {% for plan in plans %}
+        <div class="pricing-card" style="background: white; border: 1px solid {{ 'var(--primary-blue)' if plan.name == 'Pro' else '#e2e8f0' }}; border-radius: 20px; padding: 30px; position: relative; {{ 'transform: scale(1.05); z-index: 10; box-shadow: 0 10px 20px rgba(0,0,0,0.1);' if plan.name == 'Pro' else '' }}">
+            
+            {% if plan.name == 'Pro' %}
+            <div style="background: var(--primary-blue); color: white; padding: 4px 12px; border-radius: 20px; font-size: 10px; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); font-weight: 800;">POPULAR</div>
+            {% endif %}
+
+            <h3 style="margin-top: 0; color: #475569;">{{ plan.name }}</h3>
+            <h2 style="font-size: 2rem; margin: 15px 0;">₹{{ plan.price }} <span style="font-size: 12px; color: #94a3b8;">/{{ plan.duration_days }} days</span></h2>
+            
+            <div style="background: #f8fafc; padding: 10px; border-radius: 10px; margin-bottom: 20px;">
+                <strong style="color: var(--primary-blue); font-size: 1.2rem;">{{ plan.credits }}</strong> 
+                <span style="font-size: 12px; color: #64748b;">Credits Included</span>
+            </div>
+
+            <p style="font-size: 13px; color: #64748b; min-height: 40px; line-height: 1.5;">
+                {{ plan.description }}
+            </p>
+
+            <button class="footer-btn" style="width: 100%; margin-top: 20px; {{ 'background: var(--primary-blue);' if plan.name == 'Pro' else 'background: white; color: var(--primary-blue); border: 1px solid var(--primary-blue);' }}">
+                {{ 'Upgrade Now' if plan.price > 0 else 'Current Plan' }}
+            </button>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <div style="margin-top: 40px; font-size: 12px; color: #94a3b8;">
+        <i data-lucide="info" style="width: 12px; vertical-align: middle;"></i> 
+        Note: Admin updates via Supabase Dashboard reflect instantly here.
+    </div>
+</div>
+
+<script>lucide.createIcons();</script>
+{% endblock %}

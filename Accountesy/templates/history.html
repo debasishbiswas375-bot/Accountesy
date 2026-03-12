@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="glass-card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+        <div>
+            <h1 style="color: var(--primary-blue); margin: 0;">Usage & Credit History</h1>
+            <p style="opacity: 0.6; font-size: 14px;">Review your past conversions and credit consumption.</p>
+        </div>
+        <div style="text-align: right; background: #f0fff4; padding: 10px 20px; border-radius: 12px; border: 1px solid #bbf7d0;">
+            <p style="margin: 0; font-size: 11px; color: #166534; text-transform: uppercase; font-weight: bold;">Available Balance</p>
+            <h2 style="margin: 0; color: #10b981;">9999.00 Credits</h2>
+        </div>
+    </div>
+
+    <table class="preview-table">
+        <thead>
+            <tr>
+                <th>Converted Date</th>
+                <th>Voucher Count</th>
+                <th>Credit Cost (0.1/ea)</th>
+                <th>Storage Slot</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>12-Mar-2026</td>
+                <td>60</td>
+                <td style="color: #ef4444; font-weight: bold;">- 6.00</td>
+                <td><span style="font-size: 10px; font-weight: bold; color: #666;">SLOT 1</span></td>
+                <td><span style="background: #dcfce7; color: #166534; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold;">Available</span></td>
+                <td>
+                    <button class="footer-btn" style="padding: 6px 12px; font-size: 11px; display: flex; align-items: center; gap: 5px;">
+                        <i data-lucide="download" style="width: 12px;"></i> Re-Download
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>10-Mar-2026</td>
+                <td>150</td>
+                <td style="color: #ef4444; font-weight: bold;">- 15.00</td>
+                <td><span style="font-size: 10px; font-weight: bold; color: #666;">SLOT 2</span></td>
+                <td><span style="background: #dcfce7; color: #166534; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold;">Available</span></td>
+                <td>
+                    <button class="footer-btn" style="padding: 6px 12px; font-size: 11px; display: flex; align-items: center; gap: 5px;">
+                        <i data-lucide="download" style="width: 12px;"></i> Re-Download
+                    </button>
+                </td>
+            </tr>
+            <tr style="opacity: 0.6;">
+                <td>01-Mar-2026</td>
+                <td>20</td>
+                <td style="color: #ef4444; font-weight: bold;">- 2.00</td>
+                <td><span style="font-size: 10px; font-weight: bold; color: #666;">SLOT 3</span></td>
+                <td><span style="background: #f1f5f9; color: #475569; padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold;">Expired</span></td>
+                <td>
+                    <span style="font-size: 11px; color: #999;">File Overwritten</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="glass-card" style="margin-top: 25px; border: 1px dashed var(--primary-blue); background: rgba(255,255,255,0.5);">
+    <h4 style="margin-top: 0; color: var(--primary-blue);">
+        <i data-lucide="info" style="width: 18px; vertical-align: middle; margin-right: 5px;"></i>
+        Storage Safeguard Active
+    </h4>
+    <p style="font-size: 13px; color: #555; margin-bottom: 0;">
+        To keep the platform free, we only store the **last 3 XML files** per user. 
+        Credit transaction logs are kept permanently, but older XML files are automatically overwritten once you exceed 3 conversions.
+    </p>
+</div>
+
+<script>
+    // Initialize Lucide icons for the history page
+    lucide.createIcons();
+</script>
+{% endblock %}

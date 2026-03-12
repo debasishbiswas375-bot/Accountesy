@@ -1,0 +1,46 @@
+:root {
+    --primary-blue: #2a67b1;
+    --gradient-bg: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --sidebar-width: 260px;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--gradient-bg);
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 20px;
+    z-index: 1000;
+}
+
+/* FIX: This stops text from hiding behind the sidebar */
+.main-wrapper {
+    margin-left: var(--sidebar-width);
+    padding: 40px;
+}
+
+.global-footer {
+    margin-top: 80px;
+    padding: 60px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 30px;
+    text-align: center;
+}
+
+.footer-form {
+    display: flex; gap: 10px; max-width: 500px; margin: 20px auto;
+}
+
+.footer-input {
+    flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #ddd;
+}
