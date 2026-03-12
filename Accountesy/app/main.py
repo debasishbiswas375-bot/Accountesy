@@ -54,7 +54,22 @@ async def account(request: Request):
 
 @app.get("/pricing")
 async def pricing(request: Request):
-    return templates.TemplateResponse("pricing.html", {"request": request})
+    # In production, use your supabase client:
+    # response = supabase.table("plans").select("*").eq("active", True).order("price").execute()
+    # plans = response.data
+    
+    # Mock data based on your Supabase Screenshot
+    plans = [
+        {"name": "Free", "credits": 10, "price": 0, "duration_days": 30, "description": "10 Credits Included, Standard Processing"},
+        {"name": "Starter", "credits": 100, "price": 99, "duration_days": 30, "description": "100 Credits, AI Learning Access"},
+        {"name": "Pro", "credits": 500, "price": 399, "duration_days": 30, "description": "500 Credits, Priority AI Processing"},
+        {"name": "Enterprise", "credits": 2000, "price": 999, "duration_days": 30, "description": "2000 Credits, Multi-user Access"}
+    ]
+    
+    return templates.TemplateResponse("pricing.html", {
+        "request": request,
+        "plans": plans
+    })
 
 @app.get("/login")
 async def login(request: Request):
@@ -112,3 +127,4 @@ if __name__ == "__main__":
     # PORT is dynamically assigned by Render; defaults to 10000 locally
     port = int(os.environ.get("PORT", 10000))
     uvicorn.run(app, host="0.0.0.0", port=port)
+
