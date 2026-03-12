@@ -1,18 +1,32 @@
-﻿from fastapi import Request, HTTPException, status
-from app.database import get_db
+import os
+from fastapi import Request, HTTPException
+from database import supabase #
 
 async def get_current_user(request: Request):
-    token = request.cookies.get("access_token")
-    if not token:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
+    """Verifies session and checks Supabase Email Verification status."""
+    session = request.cookies.get("session")
+    if not session:
+        raise HTTPException(status_code=401, detail="Please login first.")
     
-    db = get_db()
-    try:
-        # Verify the secure cookie with Supabase
-        user_res = db.auth.get_user(token)
-        user = user_res.user
-        if not user:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token")
-        return user
-    except Exception:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Session expired")
+    user_res = supabase.auth.get_user(session)
+    if not user_res.user:
+        raise HTTPException(status_code=401, detail="Invalid Session")
+        
+    # Check for Supabase Verified Email
+    if not user_res.user.email_confirmed_at:
+        raise HTTPException(status_code=403, detail="Email not verified.")
+        
+    return user_res.user
+
+async def check_credit_eligibility(user_id: str, voucher_count: int):
+    """Rule: 0.1 Credits per Voucher"""
+    required = round(voucher_count * 0.1, 2)
+    
+    # Check 'users' table balance
+    res = supabase.table("users").select("credits").eq("id", user_id).single().execute()
+    balance = float(res.data.get('credits', 0))
+    
+    if balance < required:
+        raise HTTPException(status_code=402, detail=f"Insufficient Credits. Need {required}.")
+    
+    return True
