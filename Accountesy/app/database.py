@@ -1,25 +1,13 @@
 import os
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from dotenv import load_dotenv
+from supabase import create_client, Client
 
-load_dotenv()
+# These keys MUST be added to your Render Environment Variables
+url: str = os.environ.get("SUPABASE_URL")
+key: str = os.environ.get("SUPABASE_KEY") # Use anon key
+service_key: str = os.environ.get("SUPABASE_SERVICE_ROLE_KEY") # For admin bypass
 
-# Pulls the DATABASE_URL you set in Render
-SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
+# Standard connection
+supabase: Client = create_client(url, key)
 
-# Fixes the common 'postgres://' vs 'postgresql://' issue
-if SQLALCHEMY_DATABASE_URL and SQLALCHEMY_DATABASE_URL.startswith("postgres://"):
-    SQLALCHEMY_DATABASE_URL = SQLALCHEMY_DATABASE_URL.replace("postgres://", "postgresql://", 1)
-
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+# Admin connection (Used in admin.py logic)
+supabase_admin: Client = create_client(url, service_key)
