@@ -34,6 +34,24 @@ class LearningData(BaseModel):
 async def landing(request: Request):
     return templates.TemplateResponse("landing.html", {"request": request})
 
+@app.get("/dashboard")
+async def dashboard(request: Request):
+    # In production, fetch these from Supabase:
+    # stats = {
+    #     "balance": 9999.00,
+    #     "total_converted": 1250,
+    #     "patterns_learned": 84,
+    #     "recent_activity": [...] 
+    # }
+    
+    return templates.TemplateResponse("dashboard.html", {
+        "request": request,
+        "user_name": "Debasish Biswas",
+        "credits": 9999.00,
+        "vouchers_processed": 1248,
+        "learned_count": 84
+    })
+
 @app.get("/workspace")
 async def workspace(request: Request):
     return templates.TemplateResponse("workspace.html", {"request": request})
@@ -127,4 +145,5 @@ if __name__ == "__main__":
     # PORT is dynamically assigned by Render; defaults to 10000 locally
     port = int(os.environ.get("PORT", 10000))
     uvicorn.run(app, host="0.0.0.0", port=port)
+
 
