@@ -1,0 +1,21 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+
+<h1>AI Voucher Workspace</h1>
+
+<form action="/convert" method="post" enctype="multipart/form-data">
+
+<h3>Upload Bank Statement</h3>
+<input type="file" name="statement">
+
+<h3>Upload Ledger Master (optional)</h3>
+<input type="file" name="master">
+
+<br><br>
+
+<button type="submit">Start AI Process</button>
+
+</form>
+
+{% endblock %}
