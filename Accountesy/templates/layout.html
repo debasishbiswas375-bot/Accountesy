@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Accountesy</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- Sidebar -->
+
+<div class="sidebar">
+
+<h2 class="logo">Accountesy</h2>
+
+<a href="/dashboard">Dashboard</a>
+<a href="/workspace">Workspace</a>
+<a href="/history">History</a>
+<a href="/pricing">Plans</a>
+<a href="/account">Account</a>
+<a href="/admin">Admin</a>
+
+</div>
+
+<!-- Main -->
+
+<div class="main">
+
+{% block content %}
+
+{% endblock %}
+
+</div>
+
+</div>
+
+</body>
+</html>
