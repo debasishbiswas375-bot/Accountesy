@@ -1,5 +1,29 @@
-﻿{% extends "base.html" %}
+{% extends "base.html" %}
+
 {% block content %}
+
 <h1>Pricing</h1>
-<p>Dynamic pricing will be loaded from database.</p>
+
+<div class="pricing">
+
+{% for plan in plans %}
+
+<div class="plan">
+
+<h2>{{ plan.name }}</h2>
+
+<p>{{ plan.credits }} Credits</p>
+
+<h3>₹ {{ plan.price }}</h3>
+
+<p>{{ plan.duration_days }} Days</p>
+
+<button>Select Plan</button>
+
+</div>
+
+{% endfor %}
+
+</div>
+
 {% endblock %}
