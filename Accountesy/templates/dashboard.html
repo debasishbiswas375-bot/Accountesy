@@ -1,26 +1,22 @@
-{% extends "base.html" %}
+{% extends "layout.html" %}
 
 {% block content %}
 
 <h1>Dashboard</h1>
 
-<div class="cards">
-
 <div class="card">
-<h3>Credits</h3>
-<p>Available Credits</p>
+<h3>Credits Remaining</h3>
+<p>{{credits}}</p>
 </div>
 
 <div class="card">
-<h3>AI Mappings</h3>
-<p>Learned Patterns</p>
+<h3>Current Plan</h3>
+<p>{{plan}}</p>
 </div>
 
 <div class="card">
 <h3>Conversions</h3>
-<p>Total Files Processed</p>
-</div>
-
+<p>{{conversions}}</p>
 </div>
 
 {% endblock %}
