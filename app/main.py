@@ -1,22 +1,16 @@
+import os
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse
 
 app = FastAPI()
 
-# Tell FastAPI where your CSS/Images are
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
+# Absolute path setup to fix Render's "file not found" issues
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Tell FastAPI where your HTML files are
-templates = Jinja2Templates(directory="app/templates")
+app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 
-@app.get("/", response_class=HTMLResponse)
-async def dashboard(request: Request):
-    # This renders the base.html we just made
-    return templates.TemplateResponse("base.html", {"request": request})
-
-# A simple route for the converter to test the links later
-@app.get("/converter", response_class=HTMLResponse)
-async def converter(request: Request):
-    return templates.TemplateResponse("base.html", {"request": request, "header": "Tally Converter"})
+@app.get("/")
+async def home(request: Request):
+    return templates.TemplateResponse
