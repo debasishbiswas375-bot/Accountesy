@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Accounting Expert</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<!-- Top Navigation -->
+<div class="topbar">
+    <div class="logo">Accounting Expert</div>
+
+    <!-- Google Style Round Menu -->
+    <div class="profile-menu">
+        <div class="profile-btn" onclick="toggleMenu()">☰</div>
+        <div class="dropdown" id="dropdown">
+            <a href="/">Dashboard</a>
+            <a href="/admin">Admin</a>
+            <a href="#">Profile</a>
+            <a href="#">Logout</a>
+        </div>
+    </div>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <h3>Menu</h3>
+    <a href="/">Dashboard</a>
+    <a href="/admin">Admin</a>
+    <a href="#">Billing</a>
+    <a href="#">Settings</a>
+</div>
+
+<!-- Main Content -->
+<div class="main">
+    <h1>Smart SaaS Accounting Platform</h1>
+
+    <div class="cards">
+        <div class="card">
+            <h3>Credits</h3>
+            <p>10 Free Credits</p>
+        </div>
+
+        <div class="card">
+            <h3>Plan</h3>
+            <p>Free Plan</p>
+        </div>
+
+        <div class="card">
+            <h3>Status</h3>
+            <p>Active</p>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleMenu() {
+    document.getElementById("dropdown").classList.toggle("show");
+}
+</script>
+
+</body>
+</html>
