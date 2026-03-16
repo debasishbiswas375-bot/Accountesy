@@ -3,50 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accountesy | Enterprise UI</title>
+    <title>Accountesy | Dashboard</title>
     <link rel="stylesheet" href="/static/css/main.css">
-    <link rel="stylesheet" href="/static/css/sidebar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
     <nav class="sidebar glass-panel">
-        <div class="logo-section">
-            <i class="fas fa-calculator" style="color: var(--primary-blue);"></i>
-            <span>Accountesy</span>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 40px;">
+            <img src="/static/assets/logo.png" alt="Logo" style="width: 35px; height: 35px;">
+            <span style="font-weight: 700; font-size: 1.1rem; color: #1e40af;">Accountesy</span>
         </div>
 
         <div class="nav-links">
-            <a href="/dashboard" class="nav-item active">
-                <i class="fas fa-th-large"></i> Dashboard
-            </a>
-            <a href="/admin" class="nav-item">
-                <i class="fas fa-user-shield"></i> Admin
-            </a>
-            <a href="/converter" class="nav-item">
-                <i class="fas fa-file-invoice"></i> Converter
-            </a>
-            <a href="/billing" class="nav-item">
-                <i class="fas fa-credit-card"></i> Billing
-            </a>
-            <a href="/settings" class="nav-item">
-                <i class="fas fa-cog"></i> Settings
-            </a>
+            <a href="/" class="nav-item active"><i class="fas fa-th-large"></i> Dashboard</a>
+            <a href="/admin" class="nav-item"><i class="fas fa-user-shield"></i> Admin</a>
+            <a href="/billing" class="nav-item"><i class="fas fa-credit-card"></i> Billing</a>
+            <a href="/settings" class="nav-item"><i class="fas fa-cog"></i> Settings</a>
+        </div>
+
+        <div class="glass-panel" style="margin-top: auto; padding: 15px; text-align: center; font-size: 0.75rem;">
+            <p style="margin: 0; opacity: 0.7;">Sponsored by</p>
+            <strong style="display: block; margin: 4px 0;">Uday Mondal</strong>
+            <span>Tax Consultant Advocate</span>
         </div>
     </nav>
 
-    <main style="flex: 1; padding: 40px;">
-        <header style="display: flex; justify-content: space-between; align-items: center;">
-            <h1 style="font-size: 2rem; color: #1a202c;">{% block header %}Dashboard{% endblock %}</h1>
-            <div class="profile-chip glass-panel" style="padding: 10px 20px; border-radius: 50px;">
-                <span>Free Plan</span>
-                <i class="fas fa-user-circle" style="margin-left: 10px;"></i>
+    <main style="flex: 1; padding: 30px; display: flex; flex-direction: column;">
+        
+        <header class="topbar glass-panel" style="display: flex; justify-content: space-between; align-items: center; padding: 12px 25px; margin-bottom: 20px;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <i class="fas fa-bars" style="font-size: 1.2rem; cursor: pointer; color: #1e40af;"></i>
+                <div>
+                    <h3 style="margin: 0; font-size: 1rem;">Dashboard</h3>
+                    <p style="margin: 0; font-size: 0.7rem; opacity: 0.6;">Welcome to Accounting Expert Enterprise UI</p>
+                </div>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <span style="background: var(--primary-blue); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem;">Free Plan</span>
+                <i class="far fa-bell" style="font-size: 1.1rem; color: #64748b;"></i>
+                <div class="profile-avatar">D</div>
             </div>
         </header>
 
-        <section id="content">
-            {% block content %}{% endblock %}
-        </section>
+        <div id="workspace" style="flex: 1;">
+            {% block content %}
+            <h1 style="font-size: 3rem; font-weight: 800; margin-top: 50px; opacity: 0.9;">Dashboard</h1>
+            {% endblock %}
+        </div>
+
     </main>
 
 </body>
