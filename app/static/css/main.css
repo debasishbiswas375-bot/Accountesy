@@ -1,74 +1,59 @@
 :root {
     --primary-blue: #4A90E2;
-    --sidebar-bg: rgba(255, 255, 255, 0.2);
-    --glass-blur: blur(20px);
-    --text-dark: #1a202c;
-    /* This creates the blue horizontal background lines from your screenshot */
-    --bg-gradient: repeating-linear-gradient(
-        180deg,
-        #e0f2fe,
-        #e0f2fe 100px,
-        #bae6fd 100px,
-        #bae6fd 200px
-    );
+    --glass-bg: rgba(255, 255, 255, 0.4); /* Slightly more solid for better contrast */
+    --glass-blur: blur(15px);
 }
 
 body {
     margin: 0;
     padding: 0;
     font-family: 'Inter', sans-serif;
-    background: var(--bg-gradient);
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative; /* Needed for the background overlay */
+}
+
+/* Background Layer with 50% Opacity */
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/static/assets/b.png');
+    background-repeat: repeat;
+    background-size: 65px;
+    opacity: 0.5; /* 50% Blur/Transparency effect */
+    z-index: -1; /* Keep it behind everything */
 }
 
 .glass-panel {
-    background: var(--sidebar-bg);
+    background: var(--glass-bg);
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    border-radius: 25px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
-/* Sidebar Styles */
+/* Header & Sidebar code remains the same as before */
+.topbar {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    box-sizing: border-box;
+    z-index: 1000;
+}
+
 .sidebar {
-    width: 240px;
-    height: 90vh;
+    width: 260px;
     margin: 20px;
-    padding: 25px;
+    padding: 20px;
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
-}
-
-.nav-item {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 12px 18px;
-    margin: 8px 0;
-    border-radius: 15px;
-    text-decoration: none;
-    color: var(--text-dark);
-    font-weight: 500;
-    transition: 0.3s;
-}
-
-.nav-item.active {
-    background: var(--primary-blue);
-    color: white;
-}
-
-/* Avatar & Icons */
-.profile-avatar {
-    width: 38px;
-    height: 38px;
-    background: var(--primary-blue);
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 0.9rem;
 }
