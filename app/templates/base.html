@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accountesy | Enterprise UI</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="sidebar glass-panel">
+        <div class="logo-section">
+            <i class="fas fa-calculator" style="color: var(--primary-blue);"></i>
+            <span>Accountesy</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="/dashboard" class="nav-item active">
+                <i class="fas fa-th-large"></i> Dashboard
+            </a>
+            <a href="/admin" class="nav-item">
+                <i class="fas fa-user-shield"></i> Admin
+            </a>
+            <a href="/converter" class="nav-item">
+                <i class="fas fa-file-invoice"></i> Converter
+            </a>
+            <a href="/billing" class="nav-item">
+                <i class="fas fa-credit-card"></i> Billing
+            </a>
+            <a href="/settings" class="nav-item">
+                <i class="fas fa-cog"></i> Settings
+            </a>
+        </div>
+    </nav>
+
+    <main style="flex: 1; padding: 40px;">
+        <header style="display: flex; justify-content: space-between; align-items: center;">
+            <h1 style="font-size: 2rem; color: #1a202c;">{% block header %}Dashboard{% endblock %}</h1>
+            <div class="profile-chip glass-panel" style="padding: 10px 20px; border-radius: 50px;">
+                <span>Free Plan</span>
+                <i class="fas fa-user-circle" style="margin-left: 10px;"></i>
+            </div>
+        </header>
+
+        <section id="content">
+            {% block content %}{% endblock %}
+        </section>
+    </main>
+
+</body>
+</html>
