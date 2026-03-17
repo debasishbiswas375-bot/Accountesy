@@ -30,20 +30,12 @@
         </div>
 
         <div class="user-plan">
-            <span class="username">
-                {% if user and user.username %}
-                    {{ user.username }}
-                {% else %}
-                    Guest
-                {% endif %}
+            <span>
+                {% if user and user.username %}{{ user.username }}{% else %}Guest{% endif %}
             </span>
-            <span class="dot-sep">•</span>
-            <span class="plan">
-                {% if user and user.plans and user.plans.name %}
-                    {{ user.plans.name }}
-                {% else %}
-                    Free
-                {% endif %}
+            •
+            <span>
+                {% if user and user.plans %}{{ user.plans.name }}{% else %}Free{% endif %}
             </span>
         </div>
 
@@ -53,10 +45,7 @@
 
         <div class="icon-bell" id="bellBtn">
             <i data-feather="bell"></i>
-
-            {% if notifications and notifications|length > 0 %}
-                <span class="dot"></span>
-            {% endif %}
+            <span class="dot"></span>
 
             <div class="dropdown" id="bellMenu">
                 <p>No notifications</p>
@@ -81,7 +70,6 @@
 </header>
 
 
-<!-- SIDEBAR -->
 <aside id="sidebar" class="sidebar">
 
     <nav>
@@ -89,8 +77,8 @@
             <i data-feather="home"></i>
             <span>Dashboard</span>
         </a>
-      
-        <a href="/workspace" class="nav-item">
+
+        <a href="/help" class="nav-item">
             <i data-feather="help-circle"></i>
             <span>Help & Features</span>
         </a>
@@ -104,28 +92,29 @@
             <i data-feather="clock"></i>
             <span>History</span>
         </a>
-      
-        <a href="/history" class="nav-item">
+
+        <a href="#" class="nav-item">
             <i data-feather="zap"></i>
             <span>Coming Soon</span>
         </a>
-      
-        <a href="/history" class="nav-item">
+
+        <a href="/account" class="nav-item">
             <i data-feather="user"></i>
             <span>Account</span>
         </a>
     </nav>
 
-  <div class="sidebar-footer">
-    <img src="/static/logo/sponsor.png" alt="Sponsor">
+    <!-- FIXED SPONSOR -->
+    <div class="sidebar-footer">
+        <img src="/static/assets/sponsor.png" alt="Sponsor">
 
-    <span class="sponsor-title">Sponsored by</span>
+        <div class="sponsor-title">Sponsored by</div>
 
-    <span class="sponsor-name">
-        Uday Mondal<br>
-        <small>Tax Consultant Advocate</small>
-    </span>
-</div>
+        <div class="sponsor-name">
+            Uday Mondal
+            <span>Tax Consultant Advocate</span>
+        </div>
+    </div>
 
 </aside>
 
@@ -134,13 +123,11 @@
     {% block content %}{% endblock %}
 </main>
 
-
 <footer class="footer">
     <div class="footer-bubble">
         Created by <b>Debasish Biswas</b> © 2026
     </div>
 </footer>
-
 
 <script>
     feather.replace();
@@ -156,6 +143,16 @@
     document.getElementById("bellBtn").onclick = () => {
         document.getElementById("bellMenu").classList.toggle("show");
     };
+
+    // CLOSE DROPDOWN ON OUTSIDE CLICK
+    document.addEventListener("click", function(e){
+        if(!e.target.closest(".avatar")){
+            document.getElementById("avatarMenu").classList.remove("show");
+        }
+        if(!e.target.closest(".icon-bell")){
+            document.getElementById("bellMenu").classList.remove("show");
+        }
+    });
 </script>
 
 </body>
