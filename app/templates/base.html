@@ -24,6 +24,7 @@
 
         <img src="/static/assets/logo.png" class="logo">
 
+        <!-- BRAND + TAGLINE -->
         <div class="brand-box">
             <span class="brand">Accountesy</span>
             <span class="tagline">
@@ -33,53 +34,35 @@
 
         <!-- SAFE BADGE -->
         <span class="badge 
-        {% if user and user.plans and user.plans.name %}
-            {{ user.plans.name | lower }}
-        {% else %}
-            guest
-        {% endif %}
+            {% if user and user.plans and user.plans.name %}
+                {{ user.plans.name | lower }}
+            {% else %}
+                guest
+            {% endif %}
         ">
-        {% if user and user.plans and user.plans.name %}
-            {{ user.plans.name }}
-        {% else %}
-            GUEST
-        {% endif %}
+            {% if user and user.plans and user.plans.name %}
+                {{ user.plans.name }}
+            {% else %}
+                GUEST
+            {% endif %}
         </span>
     </div>
 
     <div class="header-right">
 
-        <!-- NOTIFICATION -->
-        <div class="icon-bell" id="bellBtn">
+        <!-- Notification -->
+        <div class="icon-bell">
             <i data-feather="bell"></i>
-
-            {% if notifications and notifications|length > 0 %}
-                <span class="dot"></span>
-            {% endif %}
-
-            <div class="dropdown" id="bellMenu">
-                {% if notifications and notifications|length > 0 %}
-                    {% for note in notifications %}
-                        <p>{{ note }}</p>
-                    {% endfor %}
-                {% else %}
-                    <p>No notifications</p>
-                {% endif %}
-            </div>
+            <span class="dot"></span>
         </div>
 
-        <!-- AVATAR -->
-        <div class="avatar" id="avatarBtn">
+        <!-- Avatar -->
+        <div class="avatar">
             {% if user and user.username %}
-                {{ user.username[0]|upper }}
+                {{ user.username[0] | upper }}
             {% else %}
                 G
             {% endif %}
-
-            <div class="dropdown" id="avatarMenu">
-                <p>Profile</p>
-                <p>Logout</p>
-            </div>
         </div>
 
     </div>
@@ -88,9 +71,10 @@
 
 
 <!-- ================= SIDEBAR ================= -->
-<aside id="sidebar" class="sidebar">
+<aside id="sidebar" class="sidebar expanded">
 
     <nav>
+
         <a href="/dashboard" class="nav-item active">
             <i data-feather="grid"></i>
             <span>Dashboard</span>
@@ -105,13 +89,12 @@
             <i data-feather="clock"></i>
             <span>History</span>
         </a>
+
     </nav>
 
-    <!-- SPONSORED -->
     <div class="sidebar-footer">
         <img src="/static/assets/logo1.png">
-        <span>Sponsored by</span>
-        <span class="sponsor-name">Uday Mondal</span>
+        <span>Powered by Uday Mondal</span>
     </div>
 
 </aside>
@@ -131,23 +114,15 @@
 </footer>
 
 
-<!-- ================= SCRIPT ================= -->
+<!-- ================= JS ================= -->
 <script>
     feather.replace();
 
-    // Sidebar toggle
-    document.getElementById("menuToggle").onclick = () => {
-        document.getElementById("sidebar").classList.toggle("collapsed");
-    };
+    const sidebar = document.getElementById("sidebar");
+    const toggle = document.getElementById("menuToggle");
 
-    // Avatar dropdown
-    document.getElementById("avatarBtn").onclick = () => {
-        document.getElementById("avatarMenu").classList.toggle("show");
-    };
-
-    // Bell dropdown
-    document.getElementById("bellBtn").onclick = () => {
-        document.getElementById("bellMenu").classList.toggle("show");
+    toggle.onclick = () => {
+        sidebar.classList.toggle("collapsed");
     };
 </script>
 
