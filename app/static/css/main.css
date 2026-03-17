@@ -1,3 +1,4 @@
+/* ================= RESET ================= */
 * {
     margin: 0;
     padding: 0;
@@ -5,9 +6,9 @@
     font-family: "Segoe UI", sans-serif;
 }
 
-/* BODY */
+/* ================= BODY ================= */
 body {
-    background: linear-gradient(135deg, #74ebd5, #4facfe);
+    background: linear-gradient(135deg, #4facfe, #001f4d);
     color: white;
 }
 
@@ -19,16 +20,16 @@ body::before {
     height: 100%;
     background: url('/static/assets/b.png') repeat;
     background-size: 120px;
-    opacity: 0.06;
+    opacity: 0.08;
     z-index: -1;
 }
 
-/* HEADER */
+/* ================= HEADER ================= */
 .header {
     position: fixed;
     top: 0;
     width: 100%;
-    height: 65px;
+    height: 60px;
 
     display: flex;
     justify-content: space-between;
@@ -37,67 +38,84 @@ body::before {
     padding: 0 20px;
 
     backdrop-filter: blur(20px);
-    background: rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.1);
+
+    z-index: 1000;
 }
 
 .header-left {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
 .logo {
-    height: 34px;
+    width: 30px;
+}
+
+/* BRAND */
+.brand-box {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
 }
 
 .brand {
+    font-weight: bold;
     font-size: 18px;
-    font-weight: 700;
-    background: linear-gradient(135deg, #ffffff, #e0f2fe);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 
+/* TAGLINE */
 .tagline {
     font-size: 10px;
-    opacity: 0.8;
+    opacity: 0.7;
+    margin-top: 2px;
 }
 
+/* MENU */
+.menu-btn {
+    font-size: 20px;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+/* ================= BADGE ================= */
 .badge {
-    padding: 4px 10px;
-    border-radius: 20px;
-    background: rgba(255,255,255,0.5);
-    color: #000;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 11px;
 }
 
-/* RIGHT */
+/* PLAN COLORS */
+.badge.free { background: rgba(255,255,255,0.4); color: black; }
+.badge.starter { background: orange; }
+.badge.pro { background: linear-gradient(135deg,#4facfe,#00f2fe); }
+.badge.enterprise { background: purple; }
+.badge.guest { background: rgba(255,255,255,0.3); }
+
+/* ================= HEADER RIGHT ================= */
 .header-right {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
+/* BELL */
 .icon-bell {
     position: relative;
     cursor: pointer;
 }
 
 .dot {
+    position: absolute;
+    top: -3px;
+    right: -3px;
     width: 8px;
     height: 8px;
     background: red;
     border-radius: 50%;
-    position: absolute;
-    top: -2px;
-    right: -2px;
-
-    animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    70% { transform: scale(1.4); opacity: 0.5; }
-    100% { transform: scale(1); }
 }
 
 /* AVATAR */
@@ -105,75 +123,61 @@ body::before {
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    background: #2563eb;
+    background: #3b82f6;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
 }
 
-/* DROPDOWN */
-.dropdown {
-    display: none;
-    position: absolute;
-    top: 45px;
-    right: 0;
-
-    background: white;
-    color: black;
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.dropdown.show {
-    display: block;
-}
-
-/* SIDEBAR */
+/* ================= SIDEBAR ================= */
 .sidebar {
     position: fixed;
-    top: 80px;
+    top: 70px;
     left: 20px;
 
     width: 230px;
     height: calc(100% - 100px);
 
     backdrop-filter: blur(20px);
-    background: rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.15);
 
     border-radius: 20px;
     padding: 20px;
+
+    transition: 0.3s;
 }
 
 .sidebar.collapsed {
     width: 80px;
 }
 
+/* NAV */
 .nav-item {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 
     padding: 12px;
     border-radius: 12px;
 
-    color: white;
     text-decoration: none;
+    color: white;
 }
 
 .nav-item:hover {
-    background: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.2);
 }
 
 .nav-item.active {
     background: linear-gradient(135deg,#4facfe,#00f2fe);
 }
 
+/* COLLAPSE */
 .sidebar.collapsed span {
     display: none;
 }
 
-/* SPONSOR */
+/* SIDEBAR FOOTER */
 .sidebar-footer {
     position: absolute;
     bottom: 20px;
@@ -182,21 +186,16 @@ body::before {
 
 .sidebar-footer img {
     width: 30px;
-    margin-bottom: 5px;
 }
 
-.sponsor-name {
-    font-weight: bold;
-}
-
-/* MAIN */
+/* ================= MAIN ================= */
 .main {
     margin-left: 270px;
-    margin-top: 90px;
+    margin-top: 80px;
     padding: 20px;
 }
 
-/* FOOTER */
+/* ================= FOOTER ================= */
 .footer {
     position: fixed;
     bottom: 10px;
@@ -206,8 +205,9 @@ body::before {
 }
 
 .footer-bubble {
-    padding: 6px 16px;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.4);
-    color: black;
+    padding: 8px 20px;
+    border-radius: 20px;
+
+    backdrop-filter: blur(10px);
+    background: rgba(255,255,255,0.2);
 }
