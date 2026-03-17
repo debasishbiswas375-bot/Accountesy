@@ -5,9 +5,9 @@
     font-family: "Segoe UI", sans-serif;
 }
 
-/* ================= BODY ================= */
+/* BODY */
 body {
-    background: radial-gradient(circle at 20% 20%, #1e3a8a, #020617);
+    background: linear-gradient(135deg, #74ebd5, #4facfe);
     color: white;
 }
 
@@ -19,11 +19,11 @@ body::before {
     height: 100%;
     background: url('/static/assets/b.png') repeat;
     background-size: 120px;
-    opacity: 0.05;
+    opacity: 0.06;
     z-index: -1;
 }
 
-/* ================= HEADER ================= */
+/* HEADER */
 .header {
     position: fixed;
     top: 0;
@@ -36,10 +36,8 @@ body::before {
 
     padding: 0 20px;
 
-    backdrop-filter: blur(25px);
-    background: rgba(255,255,255,0.08);
-
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(20px);
+    background: rgba(255,255,255,0.25);
 }
 
 .header-left {
@@ -48,44 +46,31 @@ body::before {
     gap: 12px;
 }
 
-/* LOGO */
 .logo {
     height: 34px;
 }
 
-/* BRAND */
 .brand {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
-
-    background: linear-gradient(90deg, #60a5fa, #38bdf8, #a78bfa);
+    background: linear-gradient(135deg, #ffffff, #e0f2fe);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-
-    animation: glowMove 4s infinite linear;
 }
 
-@keyframes glowMove {
-    0% { background-position: 0% }
-    100% { background-position: 200% }
-}
-
-/* TAGLINE */
 .tagline {
     font-size: 10px;
-    opacity: 0.75;
+    opacity: 0.8;
 }
 
-/* BADGE */
 .badge {
     padding: 4px 10px;
     border-radius: 20px;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.5);
+    color: #000;
 }
 
-.badge.guest { background: rgba(255,255,255,0.2); }
-
-/* ================= RIGHT ================= */
+/* RIGHT */
 .header-right {
     display: flex;
     align-items: center;
@@ -105,12 +90,14 @@ body::before {
     position: absolute;
     top: -2px;
     right: -2px;
+
     animation: pulse 1.5s infinite;
 }
 
 @keyframes pulse {
     0% { transform: scale(1); }
-    50% { transform: scale(1.5); }
+    70% { transform: scale(1.4); opacity: 0.5; }
+    100% { transform: scale(1); }
 }
 
 /* AVATAR */
@@ -118,7 +105,7 @@ body::before {
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    background: #3b82f6;
+    background: #2563eb;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -132,7 +119,8 @@ body::before {
     top: 45px;
     right: 0;
 
-    background: rgba(0,0,0,0.8);
+    background: white;
+    color: black;
     padding: 10px;
     border-radius: 10px;
 }
@@ -141,7 +129,7 @@ body::before {
     display: block;
 }
 
-/* ================= SIDEBAR ================= */
+/* SIDEBAR */
 .sidebar {
     position: fixed;
     top: 80px;
@@ -150,13 +138,11 @@ body::before {
     width: 230px;
     height: calc(100% - 100px);
 
-    backdrop-filter: blur(30px);
-    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    background: rgba(255,255,255,0.25);
 
-    border-radius: 25px;
+    border-radius: 20px;
     padding: 20px;
-
-    transition: 0.3s;
 }
 
 .sidebar.collapsed {
@@ -167,15 +153,16 @@ body::before {
     display: flex;
     align-items: center;
     gap: 10px;
+
     padding: 12px;
     border-radius: 12px;
+
     color: white;
     text-decoration: none;
 }
 
 .nav-item:hover {
-    background: rgba(255,255,255,0.1);
-    transform: translateX(5px);
+    background: rgba(255,255,255,0.3);
 }
 
 .nav-item.active {
@@ -186,7 +173,7 @@ body::before {
     display: none;
 }
 
-/* SPONSORED */
+/* SPONSOR */
 .sidebar-footer {
     position: absolute;
     bottom: 20px;
@@ -202,14 +189,14 @@ body::before {
     font-weight: bold;
 }
 
-/* ================= MAIN ================= */
+/* MAIN */
 .main {
     margin-left: 270px;
     margin-top: 90px;
     padding: 20px;
 }
 
-/* ================= FOOTER ================= */
+/* FOOTER */
 .footer {
     position: fixed;
     bottom: 10px;
@@ -219,7 +206,8 @@ body::before {
 }
 
 .footer-bubble {
-    padding: 5px 14px;
+    padding: 6px 16px;
     border-radius: 12px;
-    background: rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.4);
+    color: black;
 }
