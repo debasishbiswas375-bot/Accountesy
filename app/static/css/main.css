@@ -7,7 +7,7 @@
 
 /* BACKGROUND */
 body {
-    background: linear-gradient(135deg, #5aa9e6, #1e3c72);
+    background: linear-gradient(135deg, #66c2ff, #1e3c72);
     color: white;
 }
 
@@ -26,7 +26,6 @@ body::before {
 /* HEADER */
 .header {
     position: fixed;
-    top: 0;
     width: 100%;
     height: 70px;
 
@@ -46,7 +45,7 @@ body::before {
     gap: 12px;
 }
 
-/* MODERN TOGGLE */
+/* TOGGLE */
 .menu-toggle {
     width: 36px;
     height: 36px;
@@ -54,14 +53,11 @@ body::before {
     border: none;
 
     background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(10px);
-
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     gap: 5px;
-
+    align-items: center;
     cursor: pointer;
 }
 
@@ -73,7 +69,7 @@ body::before {
 
 /* LOGO */
 .logo {
-    height: 48px;
+    height: 52px;
 }
 
 /* BRAND */
@@ -92,12 +88,23 @@ body::before {
     opacity: 0.8;
 }
 
-/* BADGE */
-.badge {
-    padding: 4px 10px;
-    border-radius: 20px;
+/* USER PLAN */
+.user-plan {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     background: rgba(255,255,255,0.4);
+    padding: 5px 12px;
+    border-radius: 20px;
     color: #000;
+}
+
+.username {
+    font-weight: 600;
+}
+
+.dot-sep {
+    opacity: 0.6;
 }
 
 /* RIGHT */
@@ -107,7 +114,7 @@ body::before {
     gap: 15px;
 }
 
-/* NOTIFICATION */
+/* BELL */
 .icon-bell {
     position: relative;
     cursor: pointer;
@@ -116,7 +123,7 @@ body::before {
 .dot {
     width: 8px;
     height: 8px;
-    background: #ff3b3b;
+    background: red;
     border-radius: 50%;
     position: absolute;
     top: -2px;
@@ -141,7 +148,6 @@ body::before {
     position: absolute;
     top: 45px;
     right: 0;
-
     background: white;
     color: black;
     padding: 10px;
@@ -157,7 +163,6 @@ body::before {
     position: fixed;
     top: 90px;
     left: 20px;
-
     width: 240px;
     height: calc(100% - 110px);
 
@@ -170,7 +175,10 @@ body::before {
 
 .sidebar.collapsed {
     width: 80px;
-    padding: 20px 10px;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* NAV */
@@ -178,29 +186,23 @@ body::before {
     display: flex;
     align-items: center;
     gap: 10px;
-
     padding: 12px;
     border-radius: 12px;
-
     color: white;
     text-decoration: none;
-}
-
-.nav-item:hover {
-    background: rgba(255,255,255,0.2);
 }
 
 .nav-item.active {
     background: linear-gradient(135deg, #00c6ff, #0072ff);
 }
 
-/* MINI MODE */
-.sidebar.collapsed span {
-    display: none;
-}
-
 .sidebar.collapsed .nav-item {
     justify-content: center;
+    width: 100%;
+}
+
+.sidebar.collapsed span {
+    display: none;
 }
 
 /* SPONSOR */
@@ -208,22 +210,19 @@ body::before {
     position: absolute;
     bottom: 20px;
     width: 100%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    text-align: center;
 }
 
 .sidebar-footer img {
     width: 40px;
 }
 
-.sidebar.collapsed .sidebar-footer span {
-    display: none;
+.sidebar.collapsed .sidebar-footer img {
+    width: 30px;
 }
 
-.sidebar.collapsed .sidebar-footer img {
-    width: 28px;
+.sidebar.collapsed .sidebar-footer span {
+    display: none;
 }
 
 /* MAIN */
@@ -246,7 +245,6 @@ body::before {
     padding: 4px 12px;
     font-size: 12px;
     border-radius: 10px;
-
     background: rgba(255,255,255,0.5);
     color: black;
 }
