@@ -6,73 +6,54 @@
   font-family: "Inter", sans-serif;
 }
 
-/* BODY */
+/* BODY (SOFT MOBILE STYLE GRADIENT) */
 body {
   height: 100vh;
-  background: linear-gradient(135deg, #5fa8ff, #0b1f4d);
+  background: linear-gradient(135deg, #8ec5fc, #3a7bd5);
   color: #fff;
-  overflow: hidden;
-  position: relative;
+  overflow-x: hidden;
 }
 
-/* WATERMARK */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: url('/static/assets/b.png') repeat;
-  background-size: 120px;
-  opacity: 0.05;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* APP */
-.app-wrapper {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  position: relative;
-  z-index: 1;
-}
-
-/* HEADER */
+/* HEADER (FIXED TOP - CLEAN) */
 header {
-  height: 65px;
-  margin: 15px 20px 0;
-  padding: 0 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+
+  padding: 0 15px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  border-radius: 20px;
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(25px);
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(15px);
 
-  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-  z-index: 5;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+
+  z-index: 1000;
 }
 
-/* HEADER ACTIONS */
+/* HEADER RIGHT */
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
-/* ICON */
+/* NOTIFICATION */
 .icon-button {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.3);
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  cursor: pointer;
   position: relative;
 }
 
@@ -81,8 +62,9 @@ header {
   position: absolute;
   top: 5px;
   right: 5px;
-  width: 7px;
-  height: 7px;
+
+  width: 6px;
+  height: 6px;
   background: red;
   border-radius: 50%;
 }
@@ -92,126 +74,79 @@ header {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  background: #3a7bd5;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
   font-weight: bold;
-  cursor: pointer;
 }
 
-/* MAIN */
+/* MAIN LAYOUT */
 .main-layout {
   display: flex;
-  flex: 1;
-  margin-top: 10px;
+  margin-top: 70px;
 }
 
 /* SIDEBAR */
 .sidebar {
-  width: 220px;
-  margin: 15px 0 15px 20px;
+  width: 230px;
+  margin: 15px;
   padding: 20px;
   border-radius: 25px;
 
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(30px);
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(20px);
 
-  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-/* NAV */
+/* NAV ITEMS */
 .nav-item {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 15px;
-  border-radius: 14px;
 
-  color: #e2e8f0;
+  padding: 14px;
+  border-radius: 18px;
+
+  color: #fff;
   text-decoration: none;
-  transition: 0.3s;
+  font-size: 14px;
 }
 
-.nav-item:hover {
-  background: rgba(255,255,255,0.15);
+.nav-item span {
+  font-size: 18px;
 }
 
+/* ACTIVE */
 .nav-item.active {
   background: linear-gradient(135deg, #4facfe, #00f2fe);
 }
 
-/* CONTENT */
+/* MAIN CONTENT */
 .main-content {
   flex: 1;
-  padding: 30px;
-  overflow-y: auto;
-}
-
-/* DROPDOWN */
-.dropdown {
-  position: absolute;
-  top: 55px;
-  right: 0;
-
-  min-width: 180px;
-  padding: 10px;
-
-  border-radius: 15px;
-
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(25px);
-
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-
-  display: none;
-  z-index: 50;
-}
-
-.dropdown.show {
-  display: block;
-}
-
-.dropdown-item {
-  padding: 10px;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.dropdown-item:hover {
-  background: rgba(255,255,255,0.2);
+  padding: 20px;
 }
 
 /* FOOTER */
 footer {
   position: fixed;
-  bottom: 10px;
+  bottom: 5px;
   left: 50%;
   transform: translateX(-50%);
 
-  padding: 5px 20px;
+  padding: 5px 15px;
   border-radius: 20px;
 
-  background: rgba(255,255,255,0.12);
-  backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
 
-  font-size: 0.7rem;
-  z-index: 10;
-}
-
-/* MOBILE */
-@media (max-width: 768px) {
-  .sidebar {
-    position: absolute;
-    left: 10px;
-    top: 80px;
-    width: 75%;
-    z-index: 1000;
-  }
+  font-size: 12px;
 }
