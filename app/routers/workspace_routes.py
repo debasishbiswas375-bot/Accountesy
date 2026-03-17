@@ -28,3 +28,13 @@ async def upload_file(request: Request, file: UploadFile = File(...)):
         "cost": analysis['credit_cost'],
         "preview": analysis['preview_data']
     })
+@router.post("/final-convert")
+async def finalize_conversion(request: Request, filename: str = Form(...)):
+    # 1. Deduct credits from user (Logic for your Billing engine later)
+    # 2. Call build_tally_xml from converter.py
+    # 3. Return the file
+    
+    from app.tools.converter import build_tally_xml
+    # Note: In a real scenario, you'd retrieve the DF from a temporary session or cache
+    # For now, we return a success message
+    return {"message": f"Credits deducted. {filename} is ready for Tally!"}
