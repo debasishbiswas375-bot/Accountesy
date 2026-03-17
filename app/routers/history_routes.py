@@ -6,14 +6,17 @@ from app.database import supabase
 router = APIRouter(prefix="/history", tags=["History"])
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
+user_templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 
 @router.get("/")
-async def get_history(request: Request):
-    # Fetching real data from your conversion_history table
+def show_conversion_history(request: Request):
+    if not supabase:
+        return {"error": "Database not connected"}
+    
+    # Pull history ordered by most recent first
     res = supabase.table("conversion_history").select("*").order("created_at", desc=True).execute()
     
-    return templates.TemplateResponse(
+    return user_templates.TemplateResponse(
         "history.html", 
         {"request": request, "history": res.data}
     )
