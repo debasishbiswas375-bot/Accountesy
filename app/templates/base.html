@@ -11,21 +11,17 @@
 
 <body>
 
-<!-- HEADER -->
 <header class="header">
 
     <div class="header-left">
 
-        <!-- MODERN TOGGLE -->
         <button id="menuToggle" class="menu-toggle">
             <span></span>
             <span></span>
         </button>
 
-        <!-- LOGO -->
         <img src="/static/assets/logo.png" class="logo">
 
-        <!-- BRAND -->
         <div class="brand-box">
             <div class="brand">Accountesy</div>
             <div class="tagline">
@@ -33,7 +29,6 @@
             </div>
         </div>
 
-        <!-- USER PLAN -->
         <div class="user-plan">
             <span class="username">
                 {% if user and user.username %}
@@ -42,9 +37,7 @@
                     Guest
                 {% endif %}
             </span>
-
             <span class="dot-sep">•</span>
-
             <span class="plan">
                 {% if user and user.plans and user.plans.name %}
                     {{ user.plans.name }}
@@ -58,7 +51,6 @@
 
     <div class="header-right">
 
-        <!-- NOTIFICATION -->
         <div class="icon-bell" id="bellBtn">
             <i data-feather="bell"></i>
 
@@ -67,17 +59,10 @@
             {% endif %}
 
             <div class="dropdown" id="bellMenu">
-                {% if notifications and notifications|length > 0 %}
-                    {% for note in notifications %}
-                        <p>{{ note }}</p>
-                    {% endfor %}
-                {% else %}
-                    <p>No notifications</p>
-                {% endif %}
+                <p>No notifications</p>
             </div>
         </div>
 
-        <!-- AVATAR -->
         <div class="avatar" id="avatarBtn">
             {% if user and user.username %}
                 {{ user.username[0]|upper }}
@@ -116,7 +101,6 @@
         </a>
     </nav>
 
-    <!-- SPONSOR -->
     <div class="sidebar-footer">
         <img src="/static/assets/logo1.png">
         <span>Sponsored by</span>
@@ -126,13 +110,11 @@
 </aside>
 
 
-<!-- MAIN -->
 <main class="main">
     {% block content %}{% endblock %}
 </main>
 
 
-<!-- FOOTER -->
 <footer class="footer">
     <div class="footer-bubble">
         Created by <b>Debasish Biswas</b> © 2026
@@ -140,7 +122,6 @@
 </footer>
 
 
-<!-- JS -->
 <script>
     feather.replace();
 
