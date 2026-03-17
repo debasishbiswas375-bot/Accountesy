@@ -1,48 +1,186 @@
-/* BODY BACKGROUND - Clean Soap Bubble */
-body {
-  height: 100vh;
-  background-color: #f1f7ff; /* The light blue you liked */
-  color: #1e293b; /* Dark text for readability */
-  position: relative;
-  overflow: hidden; /* FIT TO PAGE */
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
 }
 
-/* 🔥 WATERMARK LAYER (REPEATED B LOGO) */
+/* BODY BACKGROUND */
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, #5fa8ff, #0b1f4d);
+  background-attachment: fixed;
+  color: #fff;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* 🔥 WATERMARK LAYER (FIXED VERSION) */
 body::before {
   content: "";
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
   background-image: url('/static/assets/b.png');
   background-repeat: repeat;
   background-size: 120px;
-  opacity: 0.08; /* Subtle grayscale watermark */
+
+  opacity: 0.07; /* slightly lower = more premium */
   pointer-events: none;
-  z-index: -1; /* Keep it at the very back */
+
+  z-index: 0; /* IMPORTANT: not -1 */
 }
 
-/* SIDEBAR - Responsive Logic */
+/* MAIN LAYOUT */
+.container {
+  display: flex;
+  height: 100vh;
+  position: relative;
+  z-index: 1; /* ensures content stays above watermark */
+}
+
+/* SIDEBAR (GLASS EFFECT) */
 .sidebar {
   width: 240px;
   margin: 20px;
   padding: 20px;
-  border-radius: 25px;
-  background: rgba(255, 255, 255, 0.5); /* Glass effect */
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  transition: width 0.3s ease;
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
 }
 
-/* MOBILE FIX: Mini Sidebar */
+/* LOGO */
+.logo {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+/* MENU */
+.menu {
+  list-style: none;
+}
+
+.menu li {
+  padding: 12px 15px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* ACTIVE */
+.menu li.active {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+}
+
+/* HOVER */
+.menu li:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* MAIN CONTENT */
+.main {
+  flex: 1;
+  padding: 20px;
+}
+
+/* TOPBAR */
+.topbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+}
+
+/* NOTIFICATION */
+.notification {
+  position: relative;
+  cursor: pointer;
+}
+
+.notification::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 8px;
+  height: 8px;
+  background: red;
+  border-radius: 50%;
+}
+
+/* AVATAR */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #4facfe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+/* WORKSPACE */
+.workspace {
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* UPLOAD BOX */
+.upload-box {
+  height: 200px;
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px dashed rgba(255, 255, 255, 0.3);
+
+  transition: 0.3s;
+}
+
+.upload-box:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* FOOTER */
+.footer {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* MOBILE */
 @media (max-width: 768px) {
   .sidebar {
-    width: 70px; /* Shrunk for mobile */
-    margin: 10px;
-    padding: 15px 10px;
+    width: 80%;
+    position: absolute;
+    z-index: 1000;
   }
-  .sidebar span, .logo-text {
-    display: none; /* Hide text, show only liquid icons */
-  }
+
   .workspace {
     grid-template-columns: 1fr;
   }
