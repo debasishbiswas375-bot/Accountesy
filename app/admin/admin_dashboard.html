@@ -1,36 +1,44 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="glass-panel" style="padding: 40px; border-radius: 30px;">
-    <div style="display: flex; justify-content: space-between; margin-bottom: 40px;">
-        <h1 style="margin: 0;">User Management</h1>
-        <span style="background: #10b981; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem;">Supabase Live</span>
+<div class="glass-panel" style="padding: 40px; border-radius: 35px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+        <h1 style="margin: 0; color: #1e293b;">User Management</h1>
+        <div style="background: #10b981; color: white; padding: 6px 18px; border-radius: 20px; font-size: 0.8rem; font-weight: 800;">Supabase Connected</div>
     </div>
-    <table style="width: 100%; border-collapse: collapse;">
-        <thead>
-            <tr style="text-align: left; border-bottom: 2px solid #e2e8f0;">
-                <th style="padding: 15px;">User</th><th style="padding: 15px;">Email</th><th style="padding: 15px;">Plan</th><th style="padding: 15px;">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for user in users %}
-            <tr style="border-bottom: 1px solid #f1f5f9;">
-                <td style="padding: 15px; font-weight: 700;">{{ user.name }}</td>
-                <td style="padding: 15px;">{{ user.email }}</td>
-                <td style="padding: 15px;"><span style="color: var(--primary-blue); font-weight: 800;">{{ user.plan }}</span></td>
-                <td style="padding: 15px;">
-                    <form action="/admin/update-user" method="POST" style="display: flex; gap: 10px;">
-                        <input type="hidden" name="user_id" value="{{ user.id }}">
-                        <select name="new_plan" style="padding: 5px; border-radius: 8px;">
-                            <option value="FREE">FREE</option>
-                            <option value="PRO">PRO</option>
-                            <option value="ENTERPRISE">ENTERPRISE</option>
-                        </select>
-                        <button type="submit" style="background: #1e293b; color: white; border: none; padding: 5px 15px; border-radius: 8px; cursor: pointer;">Update</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+
+    <div style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="text-align: left; border-bottom: 2px solid rgba(255,255,255,0.6);">
+                    <th style="padding: 20px; color: #64748b; font-size: 0.85rem; text-transform: uppercase;">Name</th>
+                    <th style="padding: 20px; color: #64748b; font-size: 0.85rem; text-transform: uppercase;">Email</th>
+                    <th style="padding: 20px; color: #64748b; font-size: 0.85rem; text-transform: uppercase;">Current Plan</th>
+                    <th style="padding: 20px; color: #64748b; font-size: 0.85rem; text-transform: uppercase; text-align: right;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.2);">
+                    <td style="padding: 20px; font-weight: 700; color: #1e293b;">{{ u.name }}</td>
+                    <td style="padding: 20px; color: #475569;">{{ u.email }}</td>
+                    <td style="padding: 20px;">
+                        <span style="color: var(--primary-blue); font-weight: 800;">{{ u.plan }}</span>
+                    </td>
+                    <td style="padding: 20px; text-align: right;">
+                        <form action="/admin/update-user" method="POST" style="display: flex; gap: 10px; justify-content: flex-end;">
+                            <input type="hidden" name="user_id" value="{{ u.id }}">
+                            <select name="new_plan" style="padding: 8px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.5);">
+                                <option value="FREE">FREE</option>
+                                <option value="PRO">PRO</option>
+                                <option value="ENTERPRISE">ENTERPRISE</option>
+                            </select>
+                            <button type="submit" style="background: #1e293b; color: white; border: none; padding: 8px 20px; border-radius: 10px; font-weight: 700; cursor: pointer;">Update</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}
