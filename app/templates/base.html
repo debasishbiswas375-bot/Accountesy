@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accountesy | Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', path='css/main.css') }}">
+    <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
 
     <header class="topbar glass-panel">
         <div style="display: flex; align-items: center; gap: 15px;">
-            <img src="{{ url_for('static', path='assets/logo.png') }}" style="width: 32px;">
+            <img src="/static/assets/logo.png" style="width: 32px;" alt="Accountesy Logo">
             <div style="display: flex; flex-direction: column;">
                 <h2 style="margin: 0; font-size: 1.1rem; color: #1e40af;">Accountesy</h2>
                 <small style="font-size: 0.65rem; opacity: 0.6;">Welcome to Accounting Expert Enterprise UI</small>
@@ -48,7 +48,7 @@
 
             <div style="margin-top: auto; text-align: center; padding-top: 20px;">
                 <p style="font-size: 0.7rem; opacity: 0.6; margin: 0;">Sponsored by</p>
-                <img src="{{ url_for('static', path='assets/logo1.png') }}" style="width: 55px; margin: 8px 0;">
+                <img src="/static/assets/logo1.png" style="width: 55px; margin: 8px 0;" alt="Sponsor Logo">
                 <p style="font-weight: bold; font-size: 0.8rem; margin: 0;">Uday Mondal | Tax Consultant</p>
             </div>
         </nav>
