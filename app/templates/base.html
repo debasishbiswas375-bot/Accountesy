@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <title>Accountesy</title>
 
+    <!-- Favicon -->
     <link rel="icon" href="/static/assets/logo.png">
+
+    <!-- CSS -->
     <link rel="stylesheet" href="/static/css/main.css">
 
+    <!-- Icons -->
     <script src="https://unpkg.com/feather-icons"></script>
 </head>
 
@@ -45,17 +49,26 @@
 
     <div class="header-right">
 
-        <!-- Notification -->
+        <!-- NOTIFICATION -->
         <div class="icon-bell" id="bellBtn">
             <i data-feather="bell"></i>
-            <span class="dot"></span>
+
+            {% if notifications and notifications|length > 0 %}
+                <span class="dot"></span>
+            {% endif %}
 
             <div class="dropdown" id="bellMenu">
-                <p>No notifications</p>
+                {% if notifications and notifications|length > 0 %}
+                    {% for note in notifications %}
+                        <p>{{ note }}</p>
+                    {% endfor %}
+                {% else %}
+                    <p>No notifications</p>
+                {% endif %}
             </div>
         </div>
 
-        <!-- Avatar -->
+        <!-- AVATAR -->
         <div class="avatar" id="avatarBtn">
             {% if user and user.username %}
                 {{ user.username[0]|upper }}
@@ -118,20 +131,21 @@
 </footer>
 
 
-<!-- ================= JS ================= -->
+<!-- ================= SCRIPT ================= -->
 <script>
     feather.replace();
 
-    // SIDEBAR TOGGLE
+    // Sidebar toggle
     document.getElementById("menuToggle").onclick = () => {
         document.getElementById("sidebar").classList.toggle("collapsed");
     };
 
-    // DROPDOWNS
+    // Avatar dropdown
     document.getElementById("avatarBtn").onclick = () => {
         document.getElementById("avatarMenu").classList.toggle("show");
     };
 
+    // Bell dropdown
     document.getElementById("bellBtn").onclick = () => {
         document.getElementById("bellMenu").classList.toggle("show");
     };
