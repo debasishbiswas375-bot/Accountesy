@@ -1,79 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accountesy Pro</title>
+  <meta charset="UTF-8">
+  <title>Accountesy</title>
 
-    <link rel="stylesheet" href="/static/css/main.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
+
 <div class="app-wrapper">
 
-    <!-- HEADER -->
-    <header>
-        <div style="display: flex; align-items: center;">
-            <img src="/static/assets/logo.png" style="height: 38px; margin-right: 12px;">
-            <h1 style="font-size: 1.1rem; font-weight: 800;">Accountesy</h1>
-            <span style="margin-left: 10px; background: #4facfe; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem;">PRO</span>
-        </div>
+<!-- HEADER -->
+<header>
+  <div style="display:flex;align-items:center;">
+    <img src="/static/assets/logo.png" style="height:34px;margin-right:10px;">
+    <h1 style="font-size:1rem;">Accountesy</h1>
+    <span style="margin-left:8px;background:#4facfe;padding:2px 8px;border-radius:12px;font-size:0.65rem;">PRO</span>
+  </div>
 
-        <div class="header-actions">
-            <div class="icon-button">🔔</div>
-            <div class="avatar-bubble">D</div>
-        </div>
-    </header>
+  <div class="header-actions">
+    <div class="icon-button" onclick="toggleNotif()">🔔</div>
+    <div class="avatar-bubble" onclick="toggleMenu()">D</div>
+  </div>
+</header>
 
-    <!-- MAIN -->
-    <div class="main-layout">
+<!-- DROPDOWNS -->
+<div id="notifDropdown" class="dropdown">
+  <div class="dropdown-item">No notifications</div>
+</div>
 
-        <!-- SIDEBAR -->
-        <nav class="sidebar">
-            <div>
-                <a href="/dashboard" class="nav-item active">
-                    <svg class="liquid-icon" viewBox="0 0 24 24">
-                        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
-                    </svg>
-                    Dashboard
-                </a>
+<div id="avatarMenu" class="dropdown" style="right:80px;">
+  <div class="dropdown-item">Profile</div>
+  <div class="dropdown-item">Logout</div>
+</div>
 
-                <a href="/workspace" class="nav-item">
-                    <svg class="liquid-icon" viewBox="0 0 24 24">
-                        <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/>
-                    </svg>
-                    Workspace
-                </a>
+<!-- MAIN -->
+<div class="main-layout">
 
-                <a href="/history" class="nav-item">
-                    <svg class="liquid-icon" viewBox="0 0 24 24">
-                        <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    History
-                </a>
-            </div>
-
-            <div style="text-align: center;">
-                <img src="/static/assets/logo1.png" style="width: 45px; opacity: 0.8;">
-                <p style="font-size: 0.65rem; opacity: 0.7;">Powered by Uday Mondal</p>
-            </div>
-        </nav>
-
-        <!-- CONTENT -->
-        <main class="main-content">
-            {% block content %}{% endblock %}
-        </main>
-
+  <nav class="sidebar">
+    <div>
+      <a href="/dashboard" class="nav-item active">Dashboard</a>
+      <a href="/workspace" class="nav-item">Workspace</a>
+      <a href="/history" class="nav-item">History</a>
     </div>
 
-    <!-- FOOTER -->
-    <footer>
-        <p style="font-size: 0.75rem;">
-            Created by <b>Debasish Biswas</b> | © 2026
-        </p>
-    </footer>
+    <div style="text-align:center;">
+      <img src="/static/assets/logo1.png" style="width:40px;">
+      <p style="font-size:0.6rem;">Powered by Uday Mondal</p>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    {% block content %}{% endblock %}
+  </main>
 
 </div>
+
+<!-- FOOTER -->
+<footer>
+  Created by <b>&nbsp;Debasish Biswas</b> © 2026
+</footer>
+
+</div>
+
+<!-- JS -->
+<script>
+function toggleNotif() {
+  document.getElementById("notifDropdown").classList.toggle("show");
+}
+
+function toggleMenu() {
+  document.getElementById("avatarMenu").classList.toggle("show");
+}
+</script>
+
 </body>
 </html>
