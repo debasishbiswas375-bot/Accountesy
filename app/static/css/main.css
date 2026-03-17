@@ -7,7 +7,7 @@
                  linear-gradient(225deg, rgba(255, 192, 203, 0.15) 0%, rgba(173, 216, 230, 0.2) 50%, rgba(144, 238, 144, 0.15) 100%);
     --glass-blur: blur(20px); 
     
-    /* Much lighter, subtle horizontal stripes */
+    /* Lighter, subtle horizontal stripes */
     --bg-stripes: repeating-linear-gradient(
         to bottom,
         #f8fafc,          
@@ -30,7 +30,6 @@ body {
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
     border: 1px solid rgba(255, 255, 255, 0.8);
-    /* Inset shadow creates the "bubble" edge reflection */
     box-shadow: 0 8px 32px rgba(31, 38, 135, 0.05), inset 0 0 20px rgba(255, 255, 255, 0.6); 
 }
 
@@ -41,10 +40,30 @@ body {
     z-index: 10;
 }
 
+/* SIDEBAR EXPAND / COLLAPSE ANIMATIONS */
 .sidebar {
     width: 250px; margin: 15px; padding: 20px;
     border-radius: 30px; display: flex; flex-direction: column;
     height: calc(100vh - 120px);
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    position: relative;
+}
+
+.sidebar.collapsed {
+    width: 80px; /* Mini width */
+    padding: 20px 10px;
+}
+
+.toggle-btn {
+    background: transparent; border: none; cursor: pointer;
+    color: var(--nav-text); padding: 5px; margin-bottom: 20px;
+    display: flex; align-items: center; justify-content: flex-end;
+    transition: 0.3s; width: 100%;
+}
+
+.sidebar.collapsed .toggle-btn {
+    justify-content: center;
 }
 
 .nav-item {
@@ -53,6 +72,25 @@ body {
     text-decoration: none; color: var(--nav-text);
     font-weight: 600; font-size: 0.95rem;
     border-radius: 25px; transition: 0.3s;
+    white-space: nowrap;
+}
+
+/* Center icons when collapsed */
+.sidebar.collapsed .nav-item {
+    justify-content: center;
+    padding: 12px;
+}
+
+.nav-text {
+    opacity: 1; transition: opacity 0.2s;
+}
+
+/* Hide text and sponsor when collapsed */
+.sidebar.collapsed .nav-text {
+    opacity: 0; display: none;
+}
+.sidebar.collapsed .sponsor-section {
+    opacity: 0; display: none;
 }
 
 .nav-item.active {
@@ -64,6 +102,7 @@ body {
 .nav-icon {
     width: 20px; height: 20px; stroke: currentColor; 
     stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round;
+    flex-shrink: 0;
 }
 
 .nav-item:hover:not(.active) { background: rgba(255, 255, 255, 0.7); }
