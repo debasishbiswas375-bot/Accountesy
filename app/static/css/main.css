@@ -64,14 +64,14 @@ body {
     transition: 0.3s;
 }
 
-/* COLLAPSE */
+/* COLLAPSED */
 .sidebar.collapsed {
     width: 80px;
 }
 
-/* HOVER EXPAND */
-.sidebar.collapsed.hover-expand {
-    width: 240px;
+/* HIDE TEXT */
+.sidebar.collapsed .nav-item span {
+    display: none;
 }
 
 /* NAV */
@@ -85,14 +85,8 @@ body {
     position: relative;
 }
 
-/* HIDE TEXT */
-.sidebar.collapsed .nav-item span {
-    display: none;
-}
-
-/* SHOW TEXT ON HOVER */
-.sidebar.collapsed.hover-expand .nav-item span {
-    display: inline;
+.nav-item.active {
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
 }
 
 /* TOOLTIP */
@@ -100,13 +94,15 @@ body {
     content: attr(data-label);
     position: absolute;
     left: 70px;
+    top: 50%;
+    transform: translateY(-50%);
     background: black;
-    padding: 5px 8px;
+    padding: 6px 10px;
     border-radius: 6px;
+    font-size: 12px;
     opacity: 0;
     pointer-events: none;
     white-space: nowrap;
-    font-size: 12px;
 }
 
 .sidebar.collapsed .nav-item:hover::after {
@@ -125,9 +121,9 @@ body {
     margin-left: 110px;
 }
 
-/* SPACE */
+/* BIG SCROLL SPACE */
 .top-space {
-    height: 500px;
+    height: 900px; /* 👈 more scroll */
 }
 
 /* FEEDBACK */
@@ -148,6 +144,7 @@ body {
     gap: 15px;
 }
 
+/* INPUT */
 .feedback-card input,
 .feedback-card textarea {
     padding: 12px;
