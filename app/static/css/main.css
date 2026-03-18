@@ -16,52 +16,22 @@ body {
     top: 0;
     width: 100%;
     height: 64px;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     padding: 0 16px;
-
     backdrop-filter: blur(18px);
     background: rgba(255,255,255,0.15);
-    z-index: 1000;
 }
 
 .header-left {
     display: flex;
-    align-items: center;
     gap: 12px;
+    align-items: center;
 }
 
 .logo {
     height: 50px;
-}
-
-/* TOGGLE */
-.menu-toggle {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    border: none;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-    align-items: center;
-
-    background: linear-gradient(145deg, rgba(255,255,255,0.45), rgba(255,255,255,0.15));
-    backdrop-filter: blur(20px);
-
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    cursor: pointer;
-}
-
-.menu-toggle span {
-    width: 18px;
-    height: 2px;
-    background: white;
 }
 
 /* SIDEBAR */
@@ -69,91 +39,60 @@ body {
     position: fixed;
     top: 64px;
     left: 20px;
-
-    width: 240px;
+    width: 220px;
     height: calc(100% - 64px);
-
-    padding: 25px 15px;
+    padding: 20px;
     border-radius: 20px;
-
-    background: linear-gradient(160deg, rgba(255,255,255,0.25), rgba(255,255,255,0.05));
-    backdrop-filter: blur(25px);
-
-    border: 1px solid rgba(255,255,255,0.25);
-
-    box-shadow:
-        inset 0 1px 2px rgba(255,255,255,0.5),
-        0 20px 40px rgba(0,0,0,0.25);
-
-    transition: 0.3s;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(20px);
 }
 
-/* TOP GLASS */
-.sidebar::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 80px;
-
-    background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
-}
-
-/* NAV */
 .nav-item {
     display: flex;
     gap: 10px;
     padding: 12px;
-    border-radius: 12px;
     color: white;
     text-decoration: none;
 }
 
-.nav-item:hover {
+/* MAIN */
+.main {
+    margin-left: 260px;
+    margin-top: 80px;
+    padding: 20px;
+}
+
+/* FEEDBACK */
+.feedback-container {
+    max-width: 500px;
+    margin: auto;
     background: rgba(255,255,255,0.2);
+    padding: 25px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
 }
 
-.nav-item.active {
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
+.feedback-container h2 {
+    margin-bottom: 15px;
 }
 
-/* SPONSOR */
-.sidebar-footer {
-    position: absolute;
-    bottom: 20px;
+.feedback-container input,
+.feedback-container textarea {
     width: 100%;
-    text-align: center;
+    margin-bottom: 12px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
 }
 
-.sidebar-footer img {
-    width: 48px;
-    border-radius: 50%;
-}
-
-/* DASHBOARD */
-.dashboard {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 20px;
-}
-
-.card {
-    background: rgba(255,255,255,0.2);
-    padding: 20px;
-    border-radius: 16px;
-}
-
-/* CHART */
-.chart-box {
-    background: rgba(255,255,255,0.15);
-    padding: 20px;
-    border-radius: 16px;
+.feedback-container button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background: #0072ff;
+    color: white;
+    cursor: pointer;
 }
 
 /* FOOTER */
@@ -161,62 +100,5 @@ body {
     position: fixed;
     bottom: 10px;
     width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.footer-bubble {
-    background: white;
-    color: black;
-    padding: 6px 14px;
-    border-radius: 14px;
-}
-
-/* DROPDOWN */
-.dropdown {
-    visibility: hidden;
-    opacity: 0;
-    position: absolute;
-    top: 55px;
-    right: 10px;
-    background: white;
-    color: black;
-    padding: 10px;
-    border-radius: 10px;
-}
-
-.dropdown.show {
-    visibility: visible;
-    opacity: 1;
-}
-
-/* DOT */
-.dot {
-    width: 8px;
-    height: 8px;
-    background: red;
-    border-radius: 50%;
-    position: absolute;
-    top: -2px;
-    right: -2px;
-}
-
-/* DARK MODE */
-body.dark {
-    background: #0f172a;
-}
-
-/* MOBILE */
-@media (max-width: 768px) {
-    .sidebar {
-        left: -260px;
-    }
-
-    .sidebar.active {
-        left: 10px;
-    }
-
-    .main {
-        margin-left: 0;
-    }
+    text-align: center;
 }
