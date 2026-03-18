@@ -35,7 +35,11 @@
             </span>
             •
             <span>
-                {% if user and user.plans %}{{ user.plans.name }}{% else %}Free{% endif %}
+                {% if user and user.plans and user.plans.name %}
+                    {{ user.plans.name }}
+                {% else %}
+                    Free
+                {% endif %}
             </span>
         </div>
 
@@ -43,15 +47,20 @@
 
     <div class="header-right">
 
+        <!-- NOTIFICATION -->
         <div class="icon-bell" id="bellBtn">
             <i data-feather="bell"></i>
-            <span class="dot"></span>
+
+            {% if notifications and notifications|length > 0 %}
+                <span class="dot"></span>
+            {% endif %}
 
             <div class="dropdown" id="bellMenu">
                 <p>No notifications</p>
             </div>
         </div>
 
+        <!-- AVATAR -->
         <div class="avatar" id="avatarBtn">
             {% if user and user.username %}
                 {{ user.username[0]|upper }}
@@ -70,6 +79,7 @@
 </header>
 
 
+<!-- SIDEBAR -->
 <aside id="sidebar" class="sidebar">
 
     <nav>
@@ -104,7 +114,7 @@
         </a>
     </nav>
 
-    <!-- FIXED SPONSOR -->
+    <!-- SPONSOR -->
     <div class="sidebar-footer">
         <img src="/static/assets/sponsor.png" alt="Sponsor">
 
@@ -123,35 +133,44 @@
     {% block content %}{% endblock %}
 </main>
 
+
 <footer class="footer">
     <div class="footer-bubble">
         Created by <b>Debasish Biswas</b> © 2026
     </div>
 </footer>
 
+
 <script>
     feather.replace();
 
+    const sidebar = document.getElementById("sidebar");
+
     document.getElementById("menuToggle").onclick = () => {
-        document.getElementById("sidebar").classList.toggle("collapsed");
+        sidebar.classList.toggle("collapsed");
     };
 
-    document.getElementById("avatarBtn").onclick = () => {
-        document.getElementById("avatarMenu").classList.toggle("show");
+    const avatarBtn = document.getElementById("avatarBtn");
+    const avatarMenu = document.getElementById("avatarMenu");
+
+    const bellBtn = document.getElementById("bellBtn");
+    const bellMenu = document.getElementById("bellMenu");
+
+    avatarBtn.onclick = (e) => {
+        e.stopPropagation();
+        avatarMenu.classList.toggle("show");
+        bellMenu.classList.remove("show");
     };
 
-    document.getElementById("bellBtn").onclick = () => {
-        document.getElementById("bellMenu").classList.toggle("show");
+    bellBtn.onclick = (e) => {
+        e.stopPropagation();
+        bellMenu.classList.toggle("show");
+        avatarMenu.classList.remove("show");
     };
 
-    // CLOSE DROPDOWN ON OUTSIDE CLICK
-    document.addEventListener("click", function(e){
-        if(!e.target.closest(".avatar")){
-            document.getElementById("avatarMenu").classList.remove("show");
-        }
-        if(!e.target.closest(".icon-bell")){
-            document.getElementById("bellMenu").classList.remove("show");
-        }
+    document.addEventListener("click", () => {
+        avatarMenu.classList.remove("show");
+        bellMenu.classList.remove("show");
     });
 </script>
 
