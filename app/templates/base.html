@@ -14,7 +14,6 @@
 <header class="header">
 
     <div class="header-left">
-
         <button id="menuToggle" class="menu-toggle">
             <span></span>
             <span></span>
@@ -27,43 +26,21 @@
             <div class="tagline">Learn Smart, Grow Fast</div>
         </div>
 
-        <!-- USER PLAN -->
         <div class="user-plan">
             <span>{{ user.username if user else "Guest" }}</span>
             •
             <span>{{ user.plans.name if user else "Free" }}</span>
         </div>
-
     </div>
 
     <div class="header-right">
 
-        <div class="icon-bell" id="bellBtn">
+        <div class="icon-bell">
             <i data-feather="bell"></i>
-
-            {% if notifications and notifications|length > 0 %}
-            <span class="dot"></span>
-            {% endif %}
-
-            <div class="dropdown" id="bellMenu">
-                {% if notifications and notifications|length > 0 %}
-                    {% for n in notifications %}
-                        <p>{{ n }}</p>
-                    {% endfor %}
-                {% else %}
-                    <p>No notifications</p>
-                {% endif %}
-            </div>
         </div>
 
-        <div class="avatar" id="avatarBtn">
+        <div class="avatar">
             {{ user.username[0]|upper if user else "G" }}
-
-            <div class="dropdown" id="avatarMenu">
-                <p onclick="window.location='/account'">Profile</p>
-                <p onclick="window.location='/credits'">Credits</p>
-                <p onclick="window.location='/logout'">Logout</p>
-            </div>
         </div>
 
     </div>
@@ -71,36 +48,15 @@
 </header>
 
 <!-- SIDEBAR -->
-<aside id="sidebar" class="sidebar">
-
+<aside class="sidebar">
     <nav>
-        <a href="/" class="nav-item active">
-            <i data-feather="home"></i>
-            <span>Dashboard</span>
-        </a>
-
-        <a href="/help" class="nav-item">
-            <i data-feather="help-circle"></i>
-            <span>Help & Features</span>
-        </a>
-
-        <a href="/workspace" class="nav-item">
-            <i data-feather="briefcase"></i>
-            <span>Workspace</span>
-        </a>
-
-        <a href="/history" class="nav-item">
-            <i data-feather="clock"></i>
-            <span>History</span>
-        </a>
-
-        <a href="/account" class="nav-item">
-            <i data-feather="user"></i>
-            <span>Account</span>
-        </a>
+        <a href="/" class="nav-item active"><i data-feather="home"></i> Dashboard</a>
+        <a href="/help" class="nav-item"><i data-feather="help-circle"></i> Help & Features</a>
+        <a href="/workspace" class="nav-item"><i data-feather="briefcase"></i> Workspace</a>
+        <a href="/history" class="nav-item"><i data-feather="clock"></i> History</a>
+        <a href="/account" class="nav-item"><i data-feather="user"></i> Account</a>
     </nav>
 
-    <!-- SPONSOR -->
     <div class="sidebar-footer">
         <img src="/static/assets/sponsor.png">
         <div class="sponsor-title">Sponsored by</div>
@@ -109,27 +65,30 @@
             <span>Tax Consultant Advocate</span>
         </div>
     </div>
-
 </aside>
 
 <!-- MAIN -->
 <main class="main">
 
-    <div class="feedback-wrapper">
+    <!-- TOP SPACE (so user scrolls) -->
+    <div class="top-space"></div>
+
+    <!-- FEEDBACK FORM (BOTTOM) -->
+    <div class="feedback-section">
 
         <form action="/submit-feedback" method="post" class="feedback-card">
 
-            <h2>Feedback Form</h2>
+            <h2>Get Feedback</h2>
 
-            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="text" name="name" placeholder="Name *" required>
 
-            <input type="email" name="email" placeholder="Email ID" required>
+            <input type="email" name="email" placeholder="Email ID *" required>
 
-            <input type="text" name="contact" placeholder="Contact Number" required>
+            <input type="text" name="contact" placeholder="Phone Number *" required>
 
             <textarea name="message" placeholder="Your Feedback (min 30 characters)" minlength="30" required></textarea>
 
-            <button type="submit">Submit Feedback</button>
+            <button type="submit">Submit →</button>
 
         </form>
 
@@ -145,31 +104,6 @@
 
 <script>
     feather.replace();
-
-    const sidebar = document.getElementById("sidebar");
-
-    document.getElementById("menuToggle").onclick = () => {
-        sidebar.classList.toggle("active");
-    };
-
-    document.getElementById("avatarBtn").onclick = (e) => {
-        e.stopPropagation();
-        document.getElementById("avatarMenu").classList.toggle("show");
-    };
-
-    document.getElementById("bellBtn").onclick = (e) => {
-        e.stopPropagation();
-        document.getElementById("bellMenu").classList.toggle("show");
-    };
-
-    document.addEventListener("click", function(e){
-        if(!e.target.closest("#avatarBtn")){
-            document.getElementById("avatarMenu").classList.remove("show");
-        }
-        if(!e.target.closest("#bellBtn")){
-            document.getElementById("bellMenu").classList.remove("show");
-        }
-    });
 </script>
 
 </body>
