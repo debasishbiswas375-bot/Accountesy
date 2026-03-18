@@ -43,7 +43,6 @@
 
     <div class="header-right">
 
-        <!-- NOTIFICATION -->
         <div class="icon-bell" id="bellBtn">
             <i data-feather="bell"></i>
 
@@ -62,7 +61,6 @@
             </div>
         </div>
 
-        <!-- AVATAR -->
         <div class="avatar" id="avatarBtn">
             {% if user and user.username %}
                 {{ user.username[0]|upper }}
@@ -115,7 +113,6 @@
         </a>
     </nav>
 
-    <!-- SPONSOR -->
     <div class="sidebar-footer">
         <img src="/static/assets/sponsor.png" alt="Sponsor">
 
@@ -134,10 +131,8 @@
 
     {% block content %}{% endblock %}
 
-    <!-- SCROLL SPACE -->
     <div class="top-space"></div>
 
-    <!-- FEEDBACK -->
     <div class="feedback-section">
 
         <form action="/submit-feedback" method="post" class="feedback-card">
@@ -145,9 +140,7 @@
             <h2>Get Feedback</h2>
 
             <input type="text" name="name" placeholder="Name *" required>
-
             <input type="email" name="email" placeholder="Email ID *" required>
-
             <input type="text" name="contact" placeholder="Phone Number *" required>
 
             <textarea name="message" minlength="30"
