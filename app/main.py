@@ -1,3 +1,7 @@
+.guest-blur {
+    filter: blur(3px);
+    pointer-events: none;
+}
 from supabase import create_client
 import os
 from fastapi import FastAPI, Request, UploadFile, File, Form
