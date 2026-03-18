@@ -337,3 +337,40 @@ body::before {
     background: rgba(255,255,255,0.9);
     color: black;
 }
+/* SUCCESS POPUP */
+.success-popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s;
+    z-index: 9999;
+}
+
+.success-popup.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.popup-card {
+    background: white;
+    color: black;
+    padding: 25px;
+    border-radius: 14px;
+    text-align: center;
+    width: 300px;
+}
+
+.popup-card button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    background: #4caf50;
+    color: white;
+    cursor: pointer;
+}
