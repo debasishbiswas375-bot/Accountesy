@@ -1,42 +1,63 @@
 from app.database import supabase
 
-def smart_classify(df, user_id: str):
-    """The Brain: Checks ai_memory table for learned patterns."""
-    df['ledger_name'] = "Suspense Account"
-    
-    try:
-        # 1. Fetch learned patterns for this specific user
-        res = supabase.table("ai_memory").select("narration_pattern, suggested_ledger").eq("user_id", user_id).execute()
-        memory_map = {item['narration_pattern']: item['suggested_ledger'] for item in res.data}
-        
-        # 2. Apply Memory (Exact Match)
-        for idx, row in df.iterrows():
-            clean_desc = str(row['description']).lower().strip()
-            if clean_desc in memory_map:
-                df.at[idx, 'ledger_name'] = memory_map[clean_desc]
-                
-        # 3. Apply General Keyword Rules for remaining 'Suspense'
-        general_rules = {
-            "Staff Welfare": ["zomato", "swiggy", "tea", "coffee"],
-            "Bank Charges": ["chgs", "gst", "processing fee", "maintenance"],
-            "Fuel": ["petrol", "hpcl", "indian oil", "shell"]
-        }
-        
-        for ledger, keywords in general_rules.items():
-            for kw in keywords:
-                mask = (df['description'].str.contains(kw, case=False, na=False)) & (df['ledger_name'] == "Suspense Account")
-                df.loc[mask, 'ledger_name'] = ledger
-    except Exception as e:
-        print(f"Engine Error: {e}")
-        
-    return df
+def match_master(txn, master_ledgers):
+    for ledger in master_ledgers:
+        if ledger.lower() in txn["description"].lower():
+            return ledger
+    return None
 
-def learn_new_pattern(user_id: str, narration: str, ledger: str):
-    """Saves user-corrected ledger back to ai_memory."""
-    data = {
+
+def match_ai_memory(txn, user_id):
+    res = supabase.table("ai_memory").select("*").eq("user_id", user_id).execute()
+    for item in res.data:
+        if item["narration_pattern"] in txn["description"].lower():
+            return item["suggested_ledger"]
+    return None
+
+
+def rule_based(txn):
+    desc = txn["description"].lower()
+
+    if "gst" in desc:
+        return "GST Expense"
+    if "petrol" in desc:
+        return "Fuel Expense"
+    if "zomato" in desc:
+        return "Staff Welfare"
+
+    return None
+
+
+def assign_ledger(txn, user_id, master_ledgers=None, user_default=None):
+    ledger = None
+
+    # MASTER
+    if master_ledgers:
+        ledger = match_master(txn, master_ledgers)
+
+    # AI
+    if not ledger:
+        ledger = match_ai_memory(txn, user_id)
+
+    # RULE
+    if not ledger:
+        ledger = rule_based(txn)
+
+    # USER DEFAULT
+    if not ledger and user_default:
+        ledger = user_default
+
+    # FALLBACK
+    if not ledger:
+        ledger = "Suspense Account"
+
+    return ledger
+
+
+# 🔥 LEARNING
+def learn_pattern(user_id, narration, ledger):
+    supabase.table("ai_memory").upsert({
         "user_id": user_id,
-        "narration_pattern": narration.lower().strip(),
-        "suggested_ledger": ledger,
-        "confidence_level": 100
-    }
-    supabase.table("ai_memory").upsert(data, on_conflict="user_id,narration_pattern").execute()
+        "narration_pattern": narration.lower(),
+        "suggested_ledger": ledger
+    }, on_conflict="user_id,narration_pattern").execute()
