@@ -1,3 +1,6 @@
+from fastapi.responses import FileResponse
+import os
+import pandas as pd
 from fastapi import FastAPI, Request, UploadFile, File, Form
 from fastapi.responses import HTMLResponse, StreamingResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
@@ -258,3 +261,57 @@ async def submit_feedback(
     except Exception as e:
         print("Feedback Error:", e)
         return {"status": "error"}
+# =========================
+# 📊 EXCEL TOOL ROUTE
+# =========================
+@app.get("/excel", response_class=HTMLResponse)
+async def excel_page(request: Request):
+    return templates.TemplateResponse("excel.html", {"request": request})
+
+
+# =========================
+# 📂 PDF → EXCEL
+# =========================
+@app.post("/convert-excel")
+async def convert_excel(file: UploadFile = File(...)):
+    content = await file.read()
+
+    df = smart_map_bank(content, file.filename)
+
+    output_path = f"{file.filename}.xlsx"
+    df.to_excel(output_path, index=False)
+
+    return FileResponse(
+        output_path,
+        filename="converted.xlsx",
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+
+# =========================
+# 📂 PDF → XML
+# =========================
+@app.post("/convert-xml")
+async def convert_xml(file: UploadFile = File(...)):
+    content = await file.read()
+
+    df = smart_map_bank(content, file.filename)
+
+    xml = "<VOUCHERS>\n"
+
+    for _, row in df.iterrows():
+        xml += f"""
+<VOUCHER>
+    <DATE>{row.get('date','')}</DATE>
+    <NARRATION>{row.get('description','')}</NARRATION>
+    <AMOUNT>{row.get('amount','')}</AMOUNT>
+</VOUCHER>
+"""
+
+    xml += "\n</VOUCHERS>"
+
+    return StreamingResponse(
+        io.BytesIO(xml.encode()),
+        media_type="application/xml",
+        headers={"Content-Disposition": "attachment; filename=converted.xml"}
+    )
