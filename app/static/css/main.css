@@ -1,3 +1,8 @@
+:root {
+    --brand: #1179f0;
+}
+
+/* RESET */
 * {
     margin: 0;
     padding: 0;
@@ -39,7 +44,7 @@ body::before {
     backdrop-filter: blur(18px);
     background: rgba(255,255,255,0.15);
 
-    overflow: visible; /* FIXED */
+    overflow: visible;
     z-index: 1000;
 }
 
@@ -65,11 +70,6 @@ body::before {
 
     cursor: pointer;
     transition: 0.3s;
-    box-shadow: 0 0 10px rgba(255,255,255,0.2);
-}
-
-.menu-toggle:hover {
-    transform: scale(1.08);
 }
 
 .menu-toggle span {
@@ -84,11 +84,6 @@ body::before {
 }
 
 /* BRAND */
-.brand-box {
-    display: flex;
-    flex-direction: column;
-}
-
 .brand {
     font-size: 20px;
     font-weight: 700;
@@ -101,16 +96,10 @@ body::before {
 
 /* USER PLAN */
 .user-plan {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-
     background: rgba(255,255,255,0.6);
     padding: 5px 12px;
     border-radius: 20px;
-
     color: #000;
-    margin-left: 10px;
 }
 
 /* RIGHT */
@@ -118,15 +107,16 @@ body::before {
     display: flex;
     align-items: center;
     gap: 15px;
-    position: relative; /* IMPORTANT */
+    position: relative;
 }
 
-/* BELL */
+/* ICON */
 .icon-bell {
     position: relative;
     cursor: pointer;
 }
 
+/* DOT */
 .dot {
     width: 8px;
     height: 8px;
@@ -142,14 +132,14 @@ body::before {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: #2563eb;
+    background: var(--brand);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
 }
 
-/* DROPDOWN (FIXED) */
+/* DROPDOWN */
 .dropdown {
     display: none;
     position: absolute;
@@ -157,27 +147,16 @@ body::before {
     right: 10px;
 
     min-width: 180px;
-
-    background: rgba(255,255,255,0.95);
+    background: white;
     color: black;
-
     padding: 12px;
     border-radius: 12px;
 
-    backdrop-filter: blur(10px);
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-
-    z-index: 9999;
-
-    transform: translateY(-10px);
-    opacity: 0;
-    transition: 0.2s ease;
 }
 
 .dropdown.show {
     display: block;
-    transform: translateY(0);
-    opacity: 1;
 }
 
 /* SIDEBAR */
@@ -189,22 +168,11 @@ body::before {
     width: 240px;
     height: calc(100% - 80px);
 
-    backdrop-filter: blur(18px);
     background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(18px);
 
     border-radius: 20px;
     padding: 30px 20px;
-
-    transition: all 0.3s ease;
-}
-
-.sidebar.collapsed {
-    width: 80px;
-    padding: 20px 0;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
 /* NAV */
@@ -215,46 +183,26 @@ body::before {
 
     padding: 12px;
     border-radius: 12px;
-
     color: white;
     text-decoration: none;
 }
 
 .nav-item.active {
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    background: linear-gradient(135deg, var(--brand), #0a5cd6);
 }
 
-.sidebar.collapsed .nav-item {
-    justify-content: center;
-    width: 100%;
-}
-
-.sidebar.collapsed span {
-    display: none;
-}
-
-/* SPONSOR FINAL */
+/* SPONSOR */
 .sidebar-footer {
     position: absolute;
     bottom: 25px;
     width: 100%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     text-align: center;
 }
 
 .sidebar-footer img {
     width: 48px;
     height: 48px;
-    object-fit: cover;
-
     border-radius: 50%;
-    margin-bottom: 10px;
-
-    background: rgba(255,255,255,0.3);
-    padding: 6px;
 }
 
 .sponsor-title {
@@ -263,25 +211,13 @@ body::before {
 }
 
 .sponsor-name {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
-    line-height: 1.6;
 }
 
 .sponsor-name span {
-    display: block;
     font-size: 11px;
-    opacity: 0.8;
-}
-
-/* MINI SIDEBAR */
-.sidebar.collapsed .sidebar-footer div {
-    display: none;
-}
-
-.sidebar.collapsed .sidebar-footer img {
-    width: 40px;
-    height: 40px;
+    display: block;
 }
 
 /* MAIN */
@@ -304,15 +240,10 @@ body::before {
     padding: 6px 14px;
     font-size: 12px;
     border-radius: 14px;
-
     background: rgba(255,255,255,0.9);
     color: #000;
-
-    backdrop-filter: blur(8px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
-.footer-bubble:hover {
-    transform: scale(1.03);
-    transition: 0.2s;
+.footer-bubble b {
+    color: var(--brand);
 }
