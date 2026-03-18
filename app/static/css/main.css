@@ -5,8 +5,16 @@
     font-family: "Segoe UI", sans-serif;
 }
 
+/* BACKGROUND */
 body {
-    background: linear-gradient(135deg, #66c2ff, #1e3c72);
+    background:
+        linear-gradient(135deg, rgba(102,194,255,0.9), rgba(30,60,114,0.95)),
+        url("/static/assets/b.png");
+
+    background-size: cover, 120px;
+    background-repeat: no-repeat, repeat;
+    background-position: center, center;
+
     color: white;
 }
 
@@ -67,6 +75,30 @@ body {
     background: black;
 }
 
+/* HEADER RIGHT */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.icon-btn {
+    padding: 6px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.3);
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: white;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* SIDEBAR */
 .sidebar {
     position: fixed;
@@ -85,7 +117,6 @@ body {
     transition: 0.3s;
 }
 
-/* COLLAPSED */
 .sidebar.collapsed {
     width: 80px;
 }
@@ -99,6 +130,7 @@ body {
     color: white;
     text-decoration: none;
     align-items: center;
+    position: relative;
 }
 
 .nav-item.active {
@@ -107,10 +139,23 @@ body {
 
 /* HIDE TEXT */
 .sidebar.collapsed .nav-item span {
-    display: none;
+    position: absolute;
+    left: 70px;
+    background: rgba(0,0,0,0.75);
+    padding: 6px 12px;
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: 0.2s;
 }
 
-/* CENTER ICONS */
+/* SHOW ON HOVER */
+.sidebar.collapsed .nav-item:hover span {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* CENTER ICON */
 .sidebar.collapsed .nav-item {
     justify-content: center;
 }
@@ -126,11 +171,6 @@ body {
 .sponsor-img {
     width: 60px;
     border-radius: 50%;
-}
-
-/* HIDE TEXT IN COLLAPSE */
-.sidebar.collapsed .sponsor-text {
-    display: none;
 }
 
 /* MAIN */
@@ -164,7 +204,6 @@ body {
     border-radius: 16px;
 }
 
-/* INPUT */
 .feedback-card input,
 .feedback-card textarea {
     width: 100%;
@@ -187,5 +226,13 @@ body {
     position: fixed;
     bottom: 10px;
     width: 100%;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-bubble {
+    background: rgba(255,255,255,0.9);
+    color: black;
+    padding: 6px 14px;
+    border-radius: 14px;
 }
