@@ -24,7 +24,7 @@
 
         <div class="brand-box">
             <div class="brand">Accountesy</div>
-            <div class="tagline">Learn Smart, Grow Fast</div>
+            <div class="tagline">Learn Smart, Grow Fast, Be Accounting Expert with Accountesy</div>
         </div>
 
         <div class="user-plan">
@@ -34,7 +34,7 @@
     </div>
 
     <div class="header-right">
-        <i data-feather="bell"></i>
+        <div class="icon-btn"><i data-feather="bell"></i></div>
         <div class="avatar">{{ user.username[0]|upper if user else "G" }}</div>
     </div>
 
@@ -72,14 +72,8 @@
 
     </nav>
 
-    <!-- SPONSOR -->
     <div class="sidebar-footer">
         <img src="/static/assets/sponsor.png" class="sponsor-img">
-        <div class="sponsor-text">
-            <div>Sponsored by</div>
-            <div>Uday Mondal</div>
-            <span>Tax Consultant Advocate</span>
-        </div>
     </div>
 
 </aside>
@@ -87,8 +81,10 @@
 <!-- MAIN -->
 <main id="main" class="main">
 
+    <!-- SCROLL SPACE -->
     <div class="top-space"></div>
 
+    <!-- FEEDBACK -->
     <div class="feedback-section">
 
         <form action="/submit-feedback" method="post" class="feedback-card">
@@ -110,7 +106,9 @@
 </main>
 
 <footer class="footer">
-    Created by <b>Debasish Biswas</b> © 2026
+    <div class="footer-bubble">
+        Created by <b>Debasish Biswas</b> © 2026
+    </div>
 </footer>
 
 <script>
