@@ -7,3 +7,6 @@ supabase
 pandas
 openpyxl
 python-dotenv
+Flask
+pdfplumber
+pdfminer.six
