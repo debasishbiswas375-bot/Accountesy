@@ -1,9 +1,88 @@
-<!-- ONLY SHOWING CHANGED PARTS CLEANLY -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Accountesy</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
 
-<!-- 🔁 CHANGE FORM -->
-<form id="feedbackForm" class="feedback-card">
+<body>
 
-<!-- ADD THIS BELOW FOOTER -->
+<!-- HEADER -->
+<div class="header">
+    <div class="header-left">
+        <button id="menuToggle" class="menu-toggle">
+            <span></span><span></span><span></span>
+        </button>
+
+        <img src="/static/assets/logo.png" class="logo">
+        <div>
+            <div class="brand">Accountesy</div>
+            <div class="tagline">Learn Smart, Grow Fast, Be Accounting Expert with Accountesy</div>
+        </div>
+
+        <div class="user-plan">Guest • Free</div>
+    </div>
+
+    <div class="header-right">
+        <div id="bellBtn" class="icon-bell">
+            <i data-feather="bell"></i>
+            <!-- REMOVE DOT IF NO NOTIFICATION -->
+            <!-- <div class="dot"></div> -->
+        </div>
+
+        <div id="avatarBtn" class="avatar">G</div>
+    </div>
+</div>
+
+<!-- SIDEBAR -->
+<div id="sidebar" class="sidebar">
+
+    <a href="/" class="nav-item active">
+        <i data-feather="home"></i>
+        <span>Dashboard</span>
+    </a>
+
+    <a href="/workspace" class="nav-item">
+        <i data-feather="file-text"></i>
+        <span>Workspace</span>
+    </a>
+
+    <a href="/history" class="nav-item">
+        <i data-feather="clock"></i>
+        <span>History</span>
+    </a>
+
+    <!-- SPONSOR -->
+    <div class="sidebar-footer">
+        <img src="/static/assets/sponsor.png">
+        <div class="sponsor-title">Sponsored by</div>
+        <div class="sponsor-name">
+            Uday Mondal
+            <span>Tax Consultant Advocate</span>
+        </div>
+    </div>
+
+</div>
+
+<!-- MAIN CONTENT -->
+<div style="margin-left:260px; padding-top:80px;">
+    {% block content %}{% endblock %}
+</div>
+
+<!-- FEEDBACK -->
+<div class="feedback-section">
+    <form id="feedbackForm" class="feedback-card">
+        <h2>Feedback</h2>
+        <input type="text" name="name" placeholder="Your name">
+        <input type="email" name="email" placeholder="Email">
+        <textarea name="message" placeholder="Your feedback"></textarea>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<!-- POPUP -->
 <div id="successPopup" class="success-popup">
     <div class="popup-card">
         <h3>✅ Feedback Submitted</h3>
@@ -12,42 +91,37 @@
     </div>
 </div>
 
-<!-- 🔁 UPDATE SCRIPT (REPLACE YOUR SCRIPT BLOCK) -->
+<!-- FOOTER -->
+<div class="footer">
+    <div class="footer-bubble">
+        Created by Debasish Biswas © 2026
+    </div>
+</div>
+
+<!-- SCRIPT -->
 <script>
-    feather.replace();
+feather.replace();
 
-    document.getElementById("menuToggle").onclick = () => {
-        document.getElementById("sidebar").classList.toggle("collapsed");
-    };
+// SIDEBAR
+document.getElementById("menuToggle").onclick = () => {
+    document.getElementById("sidebar").classList.toggle("collapsed");
+};
 
-    document.getElementById("avatarBtn").onclick = () => {
-        document.getElementById("avatarMenu").classList.toggle("show");
-    };
+// DROPDOWN CLOSE
+document.addEventListener("click", function(e){
+    if(!e.target.closest(".avatar")){
+        document.getElementById("avatarMenu")?.classList.remove("show");
+    }
+    if(!e.target.closest(".icon-bell")){
+        document.getElementById("bellMenu")?.classList.remove("show");
+    }
+});
 
-    document.getElementById("bellBtn").onclick = () => {
-        document.getElementById("bellMenu").classList.toggle("show");
-    };
+// FEEDBACK AJAX
+const form = document.getElementById("feedbackForm");
+const popup = document.getElementById("successPopup");
 
-    document.addEventListener("click", function(e){
-        if(!e.target.closest(".avatar")){
-            document.getElementById("avatarMenu").classList.remove("show");
-        }
-        if(!e.target.closest(".icon-bell")){
-            document.getElementById("bellMenu").classList.remove("show");
-        }
-    });
-    <span id="userStatus">Guest</span>
-
-<script>
-if(document.cookie.includes("user=")){
-    document.getElementById("userStatus").innerText = "Logged";
-}
-</script>
-
-    /* 🔥 FEEDBACK AJAX */
-    const form = document.getElementById("feedbackForm");
-    const popup = document.getElementById("successPopup");
-
+if(form){
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
@@ -63,8 +137,12 @@ if(document.cookie.includes("user=")){
             form.reset();
         }
     });
+}
 
-    function closePopup(){
-        popup.classList.remove("show");
-    }
+function closePopup(){
+    popup.classList.remove("show");
+}
 </script>
+
+</body>
+</html>
