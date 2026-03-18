@@ -24,9 +24,7 @@
 
         <div class="brand-box">
             <div class="brand">Accountesy</div>
-            <div class="tagline">
-                Learn Smart, Grow Fast
-            </div>
+            <div class="tagline">Learn Smart, Grow Fast</div>
         </div>
 
         <div class="user-plan">
@@ -39,21 +37,33 @@
 
     <div class="header-right">
 
+        <!-- NOTIFICATION -->
         <div class="icon-bell" id="bellBtn">
             <i data-feather="bell"></i>
+
+            {% if notifications and notifications|length > 0 %}
             <span class="dot"></span>
+            {% endif %}
 
             <div class="dropdown" id="bellMenu">
-                <p>No notifications</p>
+                {% if notifications and notifications|length > 0 %}
+                    {% for n in notifications %}
+                        <p>{{ n }}</p>
+                    {% endfor %}
+                {% else %}
+                    <p>No notifications</p>
+                {% endif %}
             </div>
         </div>
 
+        <!-- AVATAR -->
         <div class="avatar" id="avatarBtn">
             {{ user.username[0]|upper if user else "G" }}
 
             <div class="dropdown" id="avatarMenu">
-                <p>Profile</p>
-                <p>Logout</p>
+                <p onclick="window.location='/account'">Profile</p>
+                <p onclick="window.location='/credits'">Credits</p>
+                <p onclick="window.location='/logout'">Logout</p>
             </div>
         </div>
 
@@ -61,6 +71,7 @@
 
 </header>
 
+<!-- SIDEBAR -->
 <aside id="sidebar" class="sidebar">
 
     <nav>
@@ -90,12 +101,24 @@
         </a>
     </nav>
 
+    <!-- SPONSOR -->
+    <div class="sidebar-footer">
+        <img src="/static/assets/sponsor.png" alt="Sponsor">
+        <div class="sponsor-title">Sponsored by</div>
+        <div class="sponsor-name">
+            Uday Mondal
+            <span>Tax Consultant Advocate</span>
+        </div>
+    </div>
+
 </aside>
 
+<!-- MAIN -->
 <main class="main">
     {% block content %}{% endblock %}
 </main>
 
+<!-- FOOTER -->
 <footer class="footer">
     <div class="footer-bubble">
         Created by <b>Debasish Biswas</b> © 2026
