@@ -20,7 +20,7 @@ async def convert_excel(file: UploadFile = File(...)):
     with open(file_path, "wb") as f:
         f.write(await file.read())
 
-    output_file = process_pdf_to_excel(file_path)
+    output_file = process_pdf_to_excel(file_path, user_id="guest")
 
     return FileResponse(output_file, filename=os.path.basename(output_file))
 
