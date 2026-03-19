@@ -10,39 +10,36 @@
 ========================= */
 body {
     color: white;
+    min-height: 100vh;
     position: relative;
+    overflow-x: hidden;
 }
 
 /* =========================
-   BUBBLE BACKGROUND (MAIN)
+   BUBBLE BACKGROUND (FIXED)
 ========================= */
 body.bubble-bg {
     background: linear-gradient(135deg, #4facfe, #00c6ff);
-    overflow: hidden;
 }
 
 /* MOVING BUBBLES */
-body.bubble-bg::after {
+body.bubble-bg::before {
     content: "";
     position: fixed;
-    width: 200%;
-    height: 200%;
-    top: -50%;
-    left: -50%;
-    background-image: radial-gradient(circle, rgba(255,255,255,0.15) 2px, transparent 2px);
-    background-size: 60px 60px;
-    animation: bubbleMove 25s linear infinite;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.12) 2px, transparent 2px);
+    background-size: 80px 80px;
+    animation: bubbleMove 30s linear infinite;
     z-index: 0;
 }
 
-/* WATERMARK (LOW PRIORITY) */
-body::before {
+/* WATERMARK */
+body.bubble-bg::after {
     content: "";
     position: fixed;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     background: url('/static/assets/b.png') repeat;
-    background-size: 120px;
+    background-size: 140px;
     opacity: 0.05;
     z-index: 0;
 }
@@ -50,21 +47,20 @@ body::before {
 /* ANIMATION */
 @keyframes bubbleMove {
     0% { transform: translate(0, 0); }
-    100% { transform: translate(60px, 60px); }
+    100% { transform: translate(80px, 80px); }
 }
 
 /* =========================
-   LAYOUT FIX (IMPORTANT)
+   FIX CONTENT LAYER
 ========================= */
 .header,
 .sidebar,
 .feedback-section,
 .footer,
-.glass-panel,
 .main-content,
-div {
+.glass-panel {
     position: relative;
-    z-index: 2;
+    z-index: 10;
 }
 
 /* =========================
@@ -131,41 +127,6 @@ div {
 }
 
 /* =========================
-   HEADER RIGHT
-========================= */
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.icon-bell {
-    position: relative;
-    cursor: pointer;
-}
-
-.dot {
-    width: 8px;
-    height: 8px;
-    background: red;
-    border-radius: 50%;
-    position: absolute;
-    top: -2px;
-    right: -2px;
-}
-
-.avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: #2563eb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-}
-
-/* =========================
    SIDEBAR
 ========================= */
 .sidebar {
@@ -178,18 +139,11 @@ div {
     background: rgba(255,255,255,0.18);
     border-radius: 20px;
     padding: 30px 20px;
-    transition: 0.3s;
 }
 
-.sidebar.collapsed {
-    width: 80px;
-    padding: 20px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* NAV */
+/* =========================
+   NAV
+========================= */
 .nav-item {
     display: flex;
     align-items: center;
@@ -202,22 +156,6 @@ div {
 
 .nav-item.active {
     background: linear-gradient(135deg, #00c6ff, #0072ff);
-}
-
-/* =========================
-   SPONSOR
-========================= */
-.sidebar-footer {
-    position: absolute;
-    bottom: 25px;
-    width: 100%;
-    text-align: center;
-}
-
-.sidebar-footer img {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
 }
 
 /* =========================
