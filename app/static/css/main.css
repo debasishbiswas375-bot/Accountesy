@@ -22,6 +22,12 @@ body.bubble-bg {
     background: linear-gradient(135deg, #4facfe, #00c6ff);
 }
 
+/* 🔥 FIX: allow clicks through background */
+body.bubble-bg::before,
+body.bubble-bg::after {
+    pointer-events: none;
+}
+
 /* MOVING BUBBLES */
 body.bubble-bg::before {
     content: "";
@@ -30,7 +36,7 @@ body.bubble-bg::before {
     background-image: radial-gradient(circle, rgba(255,255,255,0.12) 2px, transparent 2px);
     background-size: 80px 80px;
     animation: bubbleMove 30s linear infinite;
-    z-index: 0;
+    z-index: -1;   /* 🔥 send to back */
 }
 
 /* WATERMARK */
@@ -41,7 +47,7 @@ body.bubble-bg::after {
     background: url('/static/assets/b.png') repeat;
     background-size: 140px;
     opacity: 0.05;
-    z-index: 0;
+    z-index: -1;   /* 🔥 send to back */
 }
 
 /* ANIMATION */
@@ -139,6 +145,7 @@ body.bubble-bg::after {
     background: rgba(255,255,255,0.18);
     border-radius: 20px;
     padding: 30px 20px;
+    z-index: 20;
 }
 
 /* =========================
@@ -152,6 +159,11 @@ body.bubble-bg::after {
     border-radius: 12px;
     color: white;
     text-decoration: none;
+    cursor: pointer;
+}
+
+.nav-item:hover {
+    background: rgba(255,255,255,0.2);
 }
 
 .nav-item.active {
