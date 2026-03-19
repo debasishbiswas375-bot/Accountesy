@@ -1,7 +1,14 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi import Request
+from fastapi.responses import HTMLResponse
 
+@app.get("/", response_class=HTMLResponse)
+def home(request: Request):
+    return templates.TemplateResponse("landing.html", {
+        "request": request
+    })
 # Routers
 from app.routers.auth_routes import router as auth_router
 from app.routers.workspace_routes import router as workspace_router
