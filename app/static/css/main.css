@@ -343,7 +343,13 @@ body::before {
     padding: 100px 40px 40px;
     min-height: 100vh;
 
+    background: transparent;
+}
+/* ONLY CONTENT GETS BACKGROUND */
+.content-box {
     backdrop-filter: blur(18px);
     background: rgba(255,255,255,0.18);
     border-radius: 20px;
+
+    padding: 30px;
 }
