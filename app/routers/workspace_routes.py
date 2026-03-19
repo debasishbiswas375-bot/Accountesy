@@ -1,52 +1,40 @@
-from flask import Blueprint, render_template, request, send_file
+from fastapi import APIRouter, UploadFile, File
+from fastapi.responses import FileResponse
 import os
 import pandas as pd
 
-# ✅ USE MAIN ENGINE (NOT FREE ENGINE)
 from app.tools.engine import process_pdf_to_excel
 
-workspace_bp = Blueprint('workspace', __name__)
+router = APIRouter()
 
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 
 # =========================================
-# 🏠 WORKSPACE PAGE
+# 🔹 PDF → EXCEL (PRO)
 # =========================================
-@workspace_bp.route("/workspace")
-def workspace_page():
-    return render_template("workspace.html")
-
-
-# =========================================
-# 🔹 PDF → EXCEL (PRO ENGINE)
-# =========================================
-@workspace_bp.route("/convert-excel", methods=["POST"])
-def convert_excel():
-    file = request.files.get("file")
-
-    if not file:
-        return "❌ No file uploaded"
-
+@router.post("/workspace/convert-excel")
+async def convert_excel(file: UploadFile = File(...)):
     file_path = os.path.join(UPLOAD_FOLDER, file.filename)
-    file.save(file_path)
+
+    with open(file_path, "wb") as f:
+        f.write(await file.read())
 
     try:
         output_file = process_pdf_to_excel(file_path)
 
-        return send_file(
+        return FileResponse(
             output_file,
-            as_attachment=True,
-            download_name=os.path.basename(output_file)
+            filename=os.path.basename(output_file)
         )
 
     except Exception as e:
-        return f"❌ Excel Error: {str(e)}"
+        return {"error": str(e)}
 
 
 # =========================================
-# 🔹 XML GENERATOR
+# 🔹 PDF → XML
 # =========================================
 def generate_xml(df, output_path):
     xml = """<?xml version="1.0"?>
@@ -56,8 +44,8 @@ def generate_xml(df, output_path):
 """
 
     for _, row in df.iterrows():
-        credit = str(row.get("Credit", "")).strip()
-        debit = str(row.get("Debit", "")).strip()
+        credit = str(row.get("credit", "")).strip()
+        debit = str(row.get("debit", "")).strip()
 
         if credit and credit != "nan":
             amount = credit
@@ -69,8 +57,8 @@ def generate_xml(df, output_path):
         xml += f"""
 <TALLYMESSAGE>
 <VOUCHER VCHTYPE="{vtype}" ACTION="Create">
-<DATE>{str(row.get('Date','')).replace('/', '')}</DATE>
-<NARRATION>{row.get('Description','')}</NARRATION>
+<DATE>{str(row.get('date','')).replace('/', '')}</DATE>
+<NARRATION>{row.get('description','')}</NARRATION>
 
 <ALLLEDGERENTRIES.LIST>
 <LEDGERNAME>Bank Account</LEDGERNAME>
@@ -96,18 +84,12 @@ def generate_xml(df, output_path):
     return output_path
 
 
-# =========================================
-# 🔹 PDF → XML (PRO ENGINE)
-# =========================================
-@workspace_bp.route("/convert-xml", methods=["POST"])
-def convert_xml():
-    file = request.files.get("file")
-
-    if not file:
-        return "❌ No file uploaded"
-
+@router.post("/workspace/convert-xml")
+async def convert_xml(file: UploadFile = File(...)):
     file_path = os.path.join(UPLOAD_FOLDER, file.filename)
-    file.save(file_path)
+
+    with open(file_path, "wb") as f:
+        f.write(await file.read())
 
     try:
         excel_file = process_pdf_to_excel(file_path)
@@ -116,11 +98,7 @@ def convert_xml():
         output_xml = file_path.replace(".pdf", ".xml")
         generate_xml(df, output_xml)
 
-        return send_file(
-            output_xml,
-            as_attachment=True,
-            download_name=os.path.basename(output_xml)
-        )
+        return FileResponse(output_xml, filename=os.path.basename(output_xml))
 
     except Exception as e:
-        return f"❌ XML Error: {str(e)}"
+        return {"error": str(e)}
