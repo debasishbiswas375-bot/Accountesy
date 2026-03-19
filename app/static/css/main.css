@@ -394,3 +394,31 @@ body::before {
     color: white;
     cursor: pointer;
 }
+.bubble-bg {
+  background: linear-gradient(135deg, #4facfe, #00c6ff);
+  position: relative;
+  overflow: hidden;
+}
+
+.bubble-bg::before,
+.bubble-bg::after {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: -50%;
+  left: -50%;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.1) 2px, transparent 2px);
+  background-size: 60px 60px;
+  animation: bubbleMove 25s linear infinite;
+}
+
+.bubble-bg::after {
+  animation-direction: reverse;
+  opacity: 0.5;
+}
+
+@keyframes bubbleMove {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
+}
