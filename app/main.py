@@ -272,7 +272,9 @@ async def excel_page(request: Request):
 # =========================
 # 📂 PDF → EXCEL
 # =========================
-from app.tools.free_excel_engine import run_free_engine
+from app.tools.mapper import smart_map_bank
+from app.tools.free_excel_engine import build_free_excel
+
 import uuid, os
 
 TEMP_DIR = "app/temp"
@@ -283,8 +285,19 @@ os.makedirs(TEMP_DIR, exist_ok=True)
 async def convert_excel(file: UploadFile = File(...)):
     content = await file.read()
 
-    raw_df, processed_df, summary_df = run_free_engine(content, file.filename)
+    # =========================
+    # 1. USE YOUR MAPPER (ALL BANKS)
+    # =========================
+    df = smart_map_bank(content, file.filename)
 
+    # =========================
+    # 2. BUILD EXCEL STRUCTURE
+    # =========================
+    raw_df, processed_df, summary_df = build_free_excel(df)
+
+    # =========================
+    # 3. SAVE FILE
+    # =========================
     output_path = os.path.join(TEMP_DIR, f"{uuid.uuid4()}.xlsx")
 
     with pd.ExcelWriter(output_path, engine="openpyxl") as writer:
@@ -292,6 +305,9 @@ async def convert_excel(file: UploadFile = File(...)):
         processed_df.to_excel(writer, sheet_name="Processed Transactions", index=False)
         summary_df.to_excel(writer, sheet_name="Summary", index=False)
 
+    # =========================
+    # 4. DOWNLOAD
+    # =========================
     return FileResponse(
         output_path,
         filename="converted_free.xlsx",
