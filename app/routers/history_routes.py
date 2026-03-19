@@ -1,44 +1,56 @@
-import os
 from fastapi import APIRouter, Request
+from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from app.database import supabase
+import os
+import json
 
-router = APIRouter(prefix="/history", tags=["History"])
+router = APIRouter()
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-user_templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
+templates = Jinja2Templates(directory="app/templates")
+
+HISTORY_FILE = "app/data/history.json"
+os.makedirs("app/data", exist_ok=True)
+
+# Ensure file exists
+if not os.path.exists(HISTORY_FILE):
+    with open(HISTORY_FILE, "w") as f:
+        json.dump([], f)
 
 
-# =========================================
-# 🔹 HISTORY PAGE
-# =========================================
-@router.get("/")
-def show_conversion_history(request: Request):
+# =========================
+# PAGE
+# =========================
+@router.get("/history", response_class=HTMLResponse)
+def history_page(request: Request):
+    with open(HISTORY_FILE, "r") as f:
+        data = json.load(f)
 
-    if not supabase:
-        return {"error": "Database not connected"}
+    return templates.TemplateResponse("history.html", {
+        "request": request,
+        "history": data
+    })
 
-    user = request.cookies.get("user")
 
-    # 👤 Guest user
-    if not user:
-        return user_templates.TemplateResponse(
-            "history.html",
-            {
-                "request": request,
-                "history": [],
-                "guest": True
-            }
-        )
+# =========================
+# API: GET HISTORY
+# =========================
+@router.get("/history-data")
+def get_history():
+    with open(HISTORY_FILE, "r") as f:
+        return json.load(f)
 
-    # 👤 Logged user
-    res = supabase.table("conversion_history").select("*").execute()
 
-    return user_templates.TemplateResponse(
-        "history.html",
-        {
-            "request": request,
-            "history": res.data,
-            "guest": False
-        }
-    )
+# =========================
+# API: SAVE HISTORY
+# =========================
+@router.post("/save-history")
+def save_history(item: dict):
+    with open(HISTORY_FILE, "r") as f:
+        data = json.load(f)
+
+    data.append(item)
+
+    with open(HISTORY_FILE, "w") as f:
+        json.dump(data, f, indent=2)
+
+    return {"status": "saved"}
