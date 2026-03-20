@@ -54,3 +54,5 @@ def parse_transactions(file_stream):
                         continue
 
     return transactions
+    def parse_statement(file_path):
+    return parse_transactions(file_path)
