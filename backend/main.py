@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
-from parser import parse_statement
+from backend.parser import parse_statement
 from master_parser import parse_master
 from mapping_engine import map_transactions
 from xml_generator import generate_tally_xml
