@@ -59,3 +59,6 @@ def generate_xml(data):
 
     xml += "</REQUESTDATA></IMPORTDATA></BODY></ENVELOPE>"
     return xml
+
+def generate_tally_xml(data):
+    return generate_xml(data)
