@@ -51,4 +51,4 @@ async def process(file: UploadFile = File(...), master: UploadFile = File(None))
     }
 
 # 👉 SERVE FRONTEND (IMPORTANT)
-app.mount("/", StaticFiles(directory="../dist", html=True), name="static")
+app.mount("/", StaticFiles(directory="dist", html=True), name="static")
