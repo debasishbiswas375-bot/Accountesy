@@ -30,13 +30,11 @@ def parse_transactions(file_stream):
                         continue
 
                     try:
-                        # ✅ SBI FORMAT FIX
                         date = str(row[0]).strip()
-                        narration = str(row[2]).strip()  # ✅ CORRECT COLUMN
+                        narration = str(row[2]).strip()
                         debit = clean_amount(row[3])
                         credit = clean_amount(row[4])
 
-                        # skip empty rows
                         if not narration or narration.lower() == "nan":
                             continue
 
@@ -54,5 +52,8 @@ def parse_transactions(file_stream):
                         continue
 
     return transactions
-    def parse_statement(file_path):
-        return parse_transactions(file_path)
+
+
+# ✅ MUST BE OUTSIDE (VERY IMPORTANT)
+def parse_statement(file_path):
+    return parse_transactions(file_path)
