@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { useToast } from '@/components/ui/toast'
-import { Eye, EyeOff, User, Mail, Phone, MapPin, Building, Check, RefreshCcw } from 'lucide-react'
+import { Eye, EyeOff, RefreshCcw } from 'lucide-react' // ✅ FIXED
 import { supabase } from '@/lib/supabase'
 
 // ---------------- TYPES ----------------
@@ -52,8 +52,7 @@ export function Register() {
   const [form, setForm] = useState<FormData>(initialForm)
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [captcha, setCaptcha] = useState(generateCaptcha()) // ✅ FIXED
-  const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({})
+  const [captcha, setCaptcha] = useState(generateCaptcha())
 
   const { addToast } = useToast()
   const navigate = useNavigate()
@@ -61,7 +60,6 @@ export function Register() {
   // ---------------- UPDATE FIELD ----------------
   const updateField = useCallback((field: keyof FormData, value: string) => {
     setForm(prev => ({ ...prev, [field]: value }))
-    setErrors(prev => ({ ...prev, [field]: undefined }))
   }, [])
 
   // ---------------- PINCODE AUTO FETCH ----------------
@@ -91,29 +89,27 @@ export function Register() {
 
   // ---------------- VALIDATION ----------------
   const validate = (): boolean => {
-    const errs: Partial<Record<keyof FormData, string>> = {}
-
-    if (form.username.trim().length < 6) errs.username = 'Min 6 chars'
-    if (!form.full_name.trim()) errs.full_name = 'Required'
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email = 'Invalid email'
-    if (!form.contact_number.trim()) errs.contact_number = 'Required'
-    if (form.password.length < 6) errs.password = 'Min 6 chars'
-    if (form.password !== form.confirm_password) errs.confirm_password = 'Mismatch'
-    if (form.captcha_input !== captcha.answer) errs.captcha_input = 'Wrong answer'
-
-    setErrors(errs)
-    return Object.keys(errs).length === 0
+    if (form.username.trim().length < 6) return false
+    if (!form.full_name.trim()) return false
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) return false
+    if (!form.contact_number.trim()) return false
+    if (form.password.length < 6) return false
+    if (form.password !== form.confirm_password) return false
+    if (form.captcha_input !== captcha.answer) return false
+    return true
   }
 
   // ---------------- SUBMIT ----------------
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!validate()) return
+    if (!validate()) {
+      addToast({ title: 'Invalid input', variant: 'destructive' })
+      return
+    }
 
     setLoading(true)
 
     try {
-      // 🔐 Supabase signup
       const { data, error } = await supabase.auth.signUp({
         email: form.email,
         password: form.password
@@ -121,7 +117,6 @@ export function Register() {
 
       if (error) throw error
 
-      // 🧾 Insert extra user data
       await supabase.from('users').insert({
         id: data.user?.id,
         email: form.email,
