@@ -1,9 +1,7 @@
 from supabase import create_client
-from config import get_settings
+import os
 
-settings = get_settings()
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_KEY")  # 👈 keep anon key for now
 
-supabase = create_client(
-    settings.supabase_url,
-    settings.supabase_service_key
-)
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
