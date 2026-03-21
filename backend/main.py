@@ -1,6 +1,7 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException, Header
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 from backend.parser import parse_statement
 from backend.master_parser import parse_master
@@ -28,7 +29,6 @@ app.add_middleware(
 
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
-
 
 # ==========================
 # 🔐 SIGNUP
@@ -86,7 +86,6 @@ def login(data: dict):
     if not user.get("is_active") or user.get("is_deleted"):
         raise HTTPException(403, "Account disabled")
 
-    # 🔥 CRITICAL SECURITY CHECK
     if not verify_password(password, user["hashed_password"]):
         raise HTTPException(401, "Wrong password")
 
@@ -139,7 +138,6 @@ async def process(
         masters = parse_master(master_path)
 
     mapped = map_transactions(transactions, masters)
-
     xml = generate_tally_xml(mapped)
 
     return {
@@ -149,6 +147,18 @@ async def process(
 
 
 # ==========================
-# 🌐 FRONTEND
+# 🌐 SERVE FRONTEND (FIXED)
 # ==========================
-app.mount("/", StaticFiles(directory="dist", html=True), name="static")
+
+# Serve static assets (JS, CSS)
+app.mount("/assets", StaticFiles(directory="dist/assets"), name="assets")
+
+# Serve React app (root)
+@app.get("/")
+def serve_react():
+    return FileResponse("dist/index.html")
+
+# Handle React routes (VERY IMPORTANT)
+@app.get("/{full_path:path}")
+def serve_react_routes(full_path: str):
+    return FileResponse("dist/index.html")
