@@ -147,7 +147,7 @@ async def process(
 
 
 # ==========================
-# 🚀 SERVE FRONTEND (BULLETPROOF FIX)
+# 🚀 SERVE FRONTEND (DYNAMIC PATHING FIX)
 # ==========================
 
 # 1. Dynamically find the absolute path to the root folder (one level up from backend/)
